@@ -1,0 +1,147 @@
+[
+  {
+    "path": ".github/ISSUE_TEMPLATE/container-research.md",
+    "size": 700,
+    "sha256": "3f5521f0b44a6dc05c9fc4fbec836e8dd9dd14d501a330d5f2b3353174716dc0"
+  },
+  {
+    "path": ".gitignore",
+    "size": 321,
+    "sha256": "108286ab17528bdf7bd71e32072ffce7894c82270f131af902ebc356f7220dd2"
+  },
+  {
+    "path": "CONTRIBUTING.md",
+    "size": 701,
+    "sha256": "dd359909e6a4d27b82bc1a2d924c33deed0e5c203fe3e5cc948714d54d910c2d"
+  },
+  {
+    "path": "COPYRIGHT_NOTICE.md",
+    "size": 666,
+    "sha256": "6b9c12d51c06f7db6e4e8aa9bb9a5b62a44d71b46d505aebcbfe9e3a21edeb44"
+  },
+  {
+    "path": "FORMAT_INDEX.md",
+    "size": 1101,
+    "sha256": "aea0563fda49efa9b23860f7bad7ed783482668e4743b788d47f1d9da590b59e"
+  },
+  {
+    "path": "LICENSE_NOT_SELECTED.md",
+    "size": 167,
+    "sha256": "bbd904c0e253c93009841c38d85e43be62c398e2d09d7b044b8bcb8e281dd5ac"
+  },
+  {
+    "path": "PROJECT_STATUS.md",
+    "size": 1259,
+    "sha256": "6bb9bbb311ff61979ea127d6c2be92c8f84d3761f864f99ba7fcf9b7fb3add4e"
+  },
+  {
+    "path": "README.md",
+    "size": 3672,
+    "sha256": "ebb9e80cfaec0f39bafcf66baa6475250d101c2680174d9d1ef409719b142be0"
+  },
+  {
+    "path": "UPLOAD_FROM_IPHONE.md",
+    "size": 1206,
+    "sha256": "6b18d3cc11e81db8ce72856b64a3fcb23b1ea01530351fbaf9f0dc6879f763c5"
+  },
+  {
+    "path": "browser/README.md",
+    "size": 213,
+    "sha256": "fd5ea5c9586702cded1aeef7da39c2017f72c8d6a6cb2d6e30d822c6115acbad"
+  },
+  {
+    "path": "browser/so3_browser_disc_investigator.html",
+    "size": 60385,
+    "sha256": "3515b8819fee276da1e103e015c856dd93c23d7a1bbe8a76288a1e706d6536c6"
+  },
+  {
+    "path": "docs/TECHNICAL_GUIDE.md",
+    "size": 6411,
+    "sha256": "ab7544eb5a0da012ba1daea38b9e182a8c9ec3a6ad15713dd7d8e2ba85bc5897"
+  },
+  {
+    "path": "docs/browser/BROWSER_EXTRACTOR_GUIDE.md",
+    "size": 3243,
+    "sha256": "288e0cb686d8bd8b437d4f7059c2d6d865806ce21c4e8304cba4fc37133121df"
+  },
+  {
+    "path": "docs/compression/SLZ_AND_SLE.md",
+    "size": 1163,
+    "sha256": "f2d1285417e5eb8525d8ea63f4b8920bed955ebca486d9915d9613f9a12b3e0e"
+  },
+  {
+    "path": "docs/disc-layout/HIDDEN_RESOURCE_TABLE.md",
+    "size": 1608,
+    "sha256": "c5d3b730330b2ad1f87be4a4e653594795261f5c44bf2e4e062ef648a67c4b8c"
+  },
+  {
+    "path": "docs/key-recovery/RPC1234_DISCOVERY_REPORT.md",
+    "size": 3388,
+    "sha256": "bb7f0c89e79c9d4d17df00418af4cfd705ef12a359c382f7ef159ad2c78643f7"
+  },
+  {
+    "path": "docs/key-recovery/SLE_KEY_RECOVERY.md",
+    "size": 1574,
+    "sha256": "f6608c7403bd91d9a28735480189a3d45fb2c94a057fc341ca0c1cbb7d1629e3"
+  },
+  {
+    "path": "docs/testing/VALIDATION_METHOD.md",
+    "size": 773,
+    "sha256": "3b6842cd88a8d53a25f5dad0575bd75af9ef74adfc69f94ad87ed92ccdbac4b9"
+  },
+  {
+    "path": "prompts/FILE_CONTAINER_THREAD_TEMPLATE.md",
+    "size": 1149,
+    "sha256": "4048e7512cc97698574687674922db0be58ea5c395a3ccb2bdd831c0f7f0e798"
+  },
+  {
+    "path": "research/final-results/ANNOTATED_EE_BLOCK.md",
+    "size": 9443,
+    "sha256": "6414e9b03efaa0f8c40b0d5e804fc29403adf47e0e8e320c95273d99c30f515a"
+  },
+  {
+    "path": "research/final-results/FINAL_SLE_KEY_REPORT.md",
+    "size": 6572,
+    "sha256": "7488f7e1a273ad8d8b722e433862174f34ac61a22320ed0a677c1f8f5ee11b3d"
+  },
+  {
+    "path": "research/final-results/VALIDATION_RESULT.json",
+    "size": 1728,
+    "sha256": "11c2e7cab3dd9bf8d347237a1c4771aa34360ca93a9604d208abdce9259d9303"
+  },
+  {
+    "path": "research/manifests/decoded_resources.json",
+    "size": 2049,
+    "sha256": "e914c167a34c83ac44859a54597db877cf92cfa8dc16ac37986901d3b3a7fb70"
+  },
+  {
+    "path": "research/manifests/module_manifest.json",
+    "size": 1762,
+    "sha256": "d6532f34470c3a3aa0b28e268e1b702208fb4fb6176b15ee293498715ec1c3bc"
+  },
+  {
+    "path": "research/manifests/rpc1234_evidence.json",
+    "size": 725,
+    "sha256": "56fd98bea21ad530873438e6fa8b949fa1aec9a22f490dfceaf3fce837ca69a2"
+  },
+  {
+    "path": "samples/README.md",
+    "size": 349,
+    "sha256": "1b521783bb4d84b000a3c33b0144c7faabce2844339e29fc5bd61c004e6d299e"
+  },
+  {
+    "path": "tools/python/README.md",
+    "size": 229,
+    "sha256": "568207310872370b4475629bd2793e5f0d56ee893b478ae6a21883bd89f4a1aa"
+  },
+  {
+    "path": "tools/python/ee_key_transform.py",
+    "size": 11158,
+    "sha256": "ede6e64b0fb142cbd25776544385b13dda957b047fce5c759eb3928da5eeaca5"
+  },
+  {
+    "path": "tools/python/so3_slz_sle.py",
+    "size": 10332,
+    "sha256": "8efacdf4d28f0fb4016c2ce2239308cab21f12c9c343ae0f24cb1adc50c2d141"
+  }
+]

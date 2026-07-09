@@ -1,0 +1,24 @@
+{
+  "hidden_entry": 1,
+  "chain_blocks": 12,
+  "rpc_module": "Csi_",
+  "rpc_server_id": "0x1234",
+  "registration_call_va": "0x00C4",
+  "handler": "CsiIopServerWakeup",
+  "handler_va": "0x0744",
+  "rpc_function": "0x0E",
+  "dispatch_stub_va": "0x0878",
+  "function": "OnCsGetSecretKeyCode",
+  "function_va": "0x037C",
+  "constant_symbol": "gunSecretKeyCode",
+  "constant_va": "0x0D28",
+  "stored_constant_hex": "a4489c4f7d31fe78773703b9ca3ac386",
+  "direct_iop_response_hex": "5bb763b082ce018788c8fc4635c53c79",
+  "ee_post_rpc_transform": {
+    "load": "0x100924",
+    "opcode_1": "0x4A000038 at 0x100930",
+    "opcode_2": "0x48490001 at 0x10093C",
+    "store": "0x100940",
+    "final_key_store": "0x100958 -> 0x1CC730"
+  }
+}

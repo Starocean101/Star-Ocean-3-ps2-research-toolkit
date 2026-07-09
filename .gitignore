@@ -1,0 +1,35 @@
+# Proprietary game data
+*.iso
+*.bin
+*.img
+*.irx
+*.elf
+*.sle
+*.slz
+*.pack
+*.zls
+*.tm2
+*.tim2
+*.adx
+*.pss
+SLES_*
+SLUS_*
+SCUS_*
+SLPM_*
+SLPS_*
+
+# Extracted outputs and large archives
+/extracted/
+/private-samples/
+/disc-images/
+/game-files/
+*.7z
+*.rar
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.vscode/
+.idea/
