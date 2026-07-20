@@ -1,0 +1,41 @@
+# Proprietary game data
+*.iso
+*.bin
+*.img
+*.irx
+*.elf
+*.sle
+*.slz
+*.pack
+*.zls
+*.tm2
+*.tim2
+*.adx
+*.pss
+*.rta
+*.fas
+SLES_*
+SLUS_*
+SCUS_*
+SLPM_*
+SLPS_*
+
+# Extracted outputs and large archives
+/extracted/
+/private-samples/
+/disc-images/
+/game-files/
+*.7z
+*.rar
+*.zip
+
+# Public derived decoder constant required by the portable SAC decoder.
+!02_SOURCE/so3_sac_vu_tables.bin
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.vscode/
+.idea/

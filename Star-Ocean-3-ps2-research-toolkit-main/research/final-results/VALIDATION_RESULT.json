@@ -1,0 +1,54 @@
+{
+  "direct_iop_response_hex": "5bb763b082ce018788c8fc4635c53c79",
+  "direct_iop_response_words_le": [
+    "0xB063B75B",
+    "0x8701CE82",
+    "0x46FCC888",
+    "0x793CC535"
+  ],
+  "transformed_key_hex": "66665442b379f0c7e7d51e4b7ba41c7d",
+  "transformed_key_words_le": [
+    "0x42546666",
+    "0xC7F079B3",
+    "0x4B1ED5E7",
+    "0x7D1CA47B"
+  ],
+  "destination_key_state_address": "0x001CC730",
+  "validation_sample": "02_VALIDATION_SAMPLE/1068_exact.sle",
+  "validation": {
+    "input_magic": "SLE",
+    "type": 2,
+    "sample_bytes": 4243,
+    "compressed_bytes_declared": 4227,
+    "compressed_bytes_consumed": 4227,
+    "output_bytes_expected": 9008,
+    "output_bytes_produced": 9008,
+    "remaining_bytes": 0,
+    "size_ok": true,
+    "invalid_back_reference": false,
+    "exception": null,
+    "output_sha256": "1217cee95a95efe32285fd9916f336aefeea0726e4972f23571fbfd568c72105",
+    "output_prefix_hex": "5041434b00000d0070000000000000008006000000000000100700000000000060090000000000007015000000000000a0150000000000004018000000000000",
+    "detected_output_signature": {
+      "offset": 0,
+      "ascii": "PACK",
+      "hex": "5041434b"
+    },
+    "pass": true
+  },
+  "rejected_interpretations": [
+    {
+      "interpretation": "ordinary IEEE-754 single-precision operations",
+      "candidate_key_hex": "66665442b379f0c7e8d51e4b7ba41c7d",
+      "pass": false,
+      "validator_error": "ValueError: invalid backreference dist=3848 at out=114"
+    },
+    {
+      "interpretation": "naive round-toward-zero after each operation",
+      "candidate_key_hex": "65665442b379f0c7e7d51e4b7ba41c7d",
+      "pass": false,
+      "validator_error": "ValueError: invalid backreference dist=336 at out=0"
+    }
+  ],
+  "pass": true
+}

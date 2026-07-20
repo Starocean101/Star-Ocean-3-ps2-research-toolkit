@@ -1,0 +1,78 @@
+[
+  {
+    "source": "0009_SLZ2_3A2000.bin",
+    "decoded": "0009_SLZ2_3A2000_decoded.bin",
+    "size": 33408,
+    "sha256": "d93d9dbf7028ac52f77906f2c9fb623ecfb8ffdaec9eaff0a0f35705c654590a",
+    "header": "46495300708200000000000000000000",
+    "decode_info": {
+      "magic": "SLZ",
+      "type": 2,
+      "sle": false,
+      "compressed_size": 2003,
+      "expected_size": 33408,
+      "aux_0x0C": 0,
+      "actual_size": 33408,
+      "consumed": 2003,
+      "remaining": 0,
+      "size_ok": true
+    }
+  },
+  {
+    "source": "0010_SLZ3_3A2800.bin",
+    "decoded": "0010_SLZ3_3A2800_decoded.bin",
+    "size": 24060,
+    "sha256": "b680906badcabb2a7b9fc2682613cf89377b880b7766a4fabf529f7c8a138132",
+    "header": "e4570000000000000000005000000000",
+    "decode_info": {
+      "magic": "SLZ",
+      "type": 3,
+      "sle": false,
+      "compressed_size": 7832,
+      "expected_size": 24060,
+      "aux_0x0C": 0,
+      "actual_size": 24060,
+      "consumed": 7832,
+      "remaining": 0,
+      "size_ok": true
+    }
+  },
+  {
+    "source": "0011_SLZ2_3A4800.bin",
+    "decoded": "0011_SLZ2_3A4800_decoded.bin",
+    "size": 11776,
+    "sha256": "e84f11cfe0b7780eed4b4df5d8853200759d88fecb33bc42e48a9cef9471a258",
+    "header": "46495300f02d00000000000000000000",
+    "decode_info": {
+      "magic": "SLZ",
+      "type": 2,
+      "sle": false,
+      "compressed_size": 4996,
+      "expected_size": 11776,
+      "aux_0x0C": 0,
+      "actual_size": 11776,
+      "consumed": 4996,
+      "remaining": 0,
+      "size_ok": true
+    }
+  },
+  {
+    "source": "0008_ZLS_394800.bin",
+    "decoded": "0008_ZLS_394800_inner_SLZ2_decoded.bin",
+    "size": 34304,
+    "sha256": "cc26b99d6175737166fc2ddaebb8a7c561b289fa2ea00354c6cc53cd69559b6f",
+    "header": "46495300f08500000000000000000000",
+    "decode_info": {
+      "magic": "SLZ",
+      "type": 2,
+      "sle": false,
+      "compressed_size": 15711,
+      "expected_size": 34304,
+      "aux_0x0C": 0,
+      "actual_size": 34304,
+      "consumed": 15711,
+      "remaining": 0,
+      "size_ok": true
+    }
+  }
+]

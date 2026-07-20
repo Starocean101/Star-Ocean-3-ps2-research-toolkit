@@ -1,0 +1,1531 @@
+{
+ "ambiguities": [
+  {
+   "action_taken": "accepted on the strength of the in-subset verified update file and its present verification report; citation flagged",
+   "description": "CUTSCENE_TRANSFORM_UPDATE cites source_atlas SO3_ATLAS_CONSOLIDATION_PASS_V1_1_1 sha256 a8e027d1...; that archive is not in this subset, so the citation is recorded but not verified here.",
+   "id": "AMB-CUTSCENE-SOURCE-ATLAS"
+  },
+  {
+   "action_taken": "baseline text preserved; corrected census attached as a scope-qualified FIS annotation",
+   "description": "Baseline FIS/FPS_SEGMENT text records '86 sections corpus-wide' from an earlier pass corpus; V5.11 records old=121 / aligned=184 over its 13-sample corpus. Corpus equivalence is not proven by supplied files.",
+   "id": "AMB-FIS-CENSUS-CORPORA"
+  },
+  {
+   "action_taken": "the tag_dispatch entry is unchanged; the generic-renderer classification is attached as an annotation only",
+   "description": "Identity between container-dispatch tag u32 0x50534946 ('FISP?', confidence UNRESOLVED) and the captured FISP render-descriptor sections is not asserted by any update.",
+   "id": "AMB-FISP-TAG-IDENTITY"
+  },
+  {
+   "action_taken": "both hashes recorded on graph.nodes[module:Lib.bin] with their own descriptions; no identity claim made",
+   "description": "TARGETED_RUNTIME_V510 records decoded-Lib-module sha256 6848afef..., while V5.12.x updates cite Lib.bin sha256 0ee2c4a7.... The two byte objects are described differently and their identity is not asserted anywhere.",
+   "id": "AMB-LIB-HASH-DUALITY"
+  },
+  {
+   "action_taken": "all baseline unresolved_refs arrays are preserved untouched; Pass 6.3 supersedes WITHHELD_U_GEO_01 only for the packaged one-matrix FIXED path and does not fabricate a global U-code definition",
+   "description": "U-* unresolved-reference code definitions (e.g. U-GEO-01) are not present in this subset.",
+   "id": "AMB-U-CODE-DEFINITIONS"
+  }
+ ],
+ "atlas_version": "1.1.2",
+ "baselines": [
+  {
+   "path": "05_ATLAS/SO3_FORMAT_REGISTRY_V1_1_1.json",
+   "sha256": "4a812d43bef2a89a6439a5fe33ae5ec682936c9286d567e51f36df9d6be466b7",
+   "version": "1.1.1"
+  },
+  {
+   "path": "05_ATLAS/SO3_RESOURCE_GRAPH_V1_1_1.json",
+   "sha256": "d3313df537954864a6d50448801cc7e73678391ebae9b637b92c16c542fda6de",
+   "version": "1.1.1"
+  }
+ ],
+ "canonical_outputs": [
+  {
+   "path": "05_ATLAS/SO3_FORMAT_REGISTRY_V1_1_2.json",
+   "sha256": "a7f94fd61ee308db49c96e649674e488dbd93b931e410b0567a180ac16d6bf5b"
+  },
+  {
+   "path": "05_ATLAS/SO3_RESOURCE_GRAPH_V1_1_2.json",
+   "sha256": "efe3a4a59199d053c1da514b698270aa43731b890b72c06e84322459a4a01d1d"
+  }
+ ],
+ "conflicts": [
+  {
+   "description": "Disc 2 entry 1160 child 33 carries two historical labels: 'Nel Hi-poly' (line 49) and 'Woltar' (line 68). Both retained; neither applied.",
+   "id": "CONFLICT-LEGACY-D2-1160-33",
+   "retained_values": {
+    "labels": [
+     "Nel Hi-poly",
+     "Woltar"
+    ]
+   },
+   "sources": [
+    "05_ATLAS/SO3_LEGACY_IDENTITY_CLAIMS_V1.json#/conflicts/0",
+    "05_ATLAS/LEGACY_TOOLKIT_V581_UPDATE.json#/records/0/conflict"
+   ],
+   "status": "RETAINED_UNRESOLVED"
+  },
+  {
+   "description": "Baseline registry RTA.structures.off1_v2 reads the off1 block as 'NUL-terminated node names in node order ... occasional interleaved f32 (0.48) - per-node scalar HYPOTHESIS', while V5.8 record #1 reads it as fixed records '{f32 auxiliary_scalar, char[16] CP932 name}' (VERIFIED_ON_ACTOR_0x0BC0). Both carry VERIFIED-class labels. The two readings may be reconcilable (per-record scalar + NUL-padded 16-byte name field), but reconciliation is not asserted by any supplied file.",
+   "id": "CONFLICT-RTA-OFF1-READING",
+   "retained_values": {
+    "baseline": "registry.formats[RTA].structures.off1_v2 (unchanged)",
+    "update": "05_ATLAS/MODEL_ASSEMBLY_V58_UPDATE.json#/records/1"
+   },
+   "status": "RETAINED_UNRESOLVED_FAIL_CLOSED"
+  }
+ ],
+ "counts": {
+  "ambiguities_recorded": 5,
+  "by_file_disposition": {
+   "ACCEPTED_ANNOTATION": 7,
+   "ACCEPTED_CLAIMS_DATASET": 2,
+   "ACCEPTED_FIELD_SUPERSESSION": 5,
+   "ACCEPTED_GATE_STATE": 1,
+   "ACCEPTED_STRUCTURE_ADDITION": 1,
+   "HISTORICAL_NONPROMOTING_RETAINED": 2,
+   "NO_CANONICAL_TARGET_TOOLING_RETAINED": 4,
+   "SUPERSEDED_RETAINED": 1
+  },
+  "by_record_disposition": {
+   "ACCEPTED_ANNOTATION": 26,
+   "ACCEPTED_CLAIMS_DATASET": 2,
+   "ACCEPTED_FIELD_SUPERSESSION": 5,
+   "ACCEPTED_GATE_STATE": 6,
+   "ACCEPTED_STRUCTURE_ADDITION": 1,
+   "CANDIDATE_RETAINED_UNPROMOTED": 2,
+   "CONFLICT_RETAINED": 2,
+   "HISTORICAL_NONPROMOTING_RETAINED": 7,
+   "NO_CANONICAL_TARGET_TOOLING_RETAINED": 4,
+   "NO_CHANGE_DECLARED_RETAINED": 2,
+   "SUPERSEDED_RETAINED": 3
+  },
+  "conflicts_retained": 2,
+  "engine_gates": 45,
+  "field_supersessions_applied": 9,
+  "graph_node_annotations": 20,
+  "input_update_files": 23,
+  "legacy_claim_graph_node_candidates": 0,
+  "legacy_claims_embedded": 156,
+  "registry_annotations": 11,
+  "structure_additions_applied": 1,
+  "supersessions": 20
+ },
+ "disposition_vocabulary": {
+  "ACCEPTED_ANNOTATION": "Evidence attached to a canonical target (registry format / dispatch tag / graph node) at its stated grade; no baseline value changed.",
+  "ACCEPTED_CLAIMS_DATASET": "Historical user claims embedded verbatim as a claims dataset with their conflict gate; never converted to classifications.",
+  "ACCEPTED_FIELD_SUPERSESSION": "A baseline field value was replaced; the prior value is preserved verbatim in the supersession record and the source gate explicitly satisfies the change.",
+  "ACCEPTED_GATE_STATE": "A pipeline gate status recorded verbatim in the graph engine_gates section.",
+  "ACCEPTED_STRUCTURE_ADDITION": "A new key was added to a canonical record without altering any existing value.",
+  "ALREADY_INCORPORATED_BASELINE": "The V1.1.1 baseline already encodes this record's substance; no change made.",
+  "CANDIDATE_RETAINED_UNPROMOTED": "The source marks this ADDITIVE_CANDIDATE_ONLY (or equivalent); the canonical files are not rewritten.",
+  "CONFLICT_RETAINED": "Conflicting claims of comparable stated grade; both retained, neither applied.",
+  "HISTORICAL_NONPROMOTING_RETAINED": "The source update itself declares promotion:false / no canonical modification; retained as evidence only.",
+  "NO_CANONICAL_TARGET_TOOLING_RETAINED": "Tooling / preview-implementation scope with no canonical registry or graph target; retained as evidence.",
+  "NO_CHANGE_DECLARED_RETAINED": "The record itself declares atlas_change NONE (existing canonical knowledge supersedes it).",
+  "SUPERSEDED_RETAINED": "Retained as evidence; a later supplied update explicitly supersedes it.",
+  "UNMERGED_WITHHELD": "No defensible schema mapping; withheld with reason."
+ },
+ "format": "SO3_ATLAS_UPDATE_LEDGER_V1",
+ "integrity": {
+  "all_consumed_inputs_listed_in_sums": true,
+  "all_consumed_inputs_match_sums": true,
+  "consumed_inputs_verified": 68,
+  "known_package_anomalies": [],
+  "sums_file": "SHA256SUMS.txt"
+ },
+ "merger": "SO3_ATLAS_REMERGE_V1/merge_atlas_updates.py",
+ "supersessions": [
+  {
+   "authority": {
+    "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+    "pointer": "#/records/3/supersedes",
+    "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+   },
+   "superseded": {
+    "claim": "FISP_PROFILE_TO_TEX0_HIGH_BYTE as an actor-specific facial palette selector",
+    "file": "05_ATLAS/FACIAL_SELECTOR_CLOSURE_V5123_UPDATE.json",
+    "pointer": "#/records/3"
+   },
+   "superseding": {
+    "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+    "pointer": "#/records/3"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/CLAUDE_STATIC_TRACE_CORRECTION_V5124_UPDATE.json",
+    "pointer": "#/records/2",
+    "sha256": "d6067d99f498d01d45da50ba90190e63944d7f2ffedcec54394a54cfb331d1fa"
+   },
+   "superseded": {
+    "claims": [
+     "record+8 is a FAS event or texture-family id 1294/2413",
+     "0x004D7E00 performs per-frame FISA member selection",
+     "the supplied trace proves a complete FAS-event-to-FIS-cache-to-TEX0 chain",
+     "an embedded actor facial palette bank remains to be selected"
+    ],
+    "file": "07_EXTERNAL_EVIDENCE/CLAUDE_STATIC_TRACE_V5122_PASS2/SO3 FACIAL SELECTOR STATIC TRACE V5122 PASS2.json",
+    "present_in_subset": false,
+    "sha256": "87449518dbc3f2b86a6592eb26c0e3e69e1074f3ed36669bf71b2614d94596d8"
+   },
+   "superseding": {
+    "file": "05_ATLAS/CLAUDE_STATIC_TRACE_CORRECTION_V5124_UPDATE.json",
+    "pointer": "#/records/2"
+   }
+  },
+  {
+   "authority": {
+    "file": "00_INSTRUCTIONS/README_FIRST.md",
+    "sha256": "a4e30b86f12e4403bde3729bc068ecbc44f4ac671eb7a3da1008a72a200b469b"
+   },
+   "authority_statement": "V5.12.7 hardens the V5.12.6 actor 0x08FF repair after an independent audit",
+   "superseded": {
+    "file": "05_ATLAS/MULTI_ACTOR_MATERIAL_LINK_V5126_UPDATE.json",
+    "pointer": "#/records/0"
+   },
+   "superseding": {
+    "file": "05_ATLAS/HARDENED_MULTI_ACTOR_LINK_V5127_UPDATE.json",
+    "pointer": "#/records/0"
+   }
+  },
+  {
+   "authority": {
+    "file": "00_INSTRUCTIONS/README_FIRST.md",
+    "sha256": "a4e30b86f12e4403bde3729bc068ecbc44f4ac671eb7a3da1008a72a200b469b"
+   },
+   "authority_statement": "V5.12.7 regression restates the authoritative 0x0BC0 path with added hardening fields",
+   "superseded": {
+    "file": "05_ATLAS/MULTI_ACTOR_MATERIAL_LINK_V5126_UPDATE.json",
+    "pointer": "#/records/1"
+   },
+   "superseding": {
+    "file": "05_ATLAS/HARDENED_MULTI_ACTOR_LINK_V5127_UPDATE.json",
+    "pointer": "#/records/1"
+   }
+  },
+  {
+   "authority": {
+    "file": "00_INSTRUCTIONS/README_FIRST.md",
+    "sha256": "a4e30b86f12e4403bde3729bc068ecbc44f4ac671eb7a3da1008a72a200b469b"
+   },
+   "authority_statement": "Pass 6 supersedes that report's earlier blanket FAS-evaluator gate with a scoped execution result",
+   "superseded": {
+    "gate": "animation_rotation_evaluator",
+    "gate_supersession": true,
+    "source": "05_ATLAS/HYBRID_IDOM_MATRIX_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "fas_type_0x0135_record_layout",
+     "fas_key_selection_clock",
+     "fas_quantized_rotation_decompression",
+     "fas_positive_w_reconstruction",
+     "lib_math_table_initialization",
+     "fas_interpolation"
+    ],
+    "source": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "Pass 6.4 executes two actor-scoped bounded rotation-to-packet-vertex witnesses",
+   "superseded": {
+    "gate": "bounded_end_to_end_animated_pose",
+    "gate_supersession": true,
+    "source": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "bounded_rotation_to_packet_vertex_pose"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "Pass 6.4 replaces the ordered-gate reason with the current not-integrated boundary",
+   "superseded": {
+    "gate": "browser_mesh_deformation",
+    "gate_supersession": true,
+    "source": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "browser_mesh_deformation"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "Pass 6.4 records the current browser boundary as withheld because deformation is not integrated",
+   "superseded": {
+    "gate": "browser_mesh_skinning_playback",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "browser_mesh_deformation"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+    "pointer": "#/records/2",
+    "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+   },
+   "authority_statement": "V5.12.4 gate resolution: RESOLVED_FOR_SCOPED_ACTOR_PREVIEW; frame member selector VERIFIED_R5900_EXECUTION; palette-variant selector NOT_APPLICABLE (one logical CSM1 CLUT per FIS)",
+   "superseded": {
+    "gate": "facial_frame_palette_selector",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FACIAL_SELECTOR_CLOSURE_V5123_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "facial_frame_palette_selector"
+    ],
+    "source": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+    "pointer": "#/records/2",
+    "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+   },
+   "authority_statement": "V5.12.4 gate resolution: RESOLVED_FOR_SCOPED_ACTOR_PREVIEW; frame member selector VERIFIED_R5900_EXECUTION; palette-variant selector NOT_APPLICABLE (one logical CSM1 CLUT per FIS)",
+   "superseded": {
+    "gate": "facial_frame_palette_selector",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FACIAL_SELECTOR_PROBE_V5122_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "facial_frame_palette_selector"
+    ],
+    "source": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+    "pointer": "#/records/2",
+    "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+   },
+   "authority_statement": "V5.12.4 gate resolution: RESOLVED_FOR_SCOPED_ACTOR_PREVIEW; frame member selector VERIFIED_R5900_EXECUTION; palette-variant selector NOT_APPLICABLE (one logical CSM1 CLUT per FIS)",
+   "superseded": {
+    "gate": "facial_frame_palette_selector",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FILTERED_FACIAL_PREVIEW_V5121_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "facial_frame_palette_selector"
+    ],
+    "source": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "00_INSTRUCTIONS/README_FIRST.md",
+    "sha256": "a4e30b86f12e4403bde3729bc068ecbc44f4ac671eb7a3da1008a72a200b469b"
+   },
+   "authority_statement": "Pass 6.2 promotes the actor-scoped FAS-to-runtime-node matrix stage: it executes the concrete quaternion setter",
+   "superseded": {
+    "gate": "fas_to_runtime_node_setter",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "fas_to_runtime_node_rotation_setter"
+    ],
+    "source": "05_ATLAS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "The bounded numerical one-matrix pose passes; browser deformation and broader renderer paths remain separate",
+   "superseded": {
+    "gate": "final_skinning",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "bounded_rotation_to_packet_vertex_pose",
+     "browser_mesh_deformation"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "The bounded numerical one-matrix pose passes; browser deformation and broader renderer paths remain separate",
+   "superseded": {
+    "gate": "final_skinning",
+    "gate_supersession": true,
+    "source": "05_ATLAS/HYBRID_IDOM_MATRIX_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "bounded_rotation_to_packet_vertex_pose",
+     "browser_mesh_deformation"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+   },
+   "authority_statement": "Pass 6.3 executes the original VU1 address consumer and closes the packaged one-matrix FIXED packet-binding gate",
+   "superseded": {
+    "gate": "matrix_to_packet_binding",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "fixed_vertex_matrix_address_to_idom_palette_slot",
+     "packet_vertex_matrix_selection",
+     "packet_vertex_controlled_matrix_transform"
+    ],
+    "source": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+   },
+   "authority_statement": "Pass 6.3 retains all 51 exact actor-scoped identities with a more specific status",
+   "superseded": {
+    "gate": "matrix_to_rta_actor_0x08FF",
+    "gate_supersession": true,
+    "source": "05_ATLAS/HYBRID_IDOM_MATRIX_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "matrix_to_rta_actor_0x08FF"
+    ],
+    "source": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+   },
+   "authority_statement": "Pass 6.3 retains 40/44 exact RTA identities and explicitly preserves four named FSS identities without fabricated ordinals",
+   "superseded": {
+    "gate": "matrix_to_rta_actor_0x0BC0",
+    "gate_supersession": true,
+    "source": "05_ATLAS/HYBRID_IDOM_MATRIX_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "matrix_to_rta_actor_0x0BC0"
+    ],
+    "source": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "Pass 6.4 rejects the RTA-translation premise: RTA binds objects and FSS loads transforms",
+   "superseded": {
+    "gate": "rta_translation_loader_to_runtime_node",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "rta_relocation_and_exact_name_runtime_binding",
+     "rta_translation_semantic",
+     "fss_descriptor_translation_to_runtime_node"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "pointer": "#/gates",
+    "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+   },
+   "authority_statement": "Pass 6.4 rejects the RTA-translation premise after the Field response is inspected",
+   "superseded": {
+    "gate": "rta_translation_loader_to_runtime_node",
+    "gate_supersession": true,
+    "source": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "rta_relocation_and_exact_name_runtime_binding",
+     "rta_translation_semantic",
+     "fss_descriptor_translation_to_runtime_node"
+    ],
+    "source": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json"
+   }
+  },
+  {
+   "authority": {
+    "file": "00_INSTRUCTIONS/README_FIRST.md",
+    "sha256": "a4e30b86f12e4403bde3729bc068ecbc44f4ac671eb7a3da1008a72a200b469b"
+   },
+   "authority_statement": "Pass 6.2 executes the local/world writer from original Lib bytes",
+   "superseded": {
+    "gate": "runtime_node_matrix_write",
+    "gate_supersession": true,
+    "source": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json"
+   },
+   "superseding": {
+    "gates": [
+     "runtime_node_local_matrix_write",
+     "runtime_node_world_matrix_write"
+    ],
+    "source": "05_ATLAS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE.json"
+   }
+  }
+ ],
+ "updates": [
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/CLAUDE_STATIC_TRACE_AUDIT_V5124.md",
+     "present": true,
+     "sha256": "db77dc3ec9afefbbe92364bb01572965f1c31cf113d1b7b4b7f3a20bea3fc2c6"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/CLAUDE_STATIC_TRACE_CORRECTION_V5124_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "FPS_DYNAMIC_RECORD_TO_FISA_RUNTIME_NODE_INITIALIZATION",
+     "pointer": "#/records/0",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "registry.formats[FAS]",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "INITIALIZER_AND_FRAME_SELECTOR_SEPARATION",
+     "pointer": "#/records/1",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "registry.formats[FAS]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "EXTERNAL_STATIC_TRACE_CLAIM_CORRECTION",
+     "negative_result": true,
+     "pointer": "#/records/2",
+     "stated_grade": "VERIFIED",
+     "supersedes": [
+      "external static-trace rejected claims (V5122 PASS2)"
+     ],
+     "targets": [
+      "ledger.supersessions"
+     ]
+    }
+   ],
+   "sha256": "d6067d99f498d01d45da50ba90190e63944d7f2ffedcec54394a54cfb331d1fa"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/CUTSCENE_TRANSFORM_VERIFICATION.md",
+     "present": true,
+     "sha256": "07f822a9bff19afbc79c82d7011068b6459c4f6265348f8f6946993e2418adb4"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_CUTSCENE_TRANSFORM_UPDATE_V2",
+   "file_disposition": "ACCEPTED_FIELD_SUPERSESSION",
+   "path": "05_ATLAS/CUTSCENE_TRANSFORM_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_FIELD_SUPERSESSION",
+     "kind_or_topic": "exact carrier payload transform",
+     "pointer": "#/transform",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "registry.formats[SO3_MOVIE_CARRIER].status"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "decode symbols",
+     "pointer": "#/symbols",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "registry.formats[SO3_MOVIE_CARRIER]",
+      "graph.nodes[module:Lib.bin]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "device-validation boundary",
+     "pointer": "#/unresolved",
+     "stated_grade": "UNRESOLVED",
+     "targets": [
+      "registry.formats[SO3_MOVIE_CARRIER] (unresolved list retained verbatim)"
+     ]
+    }
+   ],
+   "sha256": "e98ab2d16c8b625ab2e08258285665581b99b34eaeb2748936eea00f12cbd056"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/DIRECT_ISO_MODEL_HOTFIX_V5111.md",
+     "present": true,
+     "sha256": "9ad4a4fdb925f293f1938f571e7d1cb393efeef85db7a314316a44f3b69f7911"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+   "path": "05_ATLAS/DIRECT_ISO_MODEL_V5111_UPDATE.json",
+   "records": [
+    {
+     "disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+     "kind_or_topic": "tooling / preview-scope update",
+     "pointer": "#",
+     "reason": "browser assembly-path feature status; no canonical resource-fact target",
+     "stated_grade": "as stated in source",
+     "targets": []
+    }
+   ],
+   "sha256": "954edf110bfaf0bad566d0dd20ea54bf13602eca81b93e697275d461e9069b3b"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FACIAL_CLUT_REPAIR_V5124.md",
+     "present": true,
+     "sha256": "0d24dbd232df2d77fc9e33708bd762c703193a7848f6c337114c96faac938473"
+    },
+    {
+     "path": "04_REPORTS/FACIAL_CLUT_V5124_CORRECTED_MONTAGE.png",
+     "present": true,
+     "sha256": "4f99b981ce5e11da502aa92bf36489c6176638b1957ebb5d09e6d28e48f11287"
+    },
+    {
+     "path": "04_REPORTS/VALIDATION_REPORT.md",
+     "present": true,
+     "sha256": "797c1f43090ebec72ba525a553dc2f3e30284339bdb9d11ec90d864ee7f91bcb"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "FIS_PSMT4_CSM1_CLUT_LAYOUT",
+     "pointer": "#/records/0",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "registry.formats[FIS]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "FACIAL_RENDER_CORRUPTION_ROOT_CAUSE",
+     "negative_result": true,
+     "pointer": "#/records/1",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "registry.formats[FIS]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_GATE_STATE",
+     "kind_or_topic": "FACIAL_FRAME_PALETTE_GATE_RESOLUTION",
+     "pointer": "#/records/2",
+     "stated_grade": "VERIFIED",
+     "targets": [
+      "graph.update_layer.engine_gates.facial_frame_palette_selector",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "FISP_FACIAL_ASSOCIATION_RETRACTION",
+     "negative_result": true,
+     "pointer": "#/records/3",
+     "stated_grade": "VERIFIED_NEGATIVE_ASSOCIATION_WITHIN_CAPTURED_EVIDENCE",
+     "supersedes": [
+      "FACIAL_SELECTOR_CLOSURE_V5123_UPDATE.json#/records/3 (facial interpretation)"
+     ],
+     "targets": [
+      "registry.tag_dispatch.tags[FISP?] (annotation only)"
+     ]
+    }
+   ],
+   "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FACIAL_SELECTOR_CLOSURE_V5123.md",
+     "present": true,
+     "sha256": "979e45e7f214395edc7f140746e4e322428bbf45e10c4635e27a2228934d4f87"
+    },
+    {
+     "path": "04_REPORTS/SO3_FACIAL_SELECTOR_R5900_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "d47dd23155a0ba0078fd6675cbaf04bb8c43321d5b5b21707f1466ccae8809ce"
+    },
+    {
+     "path": "04_REPORTS/SO3_GENERIC_FISP_TEX0_HIGH_BYTE_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "9d680c238dabac2deb816d608148ad62df2afcf5b6348ec2490b15c542af522b"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_FACIAL_SELECTOR_CANDIDATE_UPDATE",
+   "file_disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+   "path": "05_ATLAS/FACIAL_SELECTOR_CLOSURE_V5123_UPDATE.json",
+   "records": [
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "FAS_TYPE_0X0021_FACIAL_SELECTOR_BINDING",
+     "pointer": "#/records/0",
+     "reason": "the update itself declares promotion:false and canonical_full_atlas_modified:false; the durable facial-selector facts enter V1.1.2 through the promotion-bearing V5.12.4 files",
+     "stated_grade": "VERIFIED",
+     "targets": []
+    },
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "FISA_MEMBER_SELECTOR_R5900_EXECUTION",
+     "pointer": "#/records/1",
+     "reason": "same declaration; re-established by V5.12.4 records",
+     "stated_grade": "VERIFIED",
+     "targets": []
+    },
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "SELECTED_FIS_TEXTURE_PALETTE_UPLOAD",
+     "pointer": "#/records/2",
+     "reason": "same declaration",
+     "stated_grade": "VERIFIED",
+     "targets": []
+    },
+    {
+     "disposition": "SUPERSEDED_RETAINED",
+     "kind_or_topic": "FISP_PROFILE_TO_TEX0_HIGH_BYTE",
+     "pointer": "#/records/3",
+     "reason": "the actor-specific facial-palette interpretation is explicitly retracted; the mechanism survives only as a generic renderer-context diagnostic",
+     "stated_grade": "VERIFIED_WITH_CONTROLLED_FISP_INPUT",
+     "superseded_by": [
+      "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json#/records/3"
+     ],
+     "targets": []
+    },
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "DECOY_CLASSIFICATION (cmc.bin menu/portrait)",
+     "negative_result": true,
+     "pointer": "#/records/4",
+     "reason": "negative/decoy result preserved as evidence",
+     "stated_grade": "VERIFIED_NARROW",
+     "targets": []
+    }
+   ],
+   "sha256": "6d4b589c81548163bbd7679ba80996c8ee4e55b12a8f31937cdcf1f3a30b0dbf"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FACIAL_SELECTOR_AUDIT_V5122.md",
+     "present": true,
+     "sha256": "b1c23dd4b23c672087bfab9feaaa161ba80b90079b34fdcab467bf10b2e491eb"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_FACIAL_SELECTOR_PROBE_UPDATE",
+   "file_disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+   "path": "05_ATLAS/FACIAL_SELECTOR_PROBE_V5122_UPDATE.json",
+   "records": [
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "static facial-state probe (fixtures)",
+     "negative_result": true,
+     "pointer": "#/records/0",
+     "reason": "promotion:false at source; refuted hypotheses (tex0 high16 selector REFUTED, FISA pair value frame discrimination NONE) are preserved as negative evidence",
+     "stated_grade": "STRUCTURAL / UNRESOLVED (per sub-fact)",
+     "targets": []
+    },
+    {
+     "disposition": "CANDIDATE_RETAINED_UNPROMOTED",
+     "kind_or_topic": "NAKAM_TAG_MISPARSE_CANDIDATE",
+     "pointer": "#/registry_hygiene_candidates/0",
+     "reason": "source action is ADDITIVE_CANDIDATE_ONLY; the packaged registry is not rewritten",
+     "stated_grade": "ADDITIVE_CANDIDATE_ONLY",
+     "targets": [
+      "formats[1].structures.channel.sub_blocks.type_0x0021 (= formats[FAS])"
+     ]
+    },
+    {
+     "disposition": "CANDIDATE_RETAINED_UNPROMOTED",
+     "kind_or_topic": "SUB_BLOCK_MARK_ENDIANNESS_NOTE",
+     "pointer": "#/registry_hygiene_candidates/1",
+     "reason": "source action is ADDITIVE_CANDIDATE_ONLY",
+     "stated_grade": "ADDITIVE_CANDIDATE_ONLY",
+     "targets": [
+      "formats[1].structures.channel.sub_blocks (= formats[FAS])"
+     ]
+    }
+   ],
+   "sha256": "416fbdbf84eed9cbbc337e5a55c6e9bc1bbc04252d92b4d42bac82fd719c32c9"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62.md",
+     "present": true,
+     "sha256": "5435b24b1dbfba2bd62888aa78f20f326906d5ec12df248ed175fcbddaf701c3"
+    },
+    {
+     "path": "04_REPORTS/SO3_FAS_NODE_MATRIX_R5900_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "a0a877a9bba309db3dfff863377b2521fc348c3874945f6acc153bde613c3404"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_GATE_STATE",
+   "path": "05_ATLAS/FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_GATE_STATE",
+     "kind_or_topic": "node setter / local+world writer / parent composition gates",
+     "pointer": "#/gates",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "graph.update_layer.engine_gates"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "actor-scoped executed-sample inventory",
+     "pointer": "#/scope",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "graph.nodes[actor:0x08FF]",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    }
+   ],
+   "sha256": "7c42b7364cb8b5af6bbfc9aec57303337d2797fa7bb0220b808a26d7bd7b828d"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FAS_ROTATION_EXECUTION_V5128.md",
+     "present": true,
+     "sha256": "2b27af1ac840bac119a4e76cbc5ae7885923e9cdd80b1635920405e1e20a6daa"
+    },
+    {
+     "path": "04_REPORTS/SO3_FAS_ROTATION_R5900_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "0cab361cff8cb62b5fbb4b09795cb915aa673fca7f266df1a8a0ea0079bc9459"
+    },
+    {
+     "path": "04_REPORTS/SO3_FAS_ROTATION_TO_VU0_MATRIX_BRIDGE_REPORT.json",
+     "present": true,
+     "sha256": "cadfa3c5e6caf949e4769d4ba4056cc73a6cd28e998e30d5decc975e70d3a4cb"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE_V1",
+   "file_disposition": "ACCEPTED_FIELD_SUPERSESSION",
+   "path": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_GATE_STATE",
+     "kind_or_topic": "scoped rotation-execution gates",
+     "pointer": "#/gates",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "graph.update_layer.engine_gates"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_FIELD_SUPERSESSION",
+     "kind_or_topic": "type-0x0135 evaluation execution proof",
+     "pointer": "#/execution_totals",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "registry.formats[FAS].status",
+      "registry.formats[FAS].structures.rotation_reconstruction",
+      "registry.formats[FAS].structures.channel.sub_blocks.type_0x0135"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "runtime track object layout",
+     "pointer": "#/runtime_track_layout",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "registry.formats[FAS]"
+     ]
+    },
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "modeled quaternion+RTA bridge",
+     "pointer": "#/matrix_bridge",
+     "reason": "update's own boundary: bridge matrix construction is modeled, not a runtime-writer promotion",
+     "stated_grade": "MODELED_BOUNDARY_NOT_PROMOTED",
+     "targets": []
+    }
+   ],
+   "sha256": "18583ad2fc9f0db16ccf5bedc340c254148423e0dc91913db30c66ab014ac3de"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FILTERED_FACIAL_PREVIEW_V5121.md",
+     "present": true,
+     "sha256": "c0afaa15b7fd88fa9ff8696cadbf1e1b968417887b392b1ef0062c5913527d02"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/FILTERED_FACIAL_PREVIEW_V5121_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "filtered facial preview and runtime selector boundary",
+     "pointer": "#/records/0",
+     "stated_grade": "VERIFIED block + STRUCTURAL/UNRESOLVED gates",
+     "targets": [
+      "graph.nodes[actor:0x0BC0]",
+      "graph.update_layer.engine_gates"
+     ]
+    }
+   ],
+   "sha256": "e13c8f471b1c442677f9a847ddc607e8914f8a7dd78fbc68f68f6835522e5c49"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/FSS_RTA_POSE_EXECUTION_V5128_PASS64.md",
+     "present": true,
+     "sha256": "e09c9bbaf3e2eb1900c45694d0692ee099840d3ed6cf46e60bf5bfbcef6d25e8"
+    },
+    {
+     "path": "04_REPORTS/SO3_FSS_RTA_POSE_R5900_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "46e3ae61b33d7e508772c6a5210a76ecd78d8c0cf745d4009cefa6262dcca93a"
+    },
+    {
+     "path": "07_EXTERNAL_EVIDENCE/FIELD_ENGINE_RESPONSE/SO3_HYBRID_DATA_RESPONSE.json",
+     "present": true,
+     "sha256": "53582cb1b2f0a458d9af507e00aa82528ae227f9d77b33e1ed698d8680dbba0f"
+    },
+    {
+     "path": "07_EXTERNAL_EVIDENCE/FIELD_ENGINE_RESPONSE/hidden_entry_1070/block_0_base_0x001E2B00.bin",
+     "present": true,
+     "sha256": "70d4fa07abf8c7cead5f6cef829ac86dc0d894d12a6cb5214c79b900b1a6a671"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE_V1",
+   "file_disposition": "ACCEPTED_FIELD_SUPERSESSION",
+   "path": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_GATE_STATE",
+     "kind_or_topic": "RTA/FSS/bounded-pose gates",
+     "pointer": "#/gates",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "graph.update_layer.engine_gates"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "Field response and handler classification",
+     "pointer": "#/field_response",
+     "stated_grade": "PASS_RESOURCE_INSTALLATION_COPY_NOT_TRANSFORM_LOADER",
+     "targets": [
+      "graph.nodes[module:Field.bin]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_FIELD_SUPERSESSION",
+     "kind_or_topic": "RTA vector semantic correction",
+     "pointer": "#/correction",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "registry.formats[RTA].structures.node_record.+0x10"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "original RTA binder and FSS type-9 transform loader",
+     "pointer": "#/engine_paths",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "registry.formats[RTA]",
+      "graph.nodes[module:Lib.bin]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "two actor-scoped bounded packet-pose witnesses",
+     "pointer": "#/actor_rows",
+     "stated_grade": "PASS_TWO_ACTOR_SCOPED_WITNESSES_ORIGINAL_FAS_R5900_VU0_NODE_WRITER_IDOM_VU0_PALETTE_PACKET_AND_VU1",
+     "targets": [
+      "graph.nodes[actor:0x08FF]",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    }
+   ],
+   "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/HARDENED_MULTI_ACTOR_LINK_V5127.md",
+     "present": true,
+     "sha256": "528267c99fef27680f4c2e44689c574781b7ec39a5c36ae286222471c0c36dd0"
+    },
+    {
+     "path": "04_REPORTS/CLAUDE_ENGINE_EXECUTION_PREFLIGHT_AUDIT_V5128.md",
+     "present": true,
+     "sha256": "8027f4ba1b4873c1a71ef65c74adaa9843debb0544fbddfccbad59935ee66450"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/HARDENED_MULTI_ACTOR_LINK_V5127_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "EVIDENCE_SCOPED_MATERIAL_LINK_FALLBACK",
+     "pointer": "#/records/0",
+     "stated_grade": "STRONG_INFERENCE",
+     "supersedes": [
+      "05_ATLAS/MULTI_ACTOR_MATERIAL_LINK_V5126_UPDATE.json#/records/0"
+     ],
+     "targets": [
+      "graph.nodes[actor:0x08FF]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "AUTHORITATIVE_FPS_REFERENCE_TABLE_REGRESSION",
+     "pointer": "#/records/1",
+     "stated_grade": "fallback_applied:false; binding_inference_field_present:false",
+     "supersedes": [
+      "05_ATLAS/MULTI_ACTOR_MATERIAL_LINK_V5126_UPDATE.json#/records/1"
+     ],
+     "targets": [
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    }
+   ],
+   "sha256": "f8141c5a0684c518c46fddcebb47536fbe3cf9ac0c0f13e39976a62189534c62"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/HYBRID_IDOM_MATRIX_EXECUTION_V5128.md",
+     "present": true,
+     "sha256": "b6de3fa187aa5a4aafc772cf987eeda71bd9c11b056d1e1d812532885d821cf6"
+    },
+    {
+     "path": "04_REPORTS/SO3_VU0_IDOM_MATRIX_MICRO_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "470e0aabbafd260c5e1383ff145277b1e4a32beffeeda01feea767f95dc5ed20"
+    },
+    {
+     "path": "04_REPORTS/SO3_IDOM_LOADER_R5900_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "4c3927bab02a2b5536f3925584db5fa530c291ea1e418b12a3f6faed6d81f3e0"
+    },
+    {
+     "path": "04_REPORTS/SO3_MATRIX_PALETTE_R5900_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "ae40b35b2e27dd62be9f6521c5397bf3660902a91b601915c3ac03ddf6367f2d"
+    },
+    {
+     "path": "04_REPORTS/SO3_FSS_IDOM_RTA_NAME_BRIDGE_REPORT.json",
+     "present": true,
+     "sha256": "5cd51f60106273c9c0cb37cef4607a2924262ed216836f003fbbbe89cf189dfe"
+    },
+    {
+     "path": "04_REPORTS/HYBRID_EXECUTION_BRIDGE_V5128.md",
+     "present": true,
+     "sha256": "1925308e2183d3c13a7af988687fc94baf10c0f44b36b2562bc0b5d5695f12ce"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE_V1",
+   "file_disposition": "ACCEPTED_FIELD_SUPERSESSION",
+   "path": "05_ATLAS/HYBRID_IDOM_MATRIX_EXECUTION_V5128_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_GATE_STATE",
+     "kind_or_topic": "IDOM/FSS/VU0 gates",
+     "pointer": "#/gates",
+     "stated_grade": "PARTIAL_PROMOTION",
+     "targets": [
+      "graph.update_layer.engine_gates"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "IDOM row to RTA raw-name identity",
+     "pointer": "#/fss_identity",
+     "stated_grade": "PASS_ACTOR_SCOPED / PARTIAL_NO_FABRICATED_ORDINALS",
+     "targets": [
+      "graph.nodes[actor:0x08FF]",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "per-section execution hashes",
+     "pointer": "#/idom_sections",
+     "stated_grade": "PASS_EXECUTION_VERIFIED",
+     "targets": [
+      "graph.nodes[actor:0x08FF]",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_FIELD_SUPERSESSION",
+     "kind_or_topic": "XBDC matrix composition + palette upload shape",
+     "pointer": "#/gates/vu0_matrix_composition",
+     "stated_grade": "PASS_EXECUTION_VERIFIED",
+     "targets": [
+      "registry.formats[XBDC].structures.skinning.confidence"
+     ]
+    }
+   ],
+   "sha256": "072768d2af4a3b3dca3b872afceb4ea0239612c1df0202c2b12d7bf2bfa20ba7"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/LEGACY_TOOLKIT_AUDIT.md",
+     "present": true,
+     "sha256": "fbc232a81320312507d921607aaeb41c01dadcf4ed2d027db8971a831742bf4e"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_CLAIMS_DATASET",
+   "path": "05_ATLAS/LEGACY_TOOLKIT_V581_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_CLAIMS_DATASET",
+     "kind_or_topic": "legacy identity claims dataset link",
+     "pointer": "#/records/0",
+     "reason": "record's source_sha256 matches the claims file's own source.sha256 (original SO3_fileList.txt), closing the provenance chain; the claims JSON itself hash-matches SHA256SUMS",
+     "stated_grade": "HISTORICAL_USER_CLAIM",
+     "targets": [
+      "graph.update_layer.legacy_identity_claims"
+     ]
+    },
+    {
+     "disposition": "NO_CHANGE_DECLARED_RETAINED",
+     "kind_or_topic": "legacy PACK parser",
+     "pointer": "#/records/1",
+     "reason": "NONE; existing PACK parser supersedes it",
+     "stated_grade": "STRUCTURAL_COMPARISON",
+     "targets": []
+    },
+    {
+     "disposition": "NO_CHANGE_DECLARED_RETAINED",
+     "kind_or_topic": "legacy FPS MaxScript",
+     "pointer": "#/records/2",
+     "reason": "NONE; existing verified VIF/FPS/FIS/RTA/FAS chain supersedes it",
+     "stated_grade": "SOURCE_AUDITED",
+     "targets": []
+    },
+    {
+     "disposition": "HISTORICAL_NONPROMOTING_RETAINED",
+     "kind_or_topic": "legacy SAC decoder provenance",
+     "pointer": "#/records/3",
+     "reason": "provenance corroboration only; STRONG_MATCH_NOT_HASH_CONFIRMED is not promoted",
+     "stated_grade": "STRONG_MATCH_NOT_HASH_CONFIRMED",
+     "targets": []
+    }
+   ],
+   "sha256": "1a159add66a5a567be667e7136871903d7cf01149dcdb68681e4cf4c89cb3bf1"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/MATERIAL_AWARE_MODEL_PASS_V512.md",
+     "present": true,
+     "sha256": "61d67f186b9a3e688af0cd5e9ceeb2f017f99ffab35fae25b65aefe3e9de41be"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/MATERIAL_AWARE_MODEL_V512_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "FPS material-reference table (actor 0x0BC0)",
+     "pointer": "#/records/0",
+     "stated_grade": "STRUCTURAL / STRONG_INFERENCE / UNRESOLVED (per sub-record)",
+     "targets": [
+      "registry.formats[FPS_SEGMENT]",
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    }
+   ],
+   "sha256": "78ed132d6998717f1dc848151b2e5bce17c570a8fa1eb74977acf63eb0d3095f"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/MODEL_ASSEMBLY_V58.md",
+     "present": true,
+     "sha256": "1046199d5d82b3ed7c1c481c18f7cd8afee1e1d4ad79faea52a5c02426ca6b1c"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/MODEL_ASSEMBLY_V58_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "embedded FPS FIS/FISA section size",
+     "pointer": "#/records/0",
+     "stated_grade": "VERIFIED_ON_ACTOR_0x0BC0",
+     "targets": [
+      "registry.formats[FIS]"
+     ]
+    },
+    {
+     "disposition": "CONFLICT_RETAINED",
+     "kind_or_topic": "RTA off1 V2 node-name records",
+     "pointer": "#/records/1",
+     "reason": "structurally different reading from baseline off1_v2 (also VERIFIED-labeled); fail closed, see ledger conflict CONFLICT-RTA-OFF1-READING",
+     "stated_grade": "VERIFIED_ON_ACTOR_0x0BC0",
+     "targets": []
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "actor 0x0BC0 component assembly",
+     "pointer": "#/records/2",
+     "stated_grade": "COMPONENT_COMPLETE_DIAGNOSTIC",
+     "targets": [
+      "graph.nodes[actor:0x0BC0]"
+     ]
+    }
+   ],
+   "sha256": "3aedc56c99a23ef878c23acb6cde43fe09918651f46f63041a7d09f393e6b067"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/MODEL_EVIDENCE_PASS_V511.md",
+     "present": true,
+     "sha256": "9864210e6238b335b8606c6ce92f6cc3d56f9f84fe4d86123be97a8fe245562a"
+    },
+    {
+     "path": "04_REPORTS/MODEL_TEXTURE_CORPUS_CENSUS_V511.json",
+     "present": true,
+     "sha256": "b7048307d1e118fea742d5112d4f1d60eadc6e7080aa7b1af38301d4cb277a6f"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "ACCEPTED_STRUCTURE_ADDITION",
+   "path": "05_ATLAS/MODEL_TEXTURE_BINDING_V511_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "FPS embedded FIS/FISA discovery",
+     "pointer": "#/records/0",
+     "reason": "scope-qualified; see ambiguity AMB-FIS-CENSUS-CORPORA",
+     "stated_grade": "VERIFIED_CORPUS",
+     "targets": [
+      "registry.formats[FIS]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_STRUCTURE_ADDITION",
+     "kind_or_topic": "FISA group semantics",
+     "pointer": "#/records/1",
+     "stated_grade": "VERIFIED_CORPUS",
+     "targets": [
+      "registry.formats[FIS].structures.fisa_group_semantics (new key)"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "RTA spatial preview safety correction",
+     "negative_result": true,
+     "pointer": "#/records/2",
+     "stated_grade": "VERIFIED_CONTRADICTION",
+     "targets": [
+      "registry.formats[RTA]"
+     ]
+    }
+   ],
+   "sha256": "2f33e7d0085b607e0f8560e1bef7cd032a0a26a2088185aca42be5c8f4f4c63e"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/MULTI_ACTOR_MATERIAL_LINK_V5126.md",
+     "present": true,
+     "sha256": "e1de66db4be7c1f8548d2f6f029a2d72048c4153dd7e64e9dde5454073467bf1"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "SUPERSEDED_RETAINED",
+   "path": "05_ATLAS/MULTI_ACTOR_MATERIAL_LINK_V5126_UPDATE.json",
+   "records": [
+    {
+     "disposition": "SUPERSEDED_RETAINED",
+     "kind_or_topic": "EVIDENCE_SCOPED_MATERIAL_LINK_FALLBACK",
+     "pointer": "#/records/0",
+     "stated_grade": "STRONG_INFERENCE",
+     "superseded_by": [
+      "05_ATLAS/HARDENED_MULTI_ACTOR_LINK_V5127_UPDATE.json#/records/0"
+     ],
+     "targets": []
+    },
+    {
+     "disposition": "SUPERSEDED_RETAINED",
+     "kind_or_topic": "AUTHORITATIVE_FPS_REFERENCE_TABLE_REGRESSION",
+     "pointer": "#/records/1",
+     "stated_grade": "fallback_applied:false",
+     "superseded_by": [
+      "05_ATLAS/HARDENED_MULTI_ACTOR_LINK_V5127_UPDATE.json#/records/1"
+     ],
+     "targets": []
+    }
+   ],
+   "sha256": "f001409370809b3ccc160637c84f9cba0fff638c81e768c7b7ec39783069e00c"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/PS2_TEXTURE_COORDINATE_REPAIR_V5125.md",
+     "present": true,
+     "sha256": "edcea3f803e31190e0911a4d050042416afe0914960ec6a25752ab7c7b3dd585"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+   "path": "05_ATLAS/PS2_TEXTURE_COORDINATE_REPAIR_V5125_UPDATE.json",
+   "records": [
+    {
+     "disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+     "kind_or_topic": "tooling / preview-scope update",
+     "pointer": "#",
+     "reason": "the record scopes itself as MODEL_PREVIEW_TEXTURE_COORDINATES and the source report states the repair changes only preview sampling; the underlying ST-orientation observations are retained as evidence at that preview scope rather than promoted to a registry format fact",
+     "stated_grade": "as stated in source",
+     "targets": []
+    }
+   ],
+   "sha256": "17e83cae8e3786000cfc867529525a8e3a60f88aab776113a8cc6db98e1d6194"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/RUNTIME_CAPTURE_V590.md",
+     "present": true,
+     "sha256": "454ff7b964233c21a29ce127d3446f780abc9834e3af4aa79c8030e5f099f9ee"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_TOOLING_UPDATE",
+   "file_disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+   "path": "05_ATLAS/RUNTIME_CAPTURE_V590_UPDATE.json",
+   "records": [
+    {
+     "disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+     "kind_or_topic": "tooling / preview-scope update",
+     "pointer": "#",
+     "reason": "historical tooling capability (SO3_ATLAS_TOOLING_UPDATE); its own promotion_policy marks runtime hits CANDIDATE_EVIDENCE_ONLY",
+     "stated_grade": "as stated in source",
+     "targets": []
+    }
+   ],
+   "sha256": "1c61ad01a04d655ee013357e5f877842dfcb5d6a145f67347c06343a5032ce5e"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/SAFARI_WEBGL_HOTFIX_V5112.md",
+     "present": true,
+     "sha256": "ace99d15b9dd286aec0b7b119f1e0aae3510bb60356c13cfd4222a7c8cdef167"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE",
+   "file_disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+   "path": "05_ATLAS/SAFARI_WEBGL_V5112_UPDATE.json",
+   "records": [
+    {
+     "disposition": "NO_CANONICAL_TARGET_TOOLING_RETAINED",
+     "kind_or_topic": "tooling / preview-scope update",
+     "pointer": "#",
+     "reason": "preview shader implementation repair; no canonical resource-fact target",
+     "stated_grade": "as stated in source",
+     "targets": []
+    }
+   ],
+   "sha256": "aab4eaeb5237f35d2b99a3c12d8b959b767796efe445eb3dd6491f5b399205a6"
+  },
+  {
+   "cited_reports": [],
+   "declared_format": "SO3_LEGACY_IDENTITY_CLAIMS_V1",
+   "file_disposition": "ACCEPTED_CLAIMS_DATASET",
+   "path": "05_ATLAS/SO3_LEGACY_IDENTITY_CLAIMS_V1.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_CLAIMS_DATASET",
+     "kind_or_topic": "156 historical name claims",
+     "pointer": "#/claims",
+     "stated_grade": "HISTORICAL_USER_CLAIM",
+     "targets": [
+      "graph.update_layer.legacy_identity_claims"
+     ]
+    },
+    {
+     "disposition": "CONFLICT_RETAINED",
+     "kind_or_topic": "Disc 2 1160_33 label conflict",
+     "pointer": "#/conflicts/0",
+     "reason": "two historical labels ('Nel Hi-poly', 'Woltar') for one key; both retained, neither applied",
+     "stated_grade": "HISTORICAL_USER_CLAIM",
+     "targets": [
+      "ledger.conflicts[CONFLICT-LEGACY-D2-1160-33]"
+     ]
+    }
+   ],
+   "sha256": "5fe6fcf0213369e42552b55613d966d77529229a4ed604f4cdb64b61e49ba4dc"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/TARGETED_RUNTIME_RECONSTRUCTION_V510.md",
+     "present": true,
+     "sha256": "fbd2a4e7c880d1c2cc7927e60ea0f129dbb7cbd9e65e78f869c8973cc04234c2"
+    },
+    {
+     "path": "04_REPORTS/ENTRY15_FRAME0_RUNTIME_EXECUTION.json",
+     "present": true,
+     "sha256": "828bdeffd44d9b24fb32e1ccaa941bd572770f7102ea212a368b25f5325f22b2"
+    },
+    {
+     "path": "04_REPORTS/TARGET_RUNTIME_MODULE_INVENTORY.json",
+     "present": true,
+     "sha256": "cbbfc698ec1de51c5ab1b3aec118778e1e8c9150ed53622436bea11762613bf6"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_RUNTIME_RECONSTRUCTION_UPDATE",
+   "file_disposition": "ACCEPTED_ANNOTATION",
+   "path": "05_ATLAS/TARGETED_RUNTIME_V510_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "Lib 0x0041A2F0 bounded execution",
+     "pointer": "#/records/0",
+     "stated_grade": "VERIFIED_TARGET_ROUTINE_EXECUTION",
+     "targets": [
+      "graph.nodes[module:Lib.bin]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "runtime coverage boundary",
+     "pointer": "#/unresolved",
+     "stated_grade": "UNRESOLVED",
+     "targets": [
+      "graph.nodes[module:Lib.bin] (retained verbatim)"
+     ]
+    }
+   ],
+   "sha256": "03a77a8fd4d32cd4e47a4f74f089f37030c63c5b556123069fc064b92f561276"
+  },
+  {
+   "cited_reports": [
+    {
+     "path": "04_REPORTS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63.md",
+     "present": true,
+     "sha256": "b72a880727cc6297c560b3636a2d7065a7daf9adac308fd406da636a1126c39f"
+    },
+    {
+     "path": "04_REPORTS/SO3_VU1_PACKET_SKINNING_EXECUTION_REPORT.json",
+     "present": true,
+     "sha256": "1e044c4b98ddee8823435b2e6386fb82cafa2b16d32469cd8da531053d30b1bb"
+    }
+   ],
+   "declared_format": "SO3_ATLAS_UPDATE_V1",
+   "file_disposition": "ACCEPTED_FIELD_SUPERSESSION",
+   "path": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+   "records": [
+    {
+     "disposition": "ACCEPTED_GATE_STATE",
+     "kind_or_topic": "packet binding and scoped withheld gates",
+     "pointer": "#/gates",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "graph.update_layer.engine_gates"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_ANNOTATION",
+     "kind_or_topic": "original VU1 one-matrix FIXED consumer",
+     "pointer": "#/engine",
+     "stated_grade": "SCOPED_PROMOTION",
+     "targets": [
+      "graph.nodes[module:Lib.bin]"
+     ]
+    },
+    {
+     "disposition": "ACCEPTED_FIELD_SUPERSESSION",
+     "kind_or_topic": "XBDC packet-address binding promotion",
+     "pointer": "#/gates/packet_vertex_matrix_selection",
+     "stated_grade": "PASS_EXECUTED_ORIGINAL_VU1_MICROCODE",
+     "targets": [
+      "registry.formats[XBDC].status",
+      "registry.formats[XBDC].export_gate",
+      "registry.formats[XBDC].structures.skinning.confidence"
+     ]
+    }
+   ],
+   "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+  }
+ ]
+}

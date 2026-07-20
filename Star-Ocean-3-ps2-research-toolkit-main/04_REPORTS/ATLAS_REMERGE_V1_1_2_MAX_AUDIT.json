@@ -1,0 +1,89 @@
+{
+  "format": "SO3_ATLAS_REMERGE_V1_1_2_MAX_AUDIT_V1",
+  "status": "PASS_AFTER_INDEPENDENT_CORRECTION_AND_PASS64_INTEGRATION",
+  "reasoning_level": "max",
+  "returned_attachments": {
+    "zip": {
+      "name": "SO3 CLAUDE ATLAS REMERGE OUTPUT V1.zip",
+      "size": 2599523,
+      "sha256": "ce94c4eb8c5411a18ca19af206570902b6bae4aa44f4ebff492417e330c30ebf",
+      "members": 75,
+      "safe_unique_members": true,
+      "zip_crc_pass": true,
+      "manifest_members_verified": 73,
+      "manifest_pass": true,
+      "checksum_entries_verified": 73,
+      "checksum_coverage_pass": false,
+      "checksum_missing_members": [
+        "MANIFEST.json"
+      ]
+    },
+    "standalone_report": {
+      "name": "ATLAS REMERGE V1 1 2.md",
+      "size": 8483,
+      "sha256": "829a3b36f539d3afdba9bb0e7a715f526324fe6cbb39723b480db40b8c3ac1ae",
+      "byte_exact_to_zip_report": true
+    }
+  },
+  "original_subset_result": {
+    "update_files": 21,
+    "checks_passed": 296,
+    "failures": 0,
+    "double_run_byte_identical": true,
+    "accepted_as_reviewed_base": true,
+    "accepted_verbatim_as_current_canonical": false
+  },
+  "audit_corrections": [
+    "integrated VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+    "integrated FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+    "corrected RTA node-record +0x10 translation claim",
+    "promoted only the packaged one-matrix XBDC packet-binding path",
+    "required every consumed input to be present in SHA256SUMS.txt",
+    "replaced optimization-removable assertions with explicit MergeError validation",
+    "removed curated-subset anomalies from the current complete-package ledger"
+  ],
+  "canonical_counts": {
+    "input_update_files": 23,
+    "field_supersessions_applied": 9,
+    "structure_additions_applied": 1,
+    "registry_annotations": 11,
+    "graph_node_annotations": 20,
+    "engine_gates": 45,
+    "supersessions": 20,
+    "conflicts_retained": 2,
+    "ambiguities_recorded": 5,
+    "legacy_claims_embedded": 156,
+    "legacy_claims_applied": 0
+  },
+  "canonical_outputs": {
+    "05_ATLAS/SO3_FORMAT_REGISTRY_V1_1_2.json": "a7f94fd61ee308db49c96e649674e488dbd93b931e410b0567a180ac16d6bf5b",
+    "05_ATLAS/SO3_RESOURCE_GRAPH_V1_1_2.json": "efe3a4a59199d053c1da514b698270aa43731b890b72c06e84322459a4a01d1d",
+    "05_ATLAS/ATLAS_UPDATE_LEDGER_V1.json": "2985cf1c59f151be85d2b691a1ddb3cde2a53e7c872e98b04f1b32200d2c3a86"
+  },
+  "implementation": {
+    "02_SOURCE/merge_atlas_updates.py": "6ad2e91a40196216f83acf74990b13648e553a8a62949e417fc98e3338282627",
+    "03_TESTS/test_atlas_remerge.py": "75ad9540b6373d85c4e7d7cb3c74cfcedb1dcd2ecdbadb794164e169de76d9e9"
+  },
+  "dedicated_tests": {
+    "checks_passed": 393,
+    "failures": 0,
+    "double_run_byte_identical": true,
+    "unlisted_consumed_input_rejected": true,
+    "validation_survives_python_optimization": true
+  },
+  "full_regression_suite": "PASS_ZERO_FAILURES",
+  "gates": {
+    "canonical_atlas_v1_1_2": "PASS",
+    "returned_zip_verbatim_acceptance": "REJECTED_CHECKSUM_COVERAGE_AND_STALE_SCOPE",
+    "conflict_retention": "PASS",
+    "silent_promotion_or_fabrication": "PASS_NONE_DETECTED",
+    "browser_mesh_deformation": "WITHHELD_NOT_INTEGRATED",
+    "on_device_visual_validation": "WITHHELD_NOT_RUN"
+  },
+  "recommended_reasoning_levels": {
+    "browser_deformation_integration_with_static_toggle": "high",
+    "independent_browser_integration_audit": "max",
+    "on_device_actor_visual_regression": "medium",
+    "documentation_or_checksum_reinspection": "light"
+  }
+}

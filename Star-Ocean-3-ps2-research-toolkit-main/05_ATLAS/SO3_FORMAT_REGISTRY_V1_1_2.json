@@ -1,0 +1,3574 @@
+{
+ "confidence_order": [
+  "VERIFIED",
+  "STRONG_INFERENCE",
+  "HYPOTHESIS",
+  "UNRESOLVED"
+ ],
+ "created": "2026-07-14",
+ "derived_from": {
+  "baseline_file": "05_ATLAS/SO3_FORMAT_REGISTRY_V1_1_1.json",
+  "baseline_generator": "SO3_ATLAS_CONSOLIDATION_PASS_V1_1_1/build_atlas.py",
+  "baseline_sha256": "4a812d43bef2a89a6439a5fe33ae5ec682936c9286d567e51f36df9d6be466b7",
+  "baseline_version": "1.1.1",
+  "note": "top-level 'created' retains the baseline lineage date; this file embeds no wall-clock timestamps"
+ },
+ "formats": [
+  {
+   "aliases": [],
+   "category": "image",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x0025C650",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "Minimap"
+    }
+   ],
+   "format_id": "DMM",
+   "header_fields": [],
+   "magic": {
+    "note": "decoded form of MMAP children"
+   },
+   "name": "DMM minimap / index raster",
+   "parser": null,
+   "prov": [
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "04_ENGINE/ENGINE_ARCHITECTURE_V3.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "MMAP:DMM",
+     "sha256": "42c30b6af915abdb",
+     "size": 17152,
+     "truncated": true
+    }
+   ],
+   "status": "verified (prior)",
+   "structures": {
+    "raster": "128x128 minimap/index raster"
+   },
+   "unresolved_refs": [],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE MMAP child -> SLZ"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "animation",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x002B48E0",
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl",
+     "name": "AnimationKernel"
+    },
+    {
+     "address": "0x002B3E80",
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl",
+     "name": "AnimationManager"
+    }
+   ],
+   "format_id": "FAS",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'FAS\\0'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "near-EOF section pointer",
+     "name": "off04",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "= off04 + 0x10 in populated clips",
+     "name": "off0c",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "target skeleton root name ('Bip01','Plane01',...) OR sub-magic 'HFAS' for empty clip",
+     "name": "target",
+     "offset": "0x10",
+     "size": 16,
+     "type": "char[16]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "track_count",
+     "offset": "0x20",
+     "size": 4,
+     "type": "u32"
+    }
+   ],
+   "magic": {
+    "ascii": "FAS\\0"
+   },
+   "name": "FAS skeletal animation clip",
+   "parser": {
+    "name": "so3_fas.py",
+    "source": "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FAS_FORMAT_SPEC_V2.md",
+    "version": "V2"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::FAS_FORMAT_SPEC.md",
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FAS_FORMAT_SPEC_V2.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1(1)__ATLAS_UPDATE.json",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/03_MASTER_REVIEW/THREAD_8_ATLAS_RETURN_REVIEW_2026-07-14.md",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/00_INSTRUCTIONS/PROMPT_FOR_ATLAS_V1_1_UPDATE_THREAD.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/00_INSTRUCTIONS/PROMPT_FOR_ATLAS_V1_1_1_CORRECTION_THREAD.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/02_MASTER_REVIEW/THREAD_8_ATLAS_V1_1_RETURN_REVIEW_2026-07-14.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "ANIM:FAS actor 0xF80C slot 0 (1082)",
+     "sha256": "bb1d767b9e856d82",
+     "size": 7424,
+     "truncated": true
+    },
+    {
+     "key": "MAPA:FAS (empty)",
+     "sha256": "961172fdfd2249f0",
+     "size": 48,
+     "truncated": true
+    }
+   ],
+   "status": "channel structure verified (V2); type-0x0135 evaluation, positive-w decompression, and original interpolation execution-verified (V5.12.8 pass 6, scoped to the executed 255-track corpus of actors 0x08FF/0x0BC0); q1/q2 float-key role split and loop wrap remain incomplete",
+   "structures": {
+    "binding": {
+     "by_name": {
+      "claim": "channel NAME equals RTA off1 name strings exactly (e.g. 'Bip01 Pelvis')",
+      "confidence": "VERIFIED"
+     },
+     "by_res_id_low16": {
+      "claim": "bundle-level anim->skeleton association by res_id low16 match",
+      "confidence": "STRONG_INFERENCE",
+      "note": "V1.1 split (SUP-09): lookup code not isolated; foreign-low16 ANIM exists (O-RESID-02)"
+     },
+     "not": "h1.idx is NOT the RTA node index (two channels share value 1)"
+    },
+    "channel": {
+     "confidence": "VERIFIED",
+     "h1": "{u16 cls, u16 0, u16 nsec, u16 clip_c, u32 id, u32 idx}; cls 0x0003 bone | 0x0103 helper/effect",
+     "h2": "{u32 0, u16 mode (2 if nkeys>1 else 0), u16 nkeys, u32 keysec_size = 0x10+48*nkeys (VERIFIED 34/34), u32 flag 0|1}",
+     "keys": "48 bytes each: {f32 Tx,Ty,Tz, f32 time}{f32 quat q1}{f32 quat q2}",
+     "name": "cp932 NUL-terminated, padded to 16-byte multiple; exact-16/32-byte names carry no NUL",
+     "sub_blocks": {
+      "header": "{u16 0, u16 mark (0x0100 data | 0x010C event), u16 type, u16 count, u32 size, u32 aux}",
+      "type_0x0003": "32B {f32[4] vec (usually 0), f32[4] rest-pose quaternion}",
+      "type_0x0021": "event tag, ASCII ('naka','nakam') + u16 id (footstep/effect triggers)",
+      "type_0x0135": "count x {s16 x,y,z, u16 time}; quantized rotation track; timestamps equal f32 key timestamps (VERIFIED on L/R Calf); record layout and evaluation EXECUTION-VERIFIED over 255 real tracks / 4519 packed keys with runtime track-object layout documented in update_layer (V5.12.8 pass 6)"
+     }
+    },
+    "container": "FAS is a chain block {FAS\\0,end_rel,self,next_rel}; next block is an HFAS sibling in all 7 V2 clips",
+    "coverage": "79 clips (75 ANIM + 4 MAPA) parsed in V1; V2 corpus 7 clips of actor 0x0BC0 (34 channels on walk clip); 2 largest clips leave 160/576-byte residues of extra 0x0103-class channels",
+    "empty_variant": "48-byte header-only clip: 'HFAS' at 0x10 then {0x10,0x10,0,0,0,8,0}",
+    "rotation_reconstruction": "type-0x0135 quantized rotation decompression EXECUTION-VERIFIED: original R5900/VU0-macro code unpacks s16 xyz (VITOF15, 1/32768) and reconstructs positive quaternion w; original interpolation helpers 0x004CD310/0x004CCF80/0x004CD230 executed with terminal outputs byte-exact to an independent float32 oracle and interpolated outputs within two float32-ULP-sized steps of a sign-invariant shortest-path slerp oracle (max component error 1.1920928955078125e-07; 255 tracks / 4519 keys / 765 evaluator invocations). Prior V2 knee-bend trace retained as corroboration. q1/q2 float-key role split remains HYPOTHESIS.",
+    "time_base": "time in frames; walk clip spans t=0..100 with keys at 0,11,25,38,50,63,75,88,100; some 0x135 records beyond last key = loop wrap (HYPOTHESIS)"
+   },
+   "unresolved_refs": [
+    "U-ANIM-01",
+    "U-ANIM-05",
+    "U-ANIM-06",
+    "U-ANIM-07",
+    "U-ANIM-08"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE ANIM/MAPA child -> SLZ"
+   ]
+  },
+  {
+   "aliases": [
+    "FIS/SHI",
+    "FISA (section variant)"
+   ],
+   "category": "image",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": null,
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl / entry-3454 / Lib.bin",
+     "name": "FIS consumers (by source-filename attribution)"
+    }
+   ],
+   "format_id": "FIS",
+   "header_fields": [],
+   "known_tools": {
+    "exporters": [
+     "so3_fis_tool_v2.py -> PNG"
+    ],
+    "viewers": [
+     "FIS V2 previews / contact sheet (pass artifacts)"
+    ]
+   },
+   "magic": {
+    "ascii": "FIS\\0 / PSIF (bundle child)",
+    "note": "SHI asset label observed"
+   },
+   "name": "FIS texture / image container",
+   "parser": {
+    "name": "so3_fis_tool_v2.py",
+    "source": "05_SOURCE_PASSES/SO3_FIS_FORMAT_PASS_V2.zip::parser/so3_fis_tool_v2.py",
+    "version": "V2"
+   },
+   "prov": [
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+    "05_SOURCE_PASSES/SO3_FIS_FORMAT_PASS_V2.zip::reports/CORPUS_SUMMARY.json"
+   ],
+   "sample_hashes": [],
+   "status": "verified decoding for observed PSMT4/PSMT8/PSMCT24 variants incl. palettes and PS2 alpha",
+   "structures": {
+    "corpus": {
+     "actual_formats": {
+      "PSMCT24": 8,
+      "PSMT4": 16,
+      "PSMT8": 86
+     },
+     "actual_transfer_pairs": {
+      "PSMCT24 via PSMCT24": 8,
+      "PSMT4 via PSMCT32": 2,
+      "PSMT4 via PSMT4": 14,
+      "PSMT8 via PSMCT32": 64,
+      "PSMT8 via PSMT8": 22
+     },
+     "all_descriptor_formulas_match": true,
+     "allocation_sizes": {
+      "1024x256": 4,
+      "128x128": 59,
+      "128x256": 2,
+      "256x128": 1,
+      "256x256": 25,
+      "512x256": 10,
+      "512x512": 8,
+      "64x64": 1
+     },
+     "asset_labels": {
+      "ANKF": 1,
+      "John": 9,
+      "SHI": 1,
+      "asai": 2,
+      "kami": 10,
+      "strt": 22,
+      "yam1": 65
+     },
+     "palette_entries": {
+      "0": 8,
+      "256": 91,
+      "32": 5,
+      "64": 5,
+      "96": 1
+     },
+     "parse_failures": 0,
+     "sample_files": 110,
+     "transfer_formats": {
+      "PSMCT24": 8,
+      "PSMCT32": 66,
+      "PSMT4": 14,
+      "PSMT8": 22
+     }
+    },
+    "embedded_in_fps": "FIS\\0/FISA sections occur inside FPS segments after the VIF stream (86 sections corpus-wide)",
+    "fisa_group_semantics": {
+     "claim": "FISA is a trailing index for the immediately preceding contiguous FIS group; unknown_08 is member stride and pair keys are 0x10 + ordinal*stride",
+     "confidence": "VERIFIED_CORPUS",
+     "prov_update": "05_ATLAS/MODEL_TEXTURE_BINDING_V511_UPDATE.json#/records/1",
+     "unresolved": "pair value runtime meaning",
+     "validation": "9/9 tables, 34/34 member offsets resolve exactly to FIS headers"
+    }
+   },
+   "unresolved_refs": [
+    "U-GEO-09",
+    "U-EXP-03"
+   ],
+   "wrapper_ancestry": [
+    "hidden-table allocation (SLZ/ZLS blocks)",
+    "SEMANTIC_BUNDLE PSIF child",
+    "FPS_SEGMENT texture section"
+   ]
+  },
+  {
+   "aliases": [
+    "model chain"
+   ],
+   "category": "geometry-container",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00278AC0",
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl",
+     "name": "BasePolygon"
+    },
+    {
+     "address": "0x002A3440",
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl",
+     "name": "ChrElement"
+    },
+    {
+     "address": "0x002501B0",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "MapManager"
+    },
+    {
+     "address": null,
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "PolygonCharacter"
+    }
+   ],
+   "format_id": "FPS_CHAIN",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "block type (reversed-4CC family)",
+     "name": "magic",
+     "offset": "+0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "block end, relative to block start",
+     "name": "end_rel",
+     "offset": "+0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "STRONG_INFERENCE",
+     "meaning": "block's own offset (first block: 0)",
+     "name": "self",
+     "note": "some small descriptor blocks deviate (U-GEO-08)",
+     "offset": "+0x08",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "next block header, relative",
+     "name": "next_rel",
+     "offset": "+0x0C",
+     "size": 4,
+     "type": "u32"
+    }
+   ],
+   "magic": {
+    "ascii": "FPS\\0 | XBDC | RMAC (first block magic)",
+    "note": "every CHAR/MAP child beginning FPS\\0, XBDC or RMAC is the same chain format"
+   },
+   "name": "FPS chained multi-section model container",
+   "parser": {
+    "name": "so3_fps_chain.py / so3_fps_geo.py",
+    "source": "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md",
+    "version": "V2"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1(1)__ATLAS_UPDATE.json",
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md"
+   ],
+   "sample_hashes": [],
+   "status": "verified 13/13 samples (12 full-coverage walks; one MAP hits a non-ASCII block after 25 valid blocks)",
+   "structures": {
+    "block_types_note": "prose census from FPS_FORMAT_SPEC_V2 \u00a71; per-file machine totals give 362 chain blocks and 219 FPS geometry segments (see conflict C-GEO-02)",
+    "block_types_observed": {
+     "FPS": 187,
+     "LAND": 16,
+     "LCTP": 2,
+     "LIGT": 14,
+     "LPDC": 1,
+     "MODI": 33,
+     "NDNC": 6,
+     "PCDC": 5,
+     "RMAC": 3,
+     "SSF": 10,
+     "XBDC": 16
+    },
+    "terminator": "'FSS\\0' (SSF) block whose next points to itself; its end covers the file tail",
+    "unified_model": "supersedes the PASS_V1 'wrapper' model: XBDC/RMAC files are chains whose first block is a small descriptor; V1 offsets remain true (first blocks end at 0x20 / 0x30 -> next block)"
+   },
+   "unresolved_refs": [
+    "U-GEO-07",
+    "U-GEO-08",
+    "U-GEO-12"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE CHAR/MAP child -> SLZ (decompressed)"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "geometry-substructure",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x004EF8A0",
+     "confidence": "VERIFIED",
+     "module": "Lib.bin",
+     "name": "prog4"
+    }
+   ],
+   "format_id": "FPS_MESH_PACKET",
+   "header_fields": [],
+   "magic": {
+    "none": true
+   },
+   "name": "FPS mesh packet (VU-memory record)",
+   "parser": {
+    "name": "so3_fps_geo.py",
+    "source": "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md",
+    "version": "V2"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1(1)__ATLAS_UPDATE.json"
+   ],
+   "sample_hashes": [],
+   "status": "anatomy verified; several small header ints unresolved",
+   "structures": {
+    "flat_surfaces": "constant normals via all-ROW masked unpacks (mask 0x55555555, STROW=(0,-1.0,0,1.0)) on MAP geometry",
+    "header_q0": {
+     "layout": "(u16 gif_qtotal?, u16 vertbase, u16 stripcount, u16 striptab)",
+     "q0.x": {
+      "confidence": "HYPOTHESIS",
+      "meaning": "GIF output qword budget / loop bound (1488 in reference packet); read via ilw.x 0(vi14) by other renderers"
+     },
+     "stripcount": {
+      "confidence": "VERIFIED",
+      "evidence": "prog4 L225 ilw.z; equals strip-table length"
+     },
+     "striptab": {
+      "confidence": "VERIFIED",
+      "evidence": "prog4 L224 ilw.w; equals S-8 unpack addr"
+     },
+     "vertbase": {
+      "confidence": "VERIFIED",
+      "evidence": "prog4 L223 ilw.y vi13,0(vi14); matches unpack addrs"
+     }
+    },
+    "material_block": {
+     "confidence": "VERIFIED",
+     "content": "GIFtag NLOOP=4 EOP PACKED NREG=1 REGS=A+D; observed regs ALPHA_1 (0x42), TEX0_1 (0x06, TBP placeholder patched at runtime; texture id in high word STRONG_INFERENCE)",
+     "location": "14 qwords at TOPS+7 (optional per packet); strip GIFtag template at TOPS+12",
+     "note": "re-uploaded only on material change; 14-qword region always reserved (vertbase >= 22)"
+    },
+    "small_ints": {
+     "confidence": "UNRESOLVED",
+     "fields": "q1.w,q2.x,q2.zw,q3.*,q5.x (23,1,960,336,884,320,5,20 in reference)",
+     "meaning": "flags / secondary buffer addresses for two-buffer output (HYPOTHESIS)"
+    },
+    "strip_table": {
+     "checks": "3540/3540",
+     "confidence": "VERIFIED",
+     "layout": "S-8 byte array at striptab; each byte = vertex count of one tri-strip; sum == vertex count",
+     "triangles": "n-2 per strip, alternating winding (prog4 isubiu vi11,2); ADC bits written by VU per strip head, not stored in file"
+    },
+    "vertex_count": {
+     "confidence": "VERIFIED",
+     "evidence": "equals attribute-unpack num and strip sum on every packet (3540/3540)",
+     "field": "q2.y"
+    },
+    "vertex_record": {
+     "confidence": "VERIFIED",
+     "profiles": {
+      "prov": [
+       "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+       "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md"
+      ],
+      "reference_export": {
+       "actor": "0x0000F80C",
+       "faces": 1056,
+       "note": "rigid OBJ independently reproducible",
+       "vertices": 1292
+      },
+      "rigid_map": {
+       "confidence": "VERIFIED",
+       "normals": "V3-32 float",
+       "position": "V3-32 float",
+       "uv": "V2-16 fixed / 4096"
+      },
+      "xbdc_skinned": {
+       "confidence": "VERIFIED",
+       "normals": "V3-16 / 4096",
+       "position": "V4-16: xyz 12.4 fixed (/16); w = VU matrix-qword address",
+       "uv": "V2-16 / 4096"
+      }
+     },
+     "slots": {
+      "0": "normal",
+      "1": "uv",
+      "2": "rgba (masked S-8 usn=1, mask 0x54545454; R from stream, G/B/A from STROW)",
+      "3": "position"
+     },
+     "stride": "4 qwords (STCYCL cl=4 wl=1)"
+    }
+   },
+   "unresolved_refs": [
+    "U-GEO-10",
+    "U-GEO-11",
+    "U-GEO-13"
+   ],
+   "wrapper_ancestry": [
+    "FPS_SEGMENT VIF stream"
+   ]
+  },
+  {
+   "aliases": [
+    "FPS"
+   ],
+   "category": "geometry",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x004EF8A0",
+     "confidence": "VERIFIED",
+     "module": "Lib.bin",
+     "name": "prog4 FPS strip renderer (selector index 10)"
+    }
+   ],
+   "format_id": "FPS_SEGMENT",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'FPS\\0'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "end of primary geometry section / section table",
+     "name": "off_a",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "semantics UNRESOLVED",
+     "name": "field_08",
+     "offset": "0x08",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "== off_a + 0x10 in every sample (225/225)",
+     "name": "off_c",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "one of +0x10/+0x14/+0x18 equals 0x60 -> VIF stream begins at +0x60",
+     "name": "header_size",
+     "offset": "0x10",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "loosely tracks first sub-region size; exact rule UNRESOLVED",
+     "name": "sec14",
+     "offset": "0x14",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "as sec14",
+     "name": "sec18",
+     "offset": "0x18",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "bounding-sphere radius (1414.21 = 1000*sqrt(2) on the +-1000 map); radius-like on rigid props, ~0 on some skinned segments",
+     "name": "bound_radius",
+     "offset": "0x1C",
+     "size": 4,
+     "type": "f32"
+    },
+    {
+     "confidence": "STRONG_INFERENCE",
+     "meaning": "centre or first bound vector",
+     "name": "vec_a",
+     "offset": "0x20",
+     "size": 12,
+     "type": "f32[3]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "AABB min (99.95% of decoded positions inside, corpus-wide)",
+     "name": "aabb_min",
+     "offset": "0x2C",
+     "size": 12,
+     "type": "f32[3]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "AABB max",
+     "name": "aabb_max",
+     "offset": "0x38",
+     "size": 12,
+     "type": "f32[3]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "exclusive VIF endpoint in 208/225 records; 0 in the other 17 (off_a fallback)",
+     "name": "vif_end",
+     "offset": "0x48",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "raw VIF1 command stream (mesh packets), then optional FIS/FISA texture sections, zero pad to end_rel",
+     "name": "vif_stream",
+     "offset": "0x60",
+     "size": null,
+     "type": "bytes"
+    }
+   ],
+   "magic": {
+    "ascii": "FPS\\0"
+   },
+   "name": "FPS geometry segment",
+   "parser": {
+    "name": "so3_fps.py (V1 header) + so3_fps_geo.py (V2 decode)",
+    "source": "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md",
+    "version": "V2"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC.md",
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::FPS_FORMAT_SPEC_V2.md",
+    "05_SOURCE_PASSES/SO3_VIF_GIF_PACKET_ANALYZER_PASS_V1.zip::ANALYSIS_REPORT.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_GIF_PACKET_ANALYZER_PASS_V1(1)__ATLAS_UPDATE.json",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json"
+   ],
+   "sample_hashes": [
+    {
+     "key": "CHAR:FPS actor 0xF800",
+     "sha256": "c569248008c589659dadf86f7aefdee5d1337a1b4ce0a4369281d53a81bd485c",
+     "size": 147088
+    },
+    {
+     "key": "MAP:FPS",
+     "sha256": "d7115f1005bd9fd9",
+     "size": 3830128,
+     "truncated": true
+    }
+   ],
+   "status": "fully decoded (V2); V1 header verified",
+   "structures": {
+    "texture_sections": "optional FIS\\0 / FISA sections {magic,u32 size} with material entries {u32 gs_ptr, char[] name ('maji','asai2'), u32 params...} and image bits; 86 FIS sections + 138 gap notes catalogued corpus-wide, nothing silently skipped",
+    "vif_locator_rules": {
+     "confidence": "VERIFIED",
+     "end": {
+      "FPS+0x48": 208,
+      "off_a_fallback": 17
+     },
+     "records_census": 225,
+     "start": "one section word at +0x10/+0x14/+0x18 equals 0x60; stream begins FPS+0x60",
+     "streams_exact": 225
+    }
+   },
+   "unresolved_refs": [
+    "U-GEO-05",
+    "U-GEO-06",
+    "U-GEO-09"
+   ],
+   "wrapper_ancestry": [
+    "FPS_CHAIN block"
+   ]
+  },
+  {
+   "aliases": [
+    "record_table"
+   ],
+   "category": "data",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x002513A8",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "ITEM/SYS handler"
+    }
+   ],
+   "format_id": "ITEM_TABLE",
+   "header_fields": [],
+   "magic": {
+    "none": true
+   },
+   "name": "ITEM fixed-field record table",
+   "parser": null,
+   "prov": [
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::ITEM_SCE_SMCD_CHECKPOINT.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "ITEM",
+     "sha256": "4b6d8100935d8e3f",
+     "size": 106,
+     "truncated": true
+    }
+   ],
+   "status": "category verified; record size unresolved",
+   "structures": {
+    "observed": "entry 1944 bundle 0 child, 106 bytes: monotonically increasing u16 IDs 0xEA60,0xEA61,0xEA62,... (60000+) interleaved with two recurring u16 series and a 0xFFFF marker; 106 not a clean record multiple; must not be called an inventory/placement/pickup table yet"
+   },
+   "unresolved_refs": [
+    "U-MISC-01"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE ITEM child -> SLZ"
+   ]
+  },
+  {
+   "aliases": [
+    "libipu 2700"
+   ],
+   "category": "video-codec",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x003EE918",
+     "confidence": "STRONG_INFERENCE",
+     "module": "Lib.bin",
+     "name": "IPU command issue"
+    },
+    {
+     "address": "0x003EB680",
+     "confidence": "STRONG_INFERENCE",
+     "module": "Lib.bin",
+     "name": "bitstream FIFO feeder A"
+    },
+    {
+     "address": "0x003E8670",
+     "confidence": "STRONG_INFERENCE",
+     "module": "Lib.bin",
+     "name": "bitstream FIFO feeder B"
+    },
+    {
+     "address": "0x00288830",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "MovieManager (drives Lib IPU/MPEG)"
+    }
+   ],
+   "format_id": "MPEG2_IPU_VIDEO",
+   "header_fields": [],
+   "magic": {
+    "note": "codec identity, not a disc container; disc container/mux UNRESOLVED"
+   },
+   "name": "FMV codec: MPEG2 (elementary) decoded on PS2 IPU",
+   "parser": null,
+   "prov": [
+    "04_ENGINE/LIB_VIDEO_DECODER_MAP.md",
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+    "04_ENGINE/ENGINE_ARCHITECTURE_V3.md",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/04_QUALIFIED_UPDATES/THREAD_6_MASTER_QUALIFIED_UPDATE.json",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/01_MASTER_STATE/CANONICAL_PROJECT_STATE_2026-07-14.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/00_INSTRUCTIONS/PROMPT_FOR_ATLAS_V1_1_1_CORRECTION_THREAD.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/02_MASTER_REVIEW/THREAD_8_ATLAS_V1_1_RETURN_REVIEW_2026-07-14.md"
+   ],
+   "related_formats": [
+    "SO3_MOVIE_CARRIER"
+   ],
+   "sample_hashes": [],
+   "status": "codec + decode path verified; on-disc carrier structurally identified in V1.1 (SO3_MOVIE_CARRIER); exact transform / clean demux / playability unresolved",
+   "structures": {
+    "code_region": "head of Lib.bin ~[0x003E6880, 0x003F0000)",
+    "identity": "Sony PsIIlibipu 2700 banner @0x004EB880; MPEG2 main profile, 4:2:0 only, no scalable extensions; BDEC/CSC on IPU",
+    "pipeline": "disc stream -DMA-> IPU_IN_FIFO -BDEC-> macroblocks -CSC-> RGB -> GS via VIF1/GIF (gs_vif1_submit 0x00432900); frame pacing via TIMER",
+    "unsupported_variants": [
+     "scalable extensions",
+     "chroma other than 4:2:0",
+     "vertical size > 2800"
+    ]
+   },
+   "unresolved_refs": [
+    "U-VID-01",
+    "U-VID-02",
+    "U-VID-03",
+    "U-EXP-07"
+   ],
+   "wrapper_ancestry": [
+    "SO3_MOVIE_CARRIER (obfuscated MPEG-PS; entry-21 checkpoint) -> video PES 0xE0 -> MPEG-2 elementary (U-VID-01: exact transform unresolved)"
+   ]
+  },
+  {
+   "aliases": [
+    "MWo3"
+   ],
+   "category": "module",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00102540",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "decompress dispatcher"
+    },
+    {
+     "address": "0x00142A00",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "MWo3 post-decode"
+    },
+    {
+     "address": "0x00143610",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "init-vector iterator"
+    }
+   ],
+   "format_id": "MWO3",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'MWo3'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "author-assigned category tag; loader maps identically regardless (1,2,3,4 and 7,39-47 observed)",
+     "name": "class_value",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "absolute VA the file maps to",
+     "name": "load_base",
+     "offset": "0x08",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "first mapped-region size",
+     "name": "region0_size",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "second mapped-region size",
+     "name": "region1_size",
+     "offset": "0x10",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "bytes zeroed past mapped image (bss)",
+     "name": "zero_fill",
+     "offset": "0x14",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "absolute VA, fn-pointer table start",
+     "name": "init_array_start",
+     "offset": "0x18",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "absolute VA, exclusive end",
+     "name": "init_array_end",
+     "offset": "0x1C",
+     "size": 4,
+     "type": "u32"
+    }
+   ],
+   "known_tools": {
+    "exporters": [
+     "mwo3_to_elf_v3.py (analysis-mode ELF32 MIPS R5900 wrapper)"
+    ]
+   },
+   "magic": {
+    "ascii": "MWo3",
+    "u32le": "0x336F574D"
+   },
+   "name": "MWo3 fixed-address executable overlay",
+   "parser": {
+    "name": "mwo3_parser_v3.py",
+    "source": "05_SOURCE_PASSES/SO3_MWO3_LOADER_FINAL.zip::mwo3_parser_v3.py",
+    "version": "v3 parser + v4 rule set"
+   },
+   "prov": [
+    "03_SPECS/MWO3_FORMAT_SPEC_V4.md",
+    "04_ENGINE/ENGINE_ARCHITECTURE_V3.md",
+    "02_CATALOGUES/SO3_MWO3_MODULE_SCAN.json",
+    "05_SOURCE_PASSES/SO3_MWO3_LOADER_FINAL.zip::MWO3_FORMAT_SPEC_V3.md",
+    "05_SOURCE_PASSES/SO3_MWO3_LOADER_FINAL.zip::MWO3_LOADER_ANALYSIS.md",
+    "05_SOURCE_PASSES/SO3_RESOURCE_BUNDLE_PASS_V1.zip::SPECIAL_CHILD_FINDINGS.json"
+   ],
+   "sample_hashes": [
+    {
+     "key": "boot.bin (entry 2 block 0 decoded)",
+     "sha256": "71f42d268ac6ac0183005035a953ab0152c285c6cc63a869c9ed2423b053167a",
+     "size": 166784
+    },
+    {
+     "key": "so3mclib 'y' (entry 1067 decoded)",
+     "sha256": "45eeca6a8c6ecdd51d12605588d42c313d9ff4de85ada358e3290b87b7106c83",
+     "size": 1363840
+    },
+    {
+     "key": "PRG SPAryWater11.bin (entry 1943 child 1 decoded)",
+     "sha256": "922fa9e02e8e1aec2d23cd45c03143c641dcc02304d09f6401df87a5f1fdbc9d",
+     "size": 4608
+    }
+   ],
+   "spec_versions": {
+    "note": "V5 (0x40-byte trailer after region0+region1; init vector may sit in trailer, in region-1 tail, or be empty at file end) is cited by ENGINE_ARCHITECTURE_V3 \u00a78 but the V5 document is not in this handoff",
+    "referenced_not_supplied": [
+     "V5"
+    ],
+    "supplied": [
+     "V3",
+     "V4"
+    ]
+   },
+   "status": "header/mapping/init semantics verified across 12+ modules",
+   "structures": {
+    "load_path": {
+     "confidence": "VERIFIED",
+     "destination_table": "0x001B61D0 (fixed overlay-base table; begins 0x001DD580, 0x003E6880, 0x0032B400, 0x00347F80, 0x0036F680)",
+     "init_iterator": "0x00143610 (calls each u32 pointer ascending; no sentinel)",
+     "post_decode_routine": "0x00142A00 (reads +0x14, FlushCache(2) via 0x00121FA0, zero-fill via 0x0013A638, init iterate via 0x00143610)"
+    },
+    "mapping": "copy whole file to load_base, append zero_fill zero bytes, call each pointer in [init_array_start, init_array_end) as void(*)(void); no relocation, no imports (prelinked absolute)",
+    "v4_correction": "init vector may overlap the tail of region 1 (Lib.bin class 4: init region [0x005078D0,0x00507910) lies inside region-1 tail, thunks at 0x00507300..0x005078A0; overlap 112 bytes)",
+    "v4_validation_rule": [
+     "magic == 'MWo3'",
+     "load_base word-aligned; sizes non-negative",
+     "load_base <= init_array_start <= init_array_end <= load_base+region0+region1",
+     "(init_array_end - init_array_start) % 4 == 0",
+     "every init pointer within [load_base, load_base+region0+region1)"
+    ],
+    "v5_extensions_observed": "recurring 0x40-byte trailer after region0+region1; empty init vectors (start==end) at file end on all nine menu overlays (module scan)"
+   },
+   "unresolved_refs": [
+    "U-ENG-06"
+   ],
+   "wrapper_ancestry": [
+    "hidden-table allocation (SLE/SLZ)",
+    "SEMANTIC_BUNDLE PRG child (SLZ)"
+   ]
+  },
+  {
+   "aliases": [
+    "PACK"
+   ],
+   "category": "container",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": null,
+     "confidence": "STRONG_INFERENCE",
+     "module": "Lib.bin / resident shell (disc/resource/streaming layer)",
+     "name": "PACK opener",
+     "note": "Field never compares PACK magic 0x4B434150; found only as a lone data word in Battle at 0x003DFA38; exact parser function UNRESOLVED"
+    }
+   ],
+   "distinct_from": "SEMANTIC_BUNDLE",
+   "format_id": "PACK_ARCHIVE",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'PACK'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0 in samples",
+     "name": "version",
+     "offset": "0x04",
+     "size": 2,
+     "type": "u16"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "descriptor count",
+     "name": "count",
+     "offset": "0x06",
+     "size": 2,
+     "type": "u16"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "descriptors",
+     "offset": "0x08",
+     "size": "8*count",
+     "type": "descriptor[]"
+    }
+   ],
+   "magic": {
+    "ascii": "PACK",
+    "offset": "0x00",
+    "u32le": "0x4B434150"
+   },
+   "name": "PACK archive (8-byte descriptors)",
+   "parser": {
+    "name": "so3_containers.py:parse_pack",
+    "source": "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::parsers/so3_containers.py",
+    "version": "PASS_V1"
+   },
+   "prov": [
+    "03_SPECS/CONTAINER_DISPATCH_MAP.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::json_dumps/packs.json"
+   ],
+   "sample_hashes": [],
+   "status": "structure verified; opener function address unresolved",
+   "structures": {
+    "descriptor": {
+     "+0x00": "u32 child_offset",
+     "+0x04": "u32 tag_or_id (class/resource id, NOT a size)"
+    },
+    "extent_rule": "local children have strictly increasing offsets; child i spans [off_i, off_{i+1}), last to EOF",
+    "nesting": "PACK -> descriptor -> SLZ child -> decompress -> SEMANTIC_BUNDLE -> ... ; PACK can also contain a nested PACK (verified in 3517/3862)",
+    "producers": "top-level disc allocations (entries 3455/3517/3862/1068 observed)"
+   },
+   "unresolved_refs": [
+    "U-CONT-01"
+   ],
+   "validated_samples": {
+    "check": "monotonic offsets",
+    "counts": [
+     9,
+     2,
+     3
+    ],
+    "entries": [
+     3455,
+     3517,
+     3862
+    ]
+   },
+   "wrapper_ancestry": [
+    "hidden-table allocation"
+   ]
+  },
+  {
+   "aliases": [
+    "VAG"
+   ],
+   "category": "audio-codec",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": null,
+     "confidence": "VERIFIED",
+     "module": "IOP: Csm_/libsd -> SPU2",
+     "name": "synth core"
+    }
+   ],
+   "format_id": "PS2_ADPCM",
+   "header_fields": [],
+   "magic": {
+    "none": true
+   },
+   "name": "PlayStation-family 16-byte ADPCM frames (VAG-style)",
+   "parser": {
+    "name": "so3_audio_tool_v3.py",
+    "source": "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::parser/so3_audio_tool_v3.py",
+    "version": "V3"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/PS2_ADPCM_SPEC_V3.md",
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/PITCH_AND_SAMPLE_RATE.md",
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/LOOP_BEHAVIOR.md"
+   ],
+   "sample_hashes": [],
+   "status": "verified",
+   "structures": {
+    "flags": {
+     "bit0": "end",
+     "bit1": "repeat/loop enabled",
+     "bit2": "loop start",
+     "combos": {
+      "0": "normal",
+      "1": "one-shot audible end",
+      "2": "loop body",
+      "3": "loop end (end+repeat)",
+      "6": "explicit loop start",
+      "7": "silent post-end guard"
+     }
+    },
+    "frame": "16 bytes -> 28 signed 16-bit mono PCM samples; byte0 hi=predictor 0-4, lo=shift 0-12; byte1 flags; bytes 2-15 = 28 s4 samples low nibble first",
+    "predictors": {
+     "0": "(0,0)",
+     "1": "(60,0)",
+     "2": "(115,-52)",
+     "3": "(98,-55)",
+     "4": "(122,-60)"
+    },
+    "sample_rate": "no stored rate field; 24,000 Hz is the evidence-based default source rate for voice-style files (median inferred 24,216.216 Hz over 213 SEQW/VSC pairs vs PAL 50 Hz VSC time base); runtime pitch engine (Csm_ ProcPitch -> sceSdSetParam, clamp 0x3FFF) can transpose (note, coarse s8 semitones, fine s8 1/64 semitone, E0/E1 channel, F0-F3 global, envelope, portamento, vibrato, random, flag-bit-6 root-key)",
+    "verified_loops": [
+     {
+      "loop_end_frame": 2789,
+      "loop_start_frame": 211,
+      "pcm_loop": [
+       5908,
+       78119
+      ],
+      "program": "0x0CE0",
+      "raw_bytes": 44672
+     },
+     {
+      "loop_end_frame": 835,
+      "loop_start_frame": 25,
+      "pcm_loop": [
+       700,
+       23407
+      ],
+      "program": "0x08C1",
+      "raw_bytes": 13376
+     }
+    ]
+   },
+   "unresolved_refs": [],
+   "wrapper_ancestry": [
+    "SEQW ADPCM blob"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "identifier",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00204870",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "factory stores res_id on wrapper object"
+    }
+   ],
+   "format_id": "RESOURCE_ID",
+   "header_fields": [],
+   "magic": {
+    "none": true
+   },
+   "name": "res_id 32-bit identifier bitfield",
+   "parser": {
+    "name": "so3_containers.py (res_id u16 split)",
+    "source": "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::parsers/so3_containers.py",
+    "version": "PASS_V1"
+   },
+   "prov": [
+    "03_SPECS/RESOURCE_ID_SPEC.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_RESOURCE_BUNDLE_PASS_V1.zip::child_inventory.csv",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/03_MASTER_REVIEW/THREAD_8_ATLAS_RETURN_REVIEW_2026-07-14.md",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/00_INSTRUCTIONS/PROMPT_FOR_ATLAS_V1_1_UPDATE_THREAD.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/00_INSTRUCTIONS/PROMPT_FOR_ATLAS_V1_1_1_CORRECTION_THREAD.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/02_MASTER_REVIEW/THREAD_8_ATLAS_V1_1_RETURN_REVIEW_2026-07-14.md"
+   ],
+   "sample_hashes": [],
+   "status": "bit-field layout verified; semantic labels strong-inference (V1.1); ATRC high16 exception found during consolidation",
+   "structures": {
+    "layout": {
+     "confidence": "VERIFIED",
+     "statement": "res_id is one u32 observed as two u16 fields: high16 and low16"
+    },
+    "observed_high16_values": {
+     "note": "interpreted as motion slots under structures.semantics (STRONG_INFERENCE)",
+     "values": [
+      "0x20",
+      "0x21",
+      "0x2A",
+      "0x2B",
+      "0x2C",
+      "0x2D",
+      "0x2E",
+      "0x82",
+      "0x226",
+      "0x227",
+      "0x229",
+      "0x22A",
+      "0x325",
+      "0x3E8",
+      "0x3E9",
+      "0x0090-0x00E0 range",
+      "0x321",
+      "0x322",
+      "0x32"
+     ]
+    },
+    "rules": [
+     {
+      "confidence": "VERIFIED",
+      "note": "held across every character group in both sample sets",
+      "rule": "CHAR children carry high16 = 0"
+     },
+     {
+      "confidence": "STRONG_INFERENCE",
+      "note": "downgraded from VERIFIED during consolidation: counterexample entry 2902 child 3 ATRC res_id 0x00079D63 (high16=0x0007); see conflict C-RESID-01",
+      "rule": "ATRC carries high16 = 0"
+     },
+     {
+      "confidence": "VERIFIED",
+      "note": "numeric bit-field pattern; held across both sample sets (V1.1 split of the former combined rule, see SUP-09)",
+      "rule": "ANIM res_id splits into two u16 fields (high16, low16); high16 takes small enumerable values, low16 repeats values seen on CHAR/ATRC children"
+     },
+     {
+      "confidence": "STRONG_INFERENCE",
+      "note": "semantic labels and runtime binding downgraded in V1.1: the exact lookup code is not isolated, and one ANIM with a foreign low16 exists (2902 child 6, res 0x00320001; O-RESID-02); see conflict C-RESID-01 area and U-RESID-01",
+      "rule": "high16 = motion slot, low16 = actor id; runtime binds anim -> skeleton by low16 match"
+     },
+     {
+      "confidence": "VERIFIED",
+      "rule": "map/scene tags (MAP/ATRM/MAPA/MMAP/SCE/MSE/ITEM) use res_id 0 or a small index; SMCD uses res_id = 1"
+     }
+    ],
+    "runtime_lookup": {
+     "claim": "runtime associates FAS/RTA to ChrElement by matching low16",
+     "confidence": "STRONG_INFERENCE",
+     "note": "exact lookup code not isolated"
+    },
+    "semantics": {
+     "confidence": "STRONG_INFERENCE",
+     "interpretation": "high16 \u2248 subtype / animation-slot id; low16 \u2248 actor / object / scene id",
+     "note": "semantic labels; runtime binding not isolated (U-RESID-01, U-ANIM-04). Pass code and graph fields expose these two u16s under the semantic names actor_id/anim_slot; those field names are retained in graph/pass data for stable-ID compatibility and are graded here, not asserted as mechanical fact (V1.1.1 correction, item B)"
+    }
+   },
+   "unresolved_refs": [
+    "U-ANIM-04",
+    "U-RESID-01"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE descriptor +0x04"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "geometry",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x002501B0",
+     "confidence": "STRONG_INFERENCE",
+     "module": "Field.bin",
+     "name": "MapManager (map renderer path)"
+    }
+   ],
+   "format_id": "RMAC",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'RMAC'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0x20 (V1: header_word)",
+     "name": "end_rel",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0x30 (V1: data_off to inner FPS)",
+     "name": "next_rel",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "~1.134 (single sample; naming withheld)",
+     "name": "scalar_a",
+     "offset": "0x10",
+     "size": 4,
+     "type": "f32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "2 in sample",
+     "name": "count",
+     "offset": "0x14",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "100.0",
+     "name": "scalar_b",
+     "offset": "0x18",
+     "size": 4,
+     "type": "f32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "0x4B7ED260 (large; offset or packed value)",
+     "name": "word_1c",
+     "offset": "0x1C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "UNRESOLVED",
+     "meaning": "0.5; further scalars incl. 1.0 to 0x2F",
+     "name": "scalar_c",
+     "offset": "0x20",
+     "size": 4,
+     "type": "f32"
+    }
+   ],
+   "magic": {
+    "ascii": "RMAC"
+   },
+   "name": "RMAC map geometry (chain descriptor + FPS content)",
+   "parser": {
+    "name": "so3_fps.py:parse_rmac (V1) + chain walker (V2)",
+    "source": "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::RMAC_FORMAT_SPEC_V2.md",
+    "version": "V2"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::RMAC_FORMAT_SPEC.md",
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::RMAC_FORMAT_SPEC_V2.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "MAP:RMAC",
+     "sha256": "b890fe5ebdc1f700",
+     "size": 616704,
+     "truncated": true
+    }
+   ],
+   "status": "single-sample header; embedded FPS verified; V1 wrapper model superseded by chain model",
+   "structures": {
+    "embedded_content_validation": "616704-byte MAP->RMAC sample: 21 FPS segments / 126 packets / 4638 verts / 2742 tris; strips 126/126; positions 4638/4638 in AABB; normals unit 4638/4638; UV in [0,1]; one non-ASCII chain block catalogued UNRESOLVED",
+    "occurrence": "3 RMAC blocks in the sample set: first-block descriptor on one MAP file; mid-chain blocks (0x20-0x30 bytes) in MAP files"
+   },
+   "unresolved_refs": [
+    "U-GEO-03",
+    "U-GEO-07"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE MAP child -> SLZ",
+    "FPS_CHAIN first block or mid-chain block"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "skeleton",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x002A3440",
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl",
+     "name": "ChrElement"
+    },
+    {
+     "address": "0x00218310",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "MapAtrManager"
+    },
+    {
+     "address": "0x002B48E0",
+     "confidence": "VERIFIED",
+     "module": "BattleMain.ovl",
+     "name": "AnimationKernel (via FAS)"
+    }
+   ],
+   "format_id": "RTA",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'RTA\\0'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "== decoded file length (every sample)",
+     "name": "total_size",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "2 in all samples",
+     "name": "version",
+     "offset": "0x10",
+     "size": 2,
+     "type": "u16"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "node_count",
+     "offset": "0x12",
+     "size": 2,
+     "type": "u16"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "nodes-1 for single-root; differs for forests",
+     "name": "aux_count",
+     "offset": "0x14",
+     "size": 2,
+     "type": "u16"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "= node_array_end - 16 in every sample; name table (+lead bounds qword) per V2",
+     "name": "off1",
+     "offset": "0x18",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "STRONG_INFERENCE",
+     "meaning": "attachment/marker set per V2 (V1: name/string block)",
+     "name": "off2",
+     "offset": "0x1C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "STRONG_INFERENCE",
+     "meaning": "bounds/pivot; 4th = 1.0",
+     "name": "vector_a",
+     "offset": "0x20",
+     "size": 16,
+     "type": "f32[4]"
+    },
+    {
+     "confidence": "STRONG_INFERENCE",
+     "meaning": "bounds/pivot; 4th = 1.0",
+     "name": "vector_b",
+     "offset": "0x30",
+     "size": 16,
+     "type": "f32[4]"
+    }
+   ],
+   "magic": {
+    "ascii": "RTA\\0"
+   },
+   "name": "RTA node hierarchy / skeleton",
+   "parser": {
+    "name": "so3_rta.py",
+    "source": "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::parsers/so3_rta.py",
+    "version": "V1 records + V2 aux"
+   },
+   "prov": [
+    "03_SPECS/RTA_FORMAT_SPEC_V1.md",
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::RTA_FORMAT_SPEC_V2.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1(1)__ATLAS_UPDATE.json"
+   ],
+   "sample_hashes": [
+    {
+     "key": "ATRC:RTA actor 0xF800 (1082)",
+     "sha256": "0f6f52aa1f840042",
+     "size": 288,
+     "truncated": true
+    },
+    {
+     "key": "ATRM:RTA",
+     "sha256": "1fb7b6de44b99e19",
+     "size": 5024,
+     "truncated": true
+    }
+   ],
+   "status": "node records verified (12 samples); off1 name table verified in V2; off2 attachment set strong-inference",
+   "structures": {
+    "forests": "multi-root map hierarchies are forests (e.g. 1944 ATRM: 155 nodes / 41 roots); cross-root linkage lives in off1 block (U-ANIM-02)",
+    "names": "3ds Max Biped rigs for characters (Root, Bip01, Bip01 Pelvis, Bip01 Spine, Bip01 L Thigh, ...); block/dummy nodes for maps (PBLOCKN41, DummyBox01, COVER, Box)",
+    "node_record": {
+     "+0x00": "u32 f0 (per-node data offset; 0 = identity)",
+     "+0x08": "u8[2] flags (0x03 0x03 in samples)",
+     "+0x0A": "u16 flag2 (0x0020 or 0x0000; role UNRESOLVED)",
+     "+0x0C": "i16 index",
+     "+0x0E": "i16 parent (-1 / 0xFFFF = root)",
+     "+0x10": "f32[4] auxiliary vector (x,y,z,w); original RTA binder 0x0045B080 does not load it as a transform; semantic role remains UNRESOLVED (V5.12.8 pass 6.4 correction)",
+     "confidence": "VERIFIED",
+     "size": "0x20, array from 0x40"
+    },
+    "off1_v2": "one qword f32[4] (44.2,-4.75,-23.8,49.0 on 0x0BC0 - bounds-centre+radius HYPOTHESIS) then NUL-terminated node names in node order (cp932 for Japanese names); names equal FAS channel names exactly (binding VERIFIED); occasional interleaved f32 (0.48) - per-node scalar HYPOTHESIS",
+    "off2_v2": "16-byte group name ('Hand') then 32-byte records {f32 x,y,z, u16 0x2000, u16 0x8000|node_idx}{f32 a,b,c, f32 1.0} - attachment points bound to nodes; second vector local orientation/offset (HYPOTHESIS)"
+   },
+   "unresolved_refs": [
+    "U-ANIM-02",
+    "U-ANIM-03"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE ATRC/ATRM child -> SLZ"
+   ]
+  },
+  {
+   "aliases": [
+    "script"
+   ],
+   "category": "script",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00248D80",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "Scenario"
+    },
+    {
+     "address": "0x00235940",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "SceEvent"
+    },
+    {
+     "address": "0x0028F8B0",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "SceSystem"
+    }
+   ],
+   "format_id": "SCE_SCRIPT",
+   "header_fields": [],
+   "magic": {
+    "note": "decoded form of SCE children; version=1 header, command stream at 0x20"
+   },
+   "name": "SCE event script",
+   "parser": null,
+   "prov": [
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::ITEM_SCE_SMCD_CHECKPOINT.md",
+    "04_ENGINE/ENGINE_ARCHITECTURE_V3.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "SCE:script",
+     "sha256": "f7347bb16766d74f",
+     "size": 4080,
+     "truncated": true
+    }
+   ],
+   "status": "header verified; opcode table deferred",
+   "structures": {
+    "note": "header (version=1) and command stream @0x20 verified; per-opcode operand layout deferred (U-MISC-02)"
+   },
+   "unresolved_refs": [
+    "U-MISC-02"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE SCE child -> SLZ"
+   ]
+  },
+  {
+   "aliases": [
+    "resource bundle",
+    "form B"
+   ],
+   "category": "container",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00204300",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "ReadPackingData ctor (installs mgr vtable 0x0016C730)"
+    },
+    {
+     "address": "0x00204870",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "per-child object factory (16-byte stride; tag stored at obj+0x1C)"
+    },
+    {
+     "address": "0x00250680",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "tag dispatcher (if-else ladder)"
+    },
+    {
+     "address": "0x00250680->installer",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "installer 0x00250680 walks bundle, dispatches by tag"
+    }
+   ],
+   "distinct_from": "PACK_ARCHIVE",
+   "format_id": "SEMANTIC_BUNDLE",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0",
+     "name": "reserved",
+     "offset": "0x00",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "child_count",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "== 0x10*(child_count+1); held on every sample",
+     "name": "header_size",
+     "offset": "0x08",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0",
+     "name": "reserved",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "descriptors",
+     "offset": "0x10",
+     "size": "16*count",
+     "type": "descriptor[]"
+    }
+   ],
+   "magic": {
+    "none": true,
+    "note": "header is all integers; reserved0/count/header_size/reserved0"
+   },
+   "name": "semantic resource bundle (16-byte descriptors)",
+   "parser": {
+    "name": "so3_containers.py:parse_bundle + so3_resource_bundle_parser_v1.py",
+    "source": "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::parsers/so3_containers.py",
+    "version": "PASS_V1"
+   },
+   "prov": [
+    "03_SPECS/CONTAINER_DISPATCH_MAP.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_RESOURCE_BUNDLE_PASS_V1.zip::RESOURCE_BUNDLE_FORMAT_SPEC_V1.md",
+    "03_SPECS/RESOURCE_ID_SPEC.md"
+   ],
+   "sample_hashes": [],
+   "status": "verified incl. engine consumer chain",
+   "structures": {
+    "contiguity": "child[i].offset + child[i].size == child[i+1].offset in every verified sample; tail is zero sector padding",
+    "descriptor": {
+     "+0x00": "u32 tag (reversed-4CC ASCII as u32le)",
+     "+0x04": "u32 res_id (see RESOURCE_ID)",
+     "+0x08": "u32 stored_size",
+     "+0x0C": "u32 child_offset (from bundle start)"
+    },
+    "dispatch": "see containers.tag_dispatch",
+    "multi_bundle_allocations": "entry 1944 = three sector-aligned (0x800) bundles at 0x000000 / 0x0C6000 / 0x272800; parsers must scan past the first bundle",
+    "raw_children_legal": "raw (uncompressed) children are legal (entry 3123 raw SEQW under MSE); zero-length children legal (entry 1637 empty MSE)"
+   },
+   "unresolved_refs": [
+    "U-CONT-02",
+    "U-CONT-03"
+   ],
+   "wrapper_ancestry": [
+    "PACK_ARCHIVE -> SLZ child (decompressed)",
+    "hidden-table allocation (direct)"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "audio",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00105F30",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "EE SEQW parser A (Csi/Csd client)"
+    },
+    {
+     "address": "0x00106100",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "EE SEQW parser B"
+    },
+    {
+     "address": "0x00106720",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "EE SEQW parser C"
+    }
+   ],
+   "format_id": "SEQW",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'SEQW'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "offset of 'WAV ' chunk",
+     "name": "wav_offset",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "used sequence bytes from 0x20",
+     "name": "seq_used",
+     "offset": "0x08",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "descriptor-table bytes; mirrors WAV+0x0C",
+     "name": "desc_bytes",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "used ADPCM bytes; mirrors WAV+0x14",
+     "name": "adpcm_used",
+     "offset": "0x14",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "HYPOTHESIS",
+     "meaning": "container flags / default-ID composite; partly understood",
+     "name": "flags_default_id",
+     "offset": "0x18",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "see SEQUENCE_BYTECODE_SPEC",
+     "name": "sequence_area",
+     "offset": "0x20",
+     "size": null,
+     "type": "bytes"
+    }
+   ],
+   "known_tools": {
+    "exporters": [
+     "so3_audio_tool_v3.py (VAG->WAV with smpl loop chunk; loop preview)"
+    ]
+   },
+   "magic": {
+    "ascii": "SEQW"
+   },
+   "name": "SEQW audio sequence + wave container",
+   "parser": {
+    "name": "so3_audio_tool_v3.py",
+    "source": "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::parser/so3_audio_tool_v3.py",
+    "version": "V3"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/SEQW_FORMAT_SPEC_V3.md",
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/LOOP_BEHAVIOR.md",
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::analysis/SUMMARY.json",
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "MSE:SEQW (3121 scene bank)",
+     "sha256": "e3df685e1648afd1",
+     "size": 36480,
+     "truncated": true
+    }
+   ],
+   "status": "core container / sequence / synthesis / lip-state / pitch / loop behavior recovered (226/226 parse)",
+   "structures": {
+    "corpus": {
+     "descriptor_count": 238,
+     "looped_samples_validated": 2,
+     "passed": 226,
+     "sequence_opcode_groups": 91,
+     "seqw_count": 226,
+     "vsc_blocks": 223
+    },
+    "lip_chunk": "'LIP ' at wav_offset + size_to_lip; empty valid; populated = one or more VSC blocks",
+    "runtime_flow": "SEQW sequence -> Csd_ (timing/notes/loops/program select) -> Csm_ (voice alloc/gain/pitch/envelopes) -> SPU2 -> ADPCM playback; EE reads VSC separately for lip sync",
+    "sample_boundaries": "descriptor stores start offset relative to ADPCM blob; length = next_start - start (last: audio_used - start)",
+    "sequence_loops": "B0 7C push loop start / B0 7D loop end + play count (0 = indefinite); 4-level nest; CsdBreakLoop exits at next loop end (sequence layer only)",
+    "wav_chunk": "'WAV ' {size_to_lip, adpcm_off, desc_used, adpcm_alloc, adpcm_used, flags(0x00010001 single-program banks / 0 multi-program scene bank)}; program/timber descriptors at +0x20 (0x1C common x227, 0x34 extended x11)"
+   },
+   "unresolved_refs": [
+    "U-AUD-01",
+    "U-AUD-02",
+    "U-AUD-03"
+   ],
+   "wrapper_ancestry": [
+    "SEQW_BANK child",
+    "SEMANTIC_BUNDLE MSE child (SLZ or raw)"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "container",
+   "confidence": "VERIFIED",
+   "consumers": [],
+   "format_id": "SEQW_BANK",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "child_count",
+     "offset": "0x00",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "u16 start_sector, u16 sector_count (sector = 0x800; table in sector 0; first child at sector 1)",
+     "name": "sector_table",
+     "offset": "0x04",
+     "size": null,
+     "type": "pairs"
+    }
+   ],
+   "magic": {
+    "none": true,
+    "note": "no magic; u32 child count then {u16 start_sector, u16 sector_count} pairs"
+   },
+   "name": "SEQW sector archive (bank of SEQW files)",
+   "parser": {
+    "name": "so3_audio_tool_v3.py",
+    "source": "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::parser/so3_audio_tool_v3.py",
+    "version": "V3"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/SEQW_BANK_FORMAT_SPEC.md"
+   ],
+   "sample_hashes": [],
+   "status": "verified on 9 archives / 221 children",
+   "structures": {
+    "layout": "children are contiguous SEQW files; final child ends at the allocation boundary in every validated archive"
+   },
+   "unresolved_refs": [],
+   "wrapper_ancestry": [
+    "hidden-table allocation"
+   ]
+  },
+  {
+   "aliases": [
+    "SLE2",
+    "SLE3"
+   ],
+   "category": "compression",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00102540",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "decompression dispatcher"
+    }
+   ],
+   "format_id": "SLE",
+   "magic": {
+    "ascii": "SLE",
+    "note": "variant digit follows"
+   },
+   "name": "SLE encrypted/compressed stream",
+   "parser": null,
+   "prov": [
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+    "02_CATALOGUES/SO3_MWO3_MODULE_SCAN.tsv",
+    "05_SOURCE_PASSES/SO3_MWO3_LOADER_FINAL.zip::MWO3_LOADER_ANALYSIS.md"
+   ],
+   "sample_hashes": [],
+   "status": "substantially solved incl. final SLE key (prior verified work)",
+   "unresolved_refs": [],
+   "wrapper_ancestry": [
+    "hidden-table allocation"
+   ]
+  },
+  {
+   "aliases": [
+    "SLZ0",
+    "SLZ1",
+    "SLZ2",
+    "SLZ3"
+   ],
+   "category": "compression",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00102540",
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "decompression dispatcher"
+    }
+   ],
+   "format_id": "SLZ",
+   "magic": {
+    "ascii": "SLZ",
+    "note": "variant digit follows (0-3); stored_sig examples 534c5a01/02/03"
+   },
+   "name": "SLZ compressed stream",
+   "parser": null,
+   "prov": [
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+    "05_SOURCE_PASSES/SO3_MWO3_LOADER_FINAL.zip::MWO3_LOADER_ANALYSIS.md",
+    "05_SOURCE_PASSES/SO3_RESOURCE_BUNDLE_PASS_V1.zip::RESOURCE_BUNDLE_FORMAT_SPEC_V1.md"
+   ],
+   "sample_hashes": [],
+   "status": "substantially solved (prior verified work; decoder not re-derived in this handoff)",
+   "unresolved_refs": [],
+   "wrapper_ancestry": [
+    "PACK_ARCHIVE child",
+    "SEMANTIC_BUNDLE child"
+   ]
+  },
+  {
+   "aliases": [
+    "so3mclib_data"
+   ],
+   "category": "data",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00204870",
+     "confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "ReadPackingData factory"
+    }
+   ],
+   "format_id": "SMCD",
+   "header_fields": [],
+   "magic": {
+    "note": "carries 'so3mclib 1.80i' banner + offset table"
+   },
+   "name": "SMCD so3mclib serialized data blob",
+   "parser": null,
+   "prov": [
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::ITEM_SCE_SMCD_CHECKPOINT.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "SMCD",
+     "sha256": "29a3ac3052202187",
+     "size": 9216,
+     "truncated": true
+    }
+   ],
+   "status": "banner + offset table verified; section semantics deferred",
+   "structures": {
+    "note": "so3mclib 1.80i banner + indexed section table verified; per-section meaning deferred (U-MISC-03); res_id = 1 consistently"
+   },
+   "unresolved_refs": [
+    "U-MISC-03"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE SMCD child -> SLZ (via ReadPackingData factory, not the ladder)"
+   ]
+  },
+  {
+   "aliases": [
+    "so3_obfuscated_mpeg_ps",
+    "77522267B4EFDB84 family"
+   ],
+   "category": "video-container",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x00288830",
+     "confidence": "UNRESOLVED",
+     "identity_confidence": "VERIFIED",
+     "module": "Field.bin",
+     "name": "MovieManager (drives Lib IPU/MPEG)",
+     "note": "symbol identity/role verified (see engine.symbols entry for this address); the assertion that this function consumes SO3_MOVIE_CARRIER specifically is exactly U-VID-03 and stays UNRESOLVED until the indirect edge or a runtime capture exists (V1.1.1 correction, item C: identity and carrier-binding confidence must not be conflated into a single VERIFIED grade)"
+    },
+    {
+     "address": null,
+     "confidence": "UNRESOLVED",
+     "module": "Lib.bin",
+     "name": "IPU MPEG-2 decode path (MPEG2_IPU_VIDEO)",
+     "note": "the carrier's video PES carries MPEG-2 content that the IPU path is known to decode (STRONG_INFERENCE pipeline match), but the direct feed edge from carrier to this path is unproven; see U-VID-03",
+     "pipeline_inference": "STRONG_INFERENCE"
+    }
+   ],
+   "format_id": "SO3_MOVIE_CARRIER",
+   "header_fields": [],
+   "magic": {
+    "bytes": "77 52 22 67 B4 EF DB 84",
+    "note": "8-byte raw family marker (entry 21); the stable per-frame raw prefix is only the first 6 bytes 77 52 22 67 B4 EF - bytes 6+ vary per frame and MUST NOT be treated as fixed magic beyond candidate selection"
+   },
+   "media_kind": "video",
+   "name": "SO3 obfuscated MPEG-PS/MPEG-2 movie carrier (family 77522267B4EFDB84)",
+   "parser": {
+    "name": "structural probe + detector gates (MOVIE_CONTAINER_SPEC)",
+    "source": "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/03_LATEST_RESULTS/SO3_CUTSCENE_CONTAINER_PASS_V1.zip::MOVIE_CONTAINER_SPEC.md",
+    "version": "CUTSCENE_CONTAINER_PASS_V1"
+   },
+   "playable": false,
+   "previous_classification": "unknown_header_cluster (superseded, SUP-10)",
+   "prov": [
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/04_QUALIFIED_UPDATES/THREAD_6_MASTER_QUALIFIED_UPDATE.json",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/02_MASTER_REVIEWS/THREAD_6_RETURN_REVIEW_2026-07-14.md",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/03_LATEST_RESULTS/SO3_CUTSCENE_CONTAINER_PASS_V1.zip::MOVIE_CONTAINER_SPEC.md",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/03_LATEST_RESULTS/SO3_CUTSCENE_CONTAINER_PASS_V1.zip::ATLAS_UPDATE.json",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/03_LATEST_RESULTS/SO3_CUTSCENE_CONTAINER_PASS_V1.zip::VIDEO_CANDIDATE_INVENTORY.json",
+    "SO3_ATLAS_V1_1_UPDATE_HANDOFF_V1/02_CURRENT_MASTER/SO3_MASTER_THREAD_V2_2_UPDATE.zip::SO3_MASTER_THREAD_V2_2_UPDATE/01_MASTER_STATE/CANONICAL_PROJECT_STATE_2026-07-14.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/00_INSTRUCTIONS/PROMPT_FOR_ATLAS_V1_1_1_CORRECTION_THREAD.md",
+    "SO3_ATLAS_V1_1_1_CORRECTION_HANDOFF_V1/02_MASTER_REVIEW/THREAD_8_ATLAS_V1_1_RETURN_REVIEW_2026-07-14.md"
+   ],
+   "related_formats": [
+    "MPEG2_IPU_VIDEO"
+   ],
+   "sample_hashes": [
+    {
+     "key": "entry 21 raw allocation",
+     "sha256": "3cd0fadc4361fdc8c633f587a3f9daeb4db4ae4ada32bba77c87c8a49bb885fc",
+     "size": 3180544
+    },
+    {
+     "key": "entry 21 diagnostic normalized view",
+     "sha256": "b0823b589f34fd2441905edcf065adb710a2bf547ff82b183f5fcab7414b9e39",
+     "size": 3180544
+    },
+    {
+     "key": "entry 21 diagnostic 2048B mask",
+     "sha256": "60bffcf7d4f129b3be96c92bd92ea3150fda6246f10648aca7bd3174837b319c",
+     "size": 2048
+    }
+   ],
+   "status": "structurally supported carrier checkpoint (entry 21); playable:false; exact payload transform VERIFIED: plain64 = ((carrier64 XOR lane_key64) - 57 - row_index) mod 2^64 over 64-byte rows (8 LE u64 lanes, row period 32); entries 15 and 21 fully decoded with zero ffmpeg errors (CUTSCENE_TRANSFORM_UPDATE V2)",
+   "structures": {
+    "diagnostic_probe": {
+     "caution": "STRUCTURAL PROBE ONLY - explicitly NOT the engine's proven decryption/transform algorithm; picture payload remains damaged; must not be exported as playable",
+     "confidence": "VERIFIED (mask reproduces the supplied structural-probe head byte-exactly)",
+     "mask_sha256": "60bffcf7d4f129b3be96c92bd92ea3150fda6246f10648aca7bd3174837b319c",
+     "normalized_view_sha256": "b0823b589f34fd2441905edcf065adb710a2bf547ff82b183f5fcab7414b9e39",
+     "procedure": "entry 21: select repeated sector group 665/1549/1551; rotate the 2,048-byte sector left by 64; constrain mask byte 0x10 so start-code byte is 0x01 and bytes 0x20/0x21 so first video PES is E0 0F; XOR the 2,048-byte mask repeatedly over the allocation"
+    },
+    "evidence_scope": {
+     "strong_inference_pending_raw_iso_reproduction": {
+      "complete_frames": 194,
+      "diagnostic_mask_rotation": 64,
+      "duplicate_sectors": [
+       665,
+       1549,
+       1551
+      ],
+      "entry_21_raw": "3,180,544 bytes / 1,553 sectors",
+      "length_walked_video_pes_packets": 725,
+      "pack_headers": 194,
+      "reason": "complete raw entry-21 allocation absent from the return; full run not independently rerunnable",
+      "reconstructed_video_pes_start_codes": 750,
+      "recurring_prefix_hits": 194,
+      "valid_frames": 169
+     },
+     "unresolved": [
+      "bit-exact payload transform",
+      "clean deterministic demux",
+      "audio stream presence",
+      "complete 21-member allocation inventory",
+      "Field-to-Lib indirect consumer edge",
+      "runtime pre-transform/post-transform capture"
+     ],
+     "verified_from_included_vectors": [
+      "2,048-byte diagnostic mask XORed over the supplied 4,096-byte raw head reproduces the structural-probe head exactly",
+      "16,384-byte structural-probe head begins with pack (0x000001BA), system (0x000001BB), video PES (0x000001E0) and MPEG-2 sequence (0x000001B3) syntax",
+      "one pack + one system header + four length-walked video PES packets ending exactly at the 0x4000 frame boundary",
+      "FFprobe identifies the included frame as mpeg/mpeg2video",
+      "two negative detector cases (marker-only; aligned random) rejected",
+      "SLES_820.28 contains the reported libcdvd identity / disc-reader diagnostic strings at 0x46080 and 0x4EB60-0x4EBE0"
+     ]
+    },
+    "family_inventory": {
+     "known_allocation_entries": [
+      12,
+      19,
+      20,
+      21,
+      22,
+      23
+     ],
+     "members_with_allocation_metadata": 6,
+     "members_without_allocation_metadata": 15,
+     "metadata_complete": false,
+     "reported_occurrences": 21,
+     "verified_sample_entries": [
+      21
+     ]
+    },
+    "framing": {
+     "confidence": "VERIFIED (included frame) / STRONG_INFERENCE (full-entry counts)",
+     "disc_allocation_unit": "0x800 bytes",
+     "entry_21_coverage": "194 complete frames plus a final 0x800-byte tail",
+     "frame_interval": "0x4000 bytes (8 sectors)"
+    },
+    "mpeg_layer": {
+     "audio": "no clean audio PES stream independently validated",
+     "ffprobe": "format mpeg, codec mpeg2video (included frame); missing/invalid picture structure -> playable:false",
+     "pack_header": "0xBA (program-stream pack boundary)",
+     "sequence_header": "0xB3 (MPEG-2 elementary syntax)",
+     "system_header": "0xBB",
+     "video_pes": "0xE0 (MPEG-2 video carrier)"
+    },
+    "recognition_gates": [
+     "sector aligned and at least four complete 0x4000 frames",
+     "8-byte family marker selects the candidate",
+     "6-byte prefix recurs at >= 95% of complete frame boundaries",
+     "an exact duplicate sector can be used as a rotated XOR probe",
+     "probe reconstructs 00 00 01 BA at >= 95% of complete frames",
+     "MPEG system/video-PES packet lengths walk exactly to frame boundaries in >= 80% of complete frames",
+     "the marker alone is insufficient"
+    ],
+    "rejected_interpretations": [
+     "raw elementary MPEG-2 (no raw signatures)",
+     "simple word endian swap",
+     "fixed XOR 0xFF / nibble swap / bit reversal",
+     "ordinary PSS ready for extraction",
+     "independent index table in entry 21 (insufficient data)"
+    ]
+   },
+   "unresolved_refs": [
+    "U-VID-01",
+    "U-VID-03",
+    "U-EXP-07"
+   ],
+   "wrapper_ancestry": [
+    "hidden-table allocation (raw, obfuscated)"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "stream",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x0041ADE0",
+     "confidence": "VERIFIED",
+     "module": "Lib.bin",
+     "name": "normal VIF1 DMA leaf (ptr+QWC, CHCR 0x101)"
+    },
+    {
+     "address": "0x0041D1C0",
+     "confidence": "VERIFIED",
+     "module": "Lib.bin",
+     "name": "normal VIF1 DMA leaf"
+    },
+    {
+     "address": "0x0041F2B0",
+     "confidence": "VERIFIED",
+     "module": "Lib.bin",
+     "name": "normal VIF1 DMA leaf"
+    },
+    {
+     "address": "0x0041A0F0",
+     "confidence": "VERIFIED",
+     "module": "Lib.bin",
+     "name": "source-chain VIF1 DMA leaf (TADR, CHCR 0x105)"
+    }
+   ],
+   "format_id": "VIF_RESOURCE_STREAM",
+   "header_fields": [],
+   "magic": {
+    "none": true
+   },
+   "name": "raw VIF1 resource input stream (FPS payload)",
+   "parser": {
+    "name": "so3_packet_trace.py (so3trace)",
+    "source": "05_SOURCE_PASSES/SO3_VIF_GIF_PACKET_ANALYZER_PASS_V1.zip::ANALYSIS_REPORT.md",
+    "version": "V1"
+   },
+   "prov": [
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_GIF_PACKET_ANALYZER_PASS_V1(1)__ATLAS_UPDATE.json",
+    "05_SOURCE_PASSES/SO3_VIF_GIF_PACKET_ANALYZER_PASS_V1.zip::VIF_COMMAND_SPEC.md",
+    "05_SOURCE_PASSES/SO3_VIF_GIF_PACKET_ANALYZER_PASS_V1.zip::UNPACK_STATE_MODEL.md",
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md"
+   ],
+   "sample_hashes": [],
+   "status": "225/225 streams consume exactly; command coverage census verified",
+   "structures": {
+    "absent_commands": {
+     "confidence": "VERIFIED",
+     "list": [
+      "OFFSET",
+      "BASE",
+      "ITOP",
+      "STMOD",
+      "MSKPATH3",
+      "MARK",
+      "FLUSHE",
+      "FLUSH",
+      "FLUSHA",
+      "MSCAL",
+      "MSCALF",
+      "MSCNT",
+      "STCOL",
+      "MPG",
+      "DIRECT",
+      "DIRECTHL"
+     ],
+     "note": "verified absent from the 225 supplied resource streams; fixture-tested in the parser",
+     "polarity": "absent"
+    },
+    "command_coverage": {
+     "NOP": 39046,
+     "S-8": 3611,
+     "S-8 masked": 2594,
+     "STCYCL": 7222,
+     "STMASK": 5188,
+     "STROW": 5188,
+     "V2-16": 100,
+     "V2-16 masked": 3325,
+     "V3-16": 1235,
+     "V3-32": 3271,
+     "V4-16": 4704,
+     "V4-32": 2929,
+     "V4-8": 1030
+    },
+    "cycle_modes": {
+     "fill": 0,
+     "normal": 8641,
+     "skip": 14158
+    },
+    "event_census": {
+     "events": 79443,
+     "unpack_events": 22799,
+     "unsupported_commands": 0,
+     "warnings": 0
+    },
+    "map_directhl_exception": "one MAP DIRECTHL 0x801-qword payload (39,664B sample) = GS image blit inside the stream; target regs not decoded (U-GEO-11)",
+    "masks_observed": {
+     "0x15151515": 6,
+     "0x40404040": 947,
+     "0x50505050": 2594,
+     "0x54545454": 1628,
+     "0x55555555": 13
+    },
+    "nature": "static FPS streams are raw VIF input buffers, NOT serialized EE DMA chains (0 selected chains; 53,631 tag-shaped candidates rejected with reasons)",
+    "unpack_rule": "all 22,799 UNPACKs have FLG=1 -> destination TOPS + (IMM & 0x3FF); relative vector range 0..204; absolute VU addresses UNRESOLVED without runtime TOPS"
+   },
+   "unresolved_refs": [
+    "U-RT-03",
+    "U-RT-04"
+   ],
+   "wrapper_ancestry": [
+    "FPS_SEGMENT +0x60"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "audio-metadata",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": null,
+     "confidence": "VERIFIED",
+     "module": "SLES_820.28",
+     "name": "EE VSC state lookup"
+    }
+   ],
+   "format_id": "VSC",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'VSC '",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "",
+     "name": "total_size",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "associated sound/sample ID",
+     "name": "sound_id",
+     "offset": "0x08",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "total - 0x10",
+     "name": "payload_size",
+     "offset": "0x10",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "timestamp/state entries",
+     "name": "count",
+     "offset": "0x14",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "timestamp array offset rel VSC+0x10 (normally 0x10)",
+     "name": "ts_off",
+     "offset": "0x18",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "state array offset rel VSC+0x10 (normally 0x10+count*2)",
+     "name": "state_off",
+     "offset": "0x1C",
+     "size": 4,
+     "type": "u32"
+    }
+   ],
+   "magic": {
+    "ascii": "VSC "
+   },
+   "name": "VSC lip-synchronization state table",
+   "parser": {
+    "name": "so3_audio_tool_v3.py",
+    "source": "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::parser/so3_audio_tool_v3.py",
+    "version": "V3"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::reports/VSC_FORMAT_SPEC.md",
+    "05_SOURCE_PASSES/SO3_AUDIO_FORMAT_PASS_V3.zip::analysis/SUMMARY.json"
+   ],
+   "sample_hashes": [],
+   "status": "verified (223 blocks); earlier 'event command stream' label corrected",
+   "structures": {
+    "arrays": "u16le[count] timestamps + u8[count] state indices; observed states 0-7",
+    "lookup": "EE: rounded_time = int(t+3.0); if count<2 return 0; first i>=1 with ts[i]>=rounded returns states[i-1]; else 0. The +3 bias is executable behavior.",
+    "state_census": {
+     "0": 1884,
+     "1": 454,
+     "2": 555,
+     "3": 328,
+     "4": 613,
+     "5": 375,
+     "6": 260,
+     "7": 759
+    },
+    "state_semantics": "numeric facial-state indices only; phoneme / mouth-shape labels NOT encoded and not presently verifiable (U-AUD-04)"
+   },
+   "unresolved_refs": [
+    "U-AUD-04"
+   ],
+   "wrapper_ancestry": [
+    "SEQW LIP chunk"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "geometry",
+   "confidence": "VERIFIED",
+   "consumers": [
+    {
+     "address": "0x002A3440",
+     "confidence": "STRONG_INFERENCE",
+     "module": "BattleMain.ovl",
+     "name": "ChrElement"
+    }
+   ],
+   "export_gate": "skinned export implementation remains withheld; packaged one-matrix FIXED matrix-address to IDOM-palette mapping is execution-verified, while unsupported renderer profiles and browser deformation remain separate gates",
+   "format_id": "XBDC",
+   "header_fields": [
+    {
+     "confidence": "VERIFIED",
+     "meaning": "'XBDC'",
+     "name": "magic",
+     "offset": "0x00",
+     "size": 4,
+     "type": "char[4]"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0x10.. (V1 read this as header_word 0x10)",
+     "name": "end_rel",
+     "offset": "0x04",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "VERIFIED",
+     "meaning": "0x20 (V1 read this as data_off to inner FPS)",
+     "name": "next_rel",
+     "offset": "0x0C",
+     "size": 4,
+     "type": "u32"
+    },
+    {
+     "confidence": "HYPOTHESIS",
+     "meaning": "(19.6, 39.8, 31.0, 0) on CHAR 0x0BC0 - reference point / bind anchor",
+     "name": "payload",
+     "offset": "0x10",
+     "size": 16,
+     "type": "f32[4]"
+    }
+   ],
+   "magic": {
+    "ascii": "XBDC"
+   },
+   "name": "XBDC skinned character geometry (chain descriptor + FIXED-profile FPS)",
+   "parser": {
+    "name": "so3_fps.py:parse_xbdc (V1) + chain walker (V2)",
+    "source": "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::XBDC_FORMAT_SPEC_V2.md",
+    "version": "V2"
+   },
+   "prov": [
+    "05_SOURCE_PASSES/SO3_PACK_MODEL_FORMAT_PASS_V1.zip::XBDC_FORMAT_SPEC.md",
+    "05_SOURCE_PASSES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1.zip::XBDC_FORMAT_SPEC_V2.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_VIF_VU1_FAS_FORMAT_PASS_V1(1)__ATLAS_UPDATE.json",
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md"
+   ],
+   "sample_hashes": [
+    {
+     "key": "CHAR:XBDC actor 0x0BC0",
+     "sha256": "f4aa0e83f1df38f1",
+     "size": 133600,
+     "truncated": true
+    }
+   ],
+   "status": "skinning encoding and packaged one-matrix FIXED address-to-IDOM palette binding execution-verified; V1 wrapper model superseded by chain model; blended or unsupported renderer profiles remain unresolved",
+   "structures": {
+    "inline_texel_blobs": "RGBA runs with A=0x80, headers {0x4080,0x00080000} between VIF and FIS sections - pixel data VERIFIED, container framing UNRESOLVED",
+    "skinning": {
+     "confidence": "VERIFIED (encoding); VU0 IDOM composition and DMA/VIF palette shape EXECUTION-VERIFIED (V5.12.8 pass 3); FIXED position w to IDOM palette slot and original VU1 one-matrix normal/position transform EXECUTION-VERIFIED across all 4,712 real vertices of packaged actors 0x08FF/0x0BC0 (V5.12.8 pass 6.3); blended weights and unsupported renderer profiles remain withheld",
+     "encoding": "FIXED vertex profile: pos s16 12.4 fixed (/16); normals s16/4096 exactly unit; slot3.w = VU data qword address of the vertex's bone matrix (observed 656,660,664,...; stride 4 qwords = one 4x4 per bone; palette windowed per packet)",
+     "weights": "NO per-vertex weight stream exists; rigid single-matrix binding per vertex"
+    },
+    "sub_model_descriptors": "additional small XBDC blocks (0x20-0x30B) inside large multi-model chains (CHAR 0x0003: 13, 0x0191: 8, 0x012E: 8) - per-sub-model descriptors (STRONG_INFERENCE)",
+    "validation_reference": "CHAR 0x0BC0: 113 packets, 2524 verts, 1476 tris; strips 113/113; positions 2524/2524 in AABB; normals unit 2524/2524; matrix window consistent with <=22 RTA nodes x 4 qwords"
+   },
+   "unresolved_refs": [
+    "U-GEO-01",
+    "U-GEO-02",
+    "U-GEO-09"
+   ],
+   "wrapper_ancestry": [
+    "SEMANTIC_BUNDLE CHAR child -> SLZ",
+    "FPS_CHAIN first block"
+   ]
+  },
+  {
+   "aliases": [],
+   "category": "compression",
+   "confidence": "VERIFIED",
+   "consumers": [],
+   "format_id": "ZLS",
+   "magic": {
+    "ascii": "ZLS"
+   },
+   "name": "ZLS compressed stream",
+   "parser": null,
+   "prov": [
+    "01_CANONICAL_STATE/CANONICAL_PROJECT_STATE_2026-07-13.md",
+    "02_CATALOGUES/SO3_MEDIA_CATALOGUE.json"
+   ],
+   "sample_hashes": [],
+   "status": "substantially solved (prior verified work)",
+   "unresolved_refs": [],
+   "wrapper_ancestry": [
+    "hidden-table allocation"
+   ]
+  }
+ ],
+ "generator": "SO3_ATLAS_REMERGE_V1/merge_atlas_updates.py",
+ "registry_id": "SO3_FORMAT_REGISTRY",
+ "tag_dispatch": {
+  "prov": [
+   "03_SPECS/CONTAINER_DISPATCH_MAP.md",
+   "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json",
+   "05_SOURCE_PASSES/SO3_RESOURCE_BUNDLE_PASS_V1.zip::RESOURCE_BUNDLE_FORMAT_SPEC_V1.md"
+  ],
+  "style": {
+   "confidence": "VERIFIED",
+   "dispatcher_va": "0x00250680",
+   "not": [
+    "jump_table",
+    "numeric_enum",
+    "vtable_lookup"
+   ],
+   "prov": [
+    "03_SPECS/CONTAINER_DISPATCH_MAP.md",
+    "06_EXTRACTED_ATLAS_UPDATES/SO3_PACK_MODEL_FORMAT_PASS_V1__ATLAS_UPDATE.json"
+   ],
+   "style": "if-else ladder comparing reversed-4CC tag as u32 little-endian",
+   "tag_copy": "tag duplicated onto per-child wrapper object at +0x1C for later virtual dispatch"
+  },
+  "tags": [
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x002510E0",
+    "inner": {
+     "FPS": 7,
+     "XBDC": 2
+    },
+    "role": "character geometry",
+    "tag": "CHAR",
+    "u32": "0x43484152"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x002510E0",
+    "inner": {
+     "RTA": 8
+    },
+    "note": "handler shared with CHAR",
+    "role": "character skeleton / attributes",
+    "tag": "ATRC",
+    "u32": "0x41545243"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00251000",
+    "inner": {
+     "FAS": 75
+    },
+    "role": "character animation",
+    "tag": "ANIM",
+    "u32": "0x414E494D"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00250D48",
+    "inner": {
+     "FPS": 3,
+     "RMAC": 1
+    },
+    "note": "handler inline",
+    "role": "map geometry",
+    "tag": "MAP",
+    "u32": "0x004D4150"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00250DE8",
+    "inner": {
+     "RTA": 4
+    },
+    "note": "handler inline",
+    "role": "map node hierarchy",
+    "tag": "ATRM",
+    "u32": "0x4154524D"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00250E88",
+    "inner": {
+     "FAS": 4
+    },
+    "role": "map animation",
+    "tag": "MAPA",
+    "u32": "0x4D415041"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00250FB8",
+    "inner": {
+     "DMM": 2
+    },
+    "role": "minimap raster",
+    "tag": "MMAP",
+    "u32": "0x4D4D4150"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00251238",
+    "inner": {
+     "SEQW": 4
+    },
+    "note": "zero-length MSE children are legal (scene with no local audio)",
+    "role": "audio bank",
+    "tag": "MSE",
+    "u32": "0x004D5345"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00251288",
+    "inner": {
+     "script": 4
+    },
+    "role": "event script",
+    "tag": "SCE",
+    "u32": "0x00534345"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x00251328",
+    "inner": {
+     "MWo3": 1
+    },
+    "note": "ladder handler exists with no sample in the PACK-pass set; resource-bundle pass entry 1943 child 1 decodes PRG -> MWo3 'SPAryWater11.bin' (class 7, base 0x0032B400)",
+    "role": "programmable effect overlay",
+    "tag": "PRG",
+    "u32": "0x00505247"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x002513A8",
+    "inner": {
+     "record_table": 1
+    },
+    "role": "item record table",
+    "tag": "ITEM",
+    "u32": "0x4954454D"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "0x002513A8",
+    "inner": {},
+    "note": "handler shared with ITEM; no sample",
+    "role": "system record",
+    "tag": "SYS",
+    "u32": "0x00535953"
+   },
+   {
+    "confidence": "VERIFIED",
+    "handler": "factory:0x00204870",
+    "inner": {
+     "so3mclib_data": 4
+    },
+    "note": "handled via ReadPackingData factory, no ladder branch seen; res_id = 1 consistently",
+    "role": "so3mclib serialized data",
+    "tag": "SMCD",
+    "u32": "0x534D4344"
+   },
+   {
+    "confidence": "UNRESOLVED",
+    "handler": "0x002511B8",
+    "inner": {},
+    "note": "UNKNOWN exact tag; flagged, not guessed",
+    "role": "ambiguous (FIS-related)",
+    "tag": "FISP?",
+    "u32": "0x50534946"
+   },
+   {
+    "confidence": "UNRESOLVED",
+    "handler": "0x00250F28",
+    "inner": {},
+    "note": "UNKNOWN observed constant; flagged, not guessed",
+    "role": "map-family constant",
+    "tag": "MAA?",
+    "u32": "0x004D4141"
+   }
+  ]
+ },
+ "update_layer": {
+  "annotations": [
+   {
+    "cited_reports": [
+     "04_REPORTS/CLAUDE_STATIC_TRACE_AUDIT_V5124.md"
+    ],
+    "kind": "TYPE_0X0021_NAKA_EVENT_FACIAL_SELECTOR_SEMANTICS",
+    "note": "scoped to actor 0x0BC0 static Model Lab preview; the generic baseline 'footstep/effect triggers' meaning is not rewritten",
+    "payload": {
+     "initialization": {
+      "actor_id": "0x0BC0",
+      "confidence": "VERIFIED",
+      "consumer_function": "0x004A39A0",
+      "frame_last_index_destination": "selector object +60",
+      "kind": "FPS_DYNAMIC_RECORD_TO_FISA_RUNTIME_NODE_INITIALIZATION",
+      "records": [
+       {
+        "base_texture_id": 1294,
+        "file_offset": "0xDD38",
+        "frame_last_index_at_plus_12": 2,
+        "slot_ordinal_at_plus_8": 1,
+        "tag": "naka"
+       },
+       {
+        "base_texture_id": 2413,
+        "file_offset": "0xDD48",
+        "frame_last_index_at_plus_12": 3,
+        "slot_ordinal_at_plus_8": 2,
+        "tag": "naka"
+       }
+      ],
+      "requested_runtime_node_id_destination": "selector object +56",
+      "requested_runtime_node_id_source": "FPS dynamic record +8 (slot ordinal)",
+      "resolver_wrapper": "0x004D7E00",
+      "runtime_node_id_field": "+6 u16"
+     },
+     "initializer_selector_separation": {
+      "confidence": "VERIFIED",
+      "executed_frame_selector": "0x004D7BB0 reads object+72 and selects from the resolved FISA member pointers",
+      "executed_frame_selector_sha256": "7dabf8190c0080ccaa0d630fbaddc950e9f0200949a8ec6acd177125fb604cff",
+      "initializer": "0x004D7E00 matches a runtime node by slot ordinal and invokes the recursive FISA parser",
+      "kind": "INITIALIZER_AND_FRAME_SELECTOR_SEPARATION"
+     },
+     "plus_8_semantics": "FPS dynamic record +8 is the material-slot ordinal (1/2), not a FAS event/texture id (1294/2413)"
+    },
+    "scope": "actor_0x0BC0_static_model_lab_preview",
+    "source": {
+     "file": "05_ATLAS/CLAUDE_STATIC_TRACE_CORRECTION_V5124_UPDATE.json",
+     "pointer": "#/records",
+     "sha256": "d6067d99f498d01d45da50ba90190e63944d7f2ffedcec54394a54cfb331d1fa"
+    },
+    "stated_grade": "VERIFIED",
+    "target": {
+     "format_id": "FAS"
+    }
+   },
+   {
+    "boundary": [
+     "The type-0x0135 descriptor dispatcher and target-node virtual setter are not executed in this pass.",
+     "The target node's local matrix writer is not yet identified or executed.",
+     "Quaternion-to-node-matrix construction in the bridge is modeled and is not a promotion of the runtime node matrix writer.",
+     "Final skinning and automatic Explorer animation playback are not claimed."
+    ],
+    "cited_reports": [
+     "04_REPORTS/FAS_ROTATION_EXECUTION_V5128.md",
+     "04_REPORTS/SO3_FAS_ROTATION_R5900_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_FAS_ROTATION_TO_VU0_MATRIX_BRIDGE_REPORT.json"
+    ],
+    "kind": "TYPE_0X0135_RUNTIME_TRACK_OBJECT_LAYOUT",
+    "payload": {
+     "cached_key_index_s16": "track+0x1E",
+     "current_key_index_s16": "track+0x1C",
+     "current_key_pointer": "track+0x24",
+     "key_array_pointer": "track+0x04",
+     "key_count_s16": "track+0x18",
+     "key_layout": "{s16 x, s16 y, s16 z, u16 time}",
+     "key_stride": 8,
+     "next_key_pointer": "track+0x28",
+     "terminal_cache_flag": "track+0x10"
+    },
+    "scope": [
+     "fas_type_0x0135_record_layout",
+     "fas_key_selection_clock",
+     "fas_quantized_rotation_decompression",
+     "fas_positive_w_reconstruction",
+     "lib_math_table_initialization",
+     "fas_interpolation"
+    ],
+    "source": {
+     "file": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json",
+     "pointer": "#/runtime_track_layout",
+     "sha256": "18583ad2fc9f0db16ccf5bedc340c254148423e0dc91913db30c66ab014ac3de"
+    },
+    "stated_grade": "SCOPED_PROMOTION",
+    "target": {
+     "format_id": "FAS"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FACIAL_CLUT_REPAIR_V5124.md",
+     "04_REPORTS/FACIAL_CLUT_V5124_CORRECTED_MONTAGE.png",
+     "04_REPORTS/VALIDATION_REPORT.md"
+    ],
+    "kind": "FIS_PSMT4_CSM1_CLUT_LAYOUT",
+    "payload": {
+     "actor_id": "0x0BC0",
+     "confidence": "VERIFIED",
+     "csm": "CSM1",
+     "kind": "FIS_PSMT4_CSM1_CLUT_LAYOUT",
+     "logical_palette_entries": 16,
+     "logical_to_stored_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+     ],
+     "palette_upload": {
+      "destination_x": 0,
+      "destination_y": 0,
+      "height": 2,
+      "payload_bytes": 128,
+      "psm": "PSMCT32",
+      "width": 16
+     },
+     "palette_variant_count": 1,
+     "source_modification": false,
+     "stored_padding_indices": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+     ],
+     "stored_palette_entries": 32,
+     "texture_ids": [
+      1294,
+      1295,
+      1296,
+      2413,
+      2414,
+      2415,
+      3362
+     ]
+    },
+    "scope": "actor_0x0BC0_facial_fis_clut_and_frame_selector",
+    "source": {
+     "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+     "pointer": "#/records/0",
+     "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+    },
+    "stated_grade": "VERIFIED",
+    "target": {
+     "format_id": "FIS"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FACIAL_CLUT_REPAIR_V5124.md",
+     "04_REPORTS/FACIAL_CLUT_V5124_CORRECTED_MONTAGE.png",
+     "04_REPORTS/VALIDATION_REPORT.md"
+    ],
+    "kind": "FACIAL_RENDER_CORRUPTION_ROOT_CAUSE",
+    "negative_result": true,
+    "payload": {
+     "actor_id": "0x0BC0",
+     "all_used_logical_entries_opaque": true,
+     "cause": "Decoder treated two 16-entry PSMCT32 upload rows as two contiguous PSMT4 palette banks instead of applying the CSM1 IDTEX4 8x2 layout.",
+     "confidence": "VERIFIED",
+     "corrected_rgba_sha256": {
+      "1294": "67fb7c3f7a0a93dc5deafea5c3ac7e5a676ea1adfa773937aac0c531a4c946d3",
+      "1295": "cce97e45d489dea33a6cbad5f1f1d5ed24291e3cead03866b2fdc2c219d27eae",
+      "1296": "e3e033f93f876e0358390cc66292f7f47b538c7e60bccfb00b17b7c9b80ea2d3",
+      "2413": "66a9ba0befd0e58372f25028b697848c323570dac5b86ca1878e33e0539f92e1",
+      "2414": "6e67833b4c748eb5478ba316175dceef4702038023149e811f51515d7e1da556",
+      "2415": "477651cc4e7b73eceea4fc7bf575ec7c45202ce2cc8df540a995781a936c872d",
+      "3362": "0c1095e734d504d5ec2e7753856c5c0882f0c2d99e2a521c2e07bd3f35ec9dbf"
+     },
+     "former_padding_texel_counts": {
+      "1294": 738,
+      "1295": 716,
+      "1296": 880,
+      "2413": 1478,
+      "2414": 1487,
+      "2415": 1445,
+      "3362": 1411
+     },
+     "kind": "FACIAL_RENDER_CORRUPTION_ROOT_CAUSE"
+    },
+    "scope": "actor_0x0BC0_facial_fis_clut_and_frame_selector",
+    "source": {
+     "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+     "pointer": "#/records/1",
+     "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+    },
+    "stated_grade": "VERIFIED",
+    "target": {
+     "format_id": "FIS"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/MODEL_ASSEMBLY_V58.md"
+    ],
+    "kind": "EMBEDDED_FIS_FISA_SECTION_SIZE_RULE",
+    "payload": {
+     "confidence": "VERIFIED_ON_ACTOR_0x0BC0",
+     "evidence": {
+      "all_boundaries_valid": true,
+      "decoded_texture_ids": [
+       1294,
+       1295,
+       1296,
+       2414,
+       2415,
+       3362
+      ],
+      "fis_sections": 6,
+      "fisa_sections": 2
+     },
+     "rule": "total_size = u32_at_plus_04 + 0x10",
+     "topic": "embedded FPS FIS/FISA section size"
+    },
+    "scope": "actor 0x0BC0",
+    "source": {
+     "file": "05_ATLAS/MODEL_ASSEMBLY_V58_UPDATE.json",
+     "pointer": "#/records/0",
+     "sha256": "3aedc56c99a23ef878c23acb6cde43fe09918651f46f63041a7d09f393e6b067"
+    },
+    "stated_grade": "VERIFIED_ON_ACTOR_0x0BC0",
+    "target": {
+     "format_id": "FIS"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/MODEL_EVIDENCE_PASS_V511.md",
+     "04_REPORTS/MODEL_TEXTURE_CORPUS_CENSUS_V511.json"
+    ],
+    "kind": "ALIGNED_EMBEDDED_SECTION_CENSUS",
+    "note": "the baseline 'embedded_in_fps ... (86 sections corpus-wide)' text derives from an earlier pass corpus; corpus equivalence with this 13-sample census is not proven by supplied files, so the baseline text is preserved and this census is attached at its own scope (ledger ambiguity AMB-FIS-CENSUS-CORPORA)",
+    "payload": {
+     "corpus_evidence": {
+      "aligned_sections": 184,
+      "evidence": "04_REPORTS/MODEL_TEXTURE_CORPUS_CENSUS_V511.json",
+      "fis": 175,
+      "fis_decoded": 175,
+      "fisa": 9,
+      "fisa_groups_exact": 9,
+      "fisa_members_resolved": "34/34",
+      "old_exposed_sections": 121,
+      "samples": 13
+     },
+     "record": {
+      "confidence": "VERIFIED_CORPUS",
+      "new_state": "16-byte-aligned bounded scan exposes 184 sections: 175 FIS and 9 FISA",
+      "previous_state": "VIF-driven recovery exposed 121 sections and could silently consume FIS headers as legal VIF no-op words",
+      "topic": "FPS embedded FIS/FISA discovery",
+      "validation": "175/175 FIS strict parses and all palette-bank decodes pass; 9/9 FISA parses pass"
+     }
+    },
+    "scope": "13-sample geometry corpus (corpus_evidence.samples)",
+    "source": {
+     "file": "05_ATLAS/MODEL_TEXTURE_BINDING_V511_UPDATE.json",
+     "pointer": "#/records/0",
+     "sha256": "2f33e7d0085b607e0f8560e1bef7cd032a0a26a2088185aca42be5c8f4f4c63e"
+    },
+    "stated_grade": "VERIFIED_CORPUS",
+    "target": {
+     "format_id": "FIS"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/MATERIAL_AWARE_MODEL_PASS_V512.md"
+    ],
+    "kind": "FPS_MATERIAL_REFERENCE_TABLE_DECODED",
+    "payload": {
+     "actor_id": "0x0BC0",
+     "auxiliary_slot": {
+      "default_preview_visible": false,
+      "exact_position_overlap_vertices": 319,
+      "has_nonzero_uv": false,
+      "material_slot": 3,
+      "role_confidence": "UNRESOLVED",
+      "triangles": 298,
+      "vertices": 492
+     },
+     "dynamic_records": [
+      {
+       "asset_label": "naka",
+       "base_texture_id": 1294,
+       "confidence": "STRUCTURAL",
+       "fisa_texture_ids": [
+        1294,
+        1295,
+        1296
+       ],
+       "frame_last_index": 2,
+       "material_slot": 1
+      },
+      {
+       "asset_label": "naka",
+       "base_texture_id": 2413,
+       "confidence": "STRUCTURAL",
+       "fisa_texture_ids": [
+        2413,
+        2414,
+        2415,
+        3362
+       ],
+       "frame_last_index": 3,
+       "material_slot": 2
+      }
+     ],
+     "exact_packet_start_matches": 3,
+     "fps_segment_offset": 32,
+     "material_reference_table_offset": 56612,
+     "material_start_packets": [
+      0,
+      82,
+      87
+     ],
+     "material_start_qwords": [
+      10,
+      3207,
+      3414
+     ],
+     "static_binding": {
+      "confidence": "STRONG_INFERENCE",
+      "material_slot": 0,
+      "rule": "sole remaining ungrouped FIS to sole remaining UV-bearing material slot",
+      "texture_id": 1289
+     }
+    },
+    "promotion": {
+     "evidence_linked_material_preview_allowed": true,
+     "final_skinned_model_allowed": false,
+     "universal_material_rule_claimed": false
+    },
+    "scope": "FPS material-reference table and evidence-linked browser preview",
+    "source": {
+     "file": "05_ATLAS/MATERIAL_AWARE_MODEL_V512_UPDATE.json",
+     "pointer": "#/records/0",
+     "sha256": "78ed132d6998717f1dc848151b2e5bce17c570a8fa1eb74977acf63eb0d3095f"
+    },
+    "stated_grade": "actor-scoped; per-record grades STRUCTURAL / STRONG_INFERENCE / UNRESOLVED preserved",
+    "target": {
+     "format_id": "FPS_SEGMENT"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FSS_RTA_POSE_EXECUTION_V5128_PASS64.md",
+     "04_REPORTS/SO3_FSS_RTA_POSE_R5900_EXECUTION_REPORT.json",
+     "07_EXTERNAL_EVIDENCE/FIELD_ENGINE_RESPONSE/SO3_HYBRID_DATA_RESPONSE.json",
+     "07_EXTERNAL_EVIDENCE/FIELD_ENGINE_RESPONSE/hidden_entry_1070/block_0_base_0x001E2B00.bin"
+    ],
+    "kind": "RTA_IDENTITY_BINDING_AND_FSS_TRANSFORM_SEMANTIC_CORRECTION",
+    "note": "RTA vectors are not promoted as transforms; FSS is represented as execution evidence because V1.1.1 has no canonical FSS format record",
+    "payload": {
+     "historical_reports_preserved": true,
+     "promoted": "RTA relocates and exact-name-binds existing runtime objects; FSS descriptors contain bind quaternion, translation, and scale.",
+     "rejected": "RTA record vectors are skeleton-local translation values loaded by Field 0x002510E0 through vector setter 0x003EEE70."
+    },
+    "scope": [
+     "0x08FF",
+     "0x0BC0"
+    ],
+    "source": {
+     "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+     "pointer": "#/correction",
+     "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+    },
+    "stated_grade": "SCOPED_PROMOTION",
+    "target": {
+     "format_id": "RTA"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/MODEL_EVIDENCE_PASS_V511.md",
+     "04_REPORTS/MODEL_TEXTURE_CORPUS_CENSUS_V511.json"
+    ],
+    "kind": "SPATIAL_PREVIEW_SAFETY_CORRECTION",
+    "negative_result": true,
+    "payload": {
+     "confidence": "VERIFIED_CONTRADICTION",
+     "new_state": "Preserve node names, raw vectors, indices, and link fields; withhold anatomical parent semantics and parent-wise vector composition on actor 0x0BC0",
+     "reason": "The literal interpretation yields an anatomically impossible chain and cannot be promoted without engine-consumer or runtime matrix evidence",
+     "topic": "RTA spatial preview safety correction"
+    },
+    "scope": "actor 0x0BC0",
+    "source": {
+     "file": "05_ATLAS/MODEL_TEXTURE_BINDING_V511_UPDATE.json",
+     "pointer": "#/records/2",
+     "sha256": "2f33e7d0085b607e0f8560e1bef7cd032a0a26a2088185aca42be5c8f4f4c63e"
+    },
+    "stated_grade": "VERIFIED_CONTRADICTION",
+    "target": {
+     "format_id": "RTA"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/CUTSCENE_TRANSFORM_VERIFICATION.md"
+    ],
+    "kind": "CARRIER_TRANSFORM_SYMBOLS_AND_VALIDATED_CARRIERS",
+    "note": "the update's source_atlas sha256 (consolidation pass archive) is not verifiable inside this subset; see ambiguity AMB-CUTSCENE-SOURCE-ATLAS",
+    "payload": {
+     "consumer": {
+      "browser_preview": "MPEG-2 codec-dependent; PCM WAV standard",
+      "output": "bit-exact MPEG program stream plus decoded 48 kHz stereo SAC WAV",
+      "tool": "SO3 Resource Explorer V5.4.0"
+     },
+     "symbols": [
+      {
+       "address": "0x0041A2F0",
+       "confidence": "VERIFIED",
+       "evidence": "vtable 0x00172538 slot +0x08; callback from the SLES streaming worker before the generic MPEG parser",
+       "image": "Lib MWo3 overlay",
+       "name": "movie_carrier_decode_in_place"
+      },
+      {
+       "address": "0x0010D880",
+       "confidence": "VERIFIED",
+       "evidence": "returns 0x001B6A80",
+       "image": "SLES_820.28",
+       "name": "get_host_context"
+      },
+      {
+       "address": "0x001CC730",
+       "confidence": "VERIFIED",
+       "evidence": "host context +0x15CB0; loaded with LQ by movie_carrier_decode_in_place",
+       "image": "EE runtime data",
+       "name": "pal_content_key_128"
+      }
+     ],
+     "unresolved": [
+      "human perceptual listening validation on target iPhone",
+      "on-device field validation across every movie carrier on PAL Disc 1"
+     ],
+     "validated_carriers": [
+      {
+       "complete_carrier_frames": 194,
+       "decoded_pack_prefix_frames": 194,
+       "decoded_sha256": "b9436a2caf88707e3dc4af0996ce8d63feb624420f5bf8a9beb5b2a56f6fcbd7",
+       "entry": 21,
+       "ffmpeg_full_decode_errors": 0,
+       "input_size": 3180544,
+       "sac_audio": {
+        "blocks": 255,
+        "bytes": 94885,
+        "crc_passed": 255,
+        "sample_rate": 48000,
+        "samples_per_channel": 260783,
+        "wav_sha256": "bf40fbdc42dc4f44cdf0273753fac5acdfbe78c2a0f96227377545eadf01f133"
+       },
+       "video": "MPEG-2 640x448 25fps 136 frames"
+      },
+      {
+       "complete_carrier_frames": 339,
+       "decoded_pack_prefix_frames": 339,
+       "decoded_sha256": "6a7604bab6fe0762dee767f7e9a5b1f13415d303f794b3cdafc9337300edcc6c",
+       "entry": 15,
+       "ffmpeg_full_decode_errors": 0,
+       "input_size": 5556224,
+       "sac_audio": {
+        "blocks": 438,
+        "bytes": 241457,
+        "crc_passed": 438,
+        "sample_rate": 48000,
+        "samples_per_channel": 447982,
+        "wav_sha256": "496d7961ebe6d252da1da8008f31f6ff136099d167514ab93a3fc6baf3566257"
+       },
+       "video": "MPEG-2 640x448 25fps 234 frames"
+      }
+     ]
+    },
+    "scope": "PAL Disc 1",
+    "source": {
+     "file": "05_ATLAS/CUTSCENE_TRANSFORM_UPDATE.json",
+     "pointer": "#/symbols",
+     "sha256": "e98ab2d16c8b625ab2e08258285665581b99b34eaeb2748936eea00f12cbd056"
+    },
+    "stated_grade": "VERIFIED",
+    "target": {
+     "format_id": "SO3_MOVIE_CARRIER"
+    }
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FACIAL_CLUT_REPAIR_V5124.md",
+     "04_REPORTS/FACIAL_CLUT_V5124_CORRECTED_MONTAGE.png",
+     "04_REPORTS/VALIDATION_REPORT.md"
+    ],
+    "kind": "FISP_FACIAL_ASSOCIATION_RETRACTION",
+    "negative_result": true,
+    "note": "identity between dispatcher tag u32 0x50534946 ('FISP?') and the captured FISP render-descriptor sections is not asserted by the update; the baseline tag entry is left unchanged",
+    "payload": {
+     "actor_0x0BC0_association_observed": false,
+     "captured_stride_windows": 5,
+     "chain_stride": 65536,
+     "classification": "GENERIC_RENDERER_TEMPLATE_NOT_FACIAL",
+     "confidence": "VERIFIED_NEGATIVE_ASSOCIATION_WITHIN_CAPTURED_EVIDENCE",
+     "content_sha256": "e63c2043bdc03e5158a35e90e12d7a7bdbc3b0e484d9ba06b32c23f755cbf231",
+     "corrected_fisp_content_size": 1888,
+     "kind": "FISP_FACIAL_ASSOCIATION_RETRACTION",
+     "promotion": false,
+     "supersedes": [
+      "FACIAL_SELECTOR_CLOSURE_V5123_UPDATE:FISP_PROFILE_TO_TEX0_HIGH_BYTE as an actor-specific facial palette selector",
+      "V5.12.3 live FISP profile as the smallest missing facial evidence"
+     ],
+     "unique_fisp_contents": 1
+    },
+    "scope": "captured evidence only",
+    "source": {
+     "file": "05_ATLAS/FACIAL_CLUT_REPAIR_V5124_UPDATE.json",
+     "pointer": "#/records/3",
+     "sha256": "b0f5a34bd784de57eb1adfe6987d80775929e69872411d32d62a8d6e42d3a39e"
+    },
+    "stated_grade": "VERIFIED_NEGATIVE_ASSOCIATION_WITHIN_CAPTURED_EVIDENCE",
+    "target": {
+     "tag_dispatch_tag": "FISP?"
+    }
+   }
+  ],
+  "field_supersessions": [
+   {
+    "cited_reports": [
+     "04_REPORTS/FAS_ROTATION_EXECUTION_V5128.md",
+     "04_REPORTS/SO3_FAS_ROTATION_R5900_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_FAS_ROTATION_TO_VU0_MATRIX_BRIDGE_REPORT.json"
+    ],
+    "field_path": [
+     "status"
+    ],
+    "format_id": "FAS",
+    "gate_basis": [
+     "fas_interpolation=PASS_EXECUTED_ORIGINAL_R5900_VU0_MACRO_AND_MICROCODE",
+     "fas_key_selection_clock=PASS_EXECUTED_ORIGINAL_R5900",
+     "fas_positive_w_reconstruction=PASS_EXECUTED_ORIGINAL_R5900_VU0_MACRO",
+     "fas_quantized_rotation_decompression=PASS_EXECUTED_ORIGINAL_R5900_VU0_MACRO",
+     "fas_to_runtime_node_setter=PASS_STATIC_CALLSITE_ONLY",
+     "fas_type_0x0135_record_layout=PASS_REAL_BYTES",
+     "lib_math_table_initialization=PASS_EXECUTED_ORIGINAL_R5900"
+    ],
+    "new_value": "channel structure verified (V2); type-0x0135 evaluation, positive-w decompression, and original interpolation execution-verified (V5.12.8 pass 6, scoped to the executed 255-track corpus of actors 0x08FF/0x0BC0); q1/q2 float-key role split and loop wrap remain incomplete",
+    "previous_value": "channel structure verified (V2); quaternion-group roles / interpolation / loops incomplete",
+    "scope": [
+     "fas_type_0x0135_record_layout",
+     "fas_key_selection_clock",
+     "fas_quantized_rotation_decompression",
+     "fas_positive_w_reconstruction",
+     "lib_math_table_initialization",
+     "fas_interpolation"
+    ],
+    "source": {
+     "file": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json",
+     "pointer": "#/gates",
+     "sha256": "18583ad2fc9f0db16ccf5bedc340c254148423e0dc91913db30c66ab014ac3de"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FAS_ROTATION_EXECUTION_V5128.md",
+     "04_REPORTS/SO3_FAS_ROTATION_R5900_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_FAS_ROTATION_TO_VU0_MATRIX_BRIDGE_REPORT.json"
+    ],
+    "field_path": [
+     "structures",
+     "channel",
+     "sub_blocks",
+     "type_0x0135"
+    ],
+    "format_id": "FAS",
+    "gate_basis": [
+     "fas_type_0x0135_record_layout=PASS_REAL_BYTES"
+    ],
+    "new_value": "count x {s16 x,y,z, u16 time}; quantized rotation track; timestamps equal f32 key timestamps (VERIFIED on L/R Calf); record layout and evaluation EXECUTION-VERIFIED over 255 real tracks / 4519 packed keys with runtime track-object layout documented in update_layer (V5.12.8 pass 6)",
+    "previous_value": "count x {s16 x,y,z, u16 time}; quantized rotation track; timestamps equal f32 key timestamps (VERIFIED on L/R Calf)",
+    "scope": [
+     "fas_type_0x0135_record_layout",
+     "fas_key_selection_clock",
+     "fas_quantized_rotation_decompression",
+     "fas_positive_w_reconstruction",
+     "lib_math_table_initialization",
+     "fas_interpolation"
+    ],
+    "source": {
+     "file": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json",
+     "pointer": "#/runtime_track_layout",
+     "sha256": "18583ad2fc9f0db16ccf5bedc340c254148423e0dc91913db30c66ab014ac3de"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FAS_ROTATION_EXECUTION_V5128.md",
+     "04_REPORTS/SO3_FAS_ROTATION_R5900_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_FAS_ROTATION_TO_VU0_MATRIX_BRIDGE_REPORT.json"
+    ],
+    "field_path": [
+     "structures",
+     "rotation_reconstruction"
+    ],
+    "format_id": "FAS",
+    "gate_basis": [
+     "fas_interpolation=PASS_EXECUTED_ORIGINAL_R5900_VU0_MACRO_AND_MICROCODE",
+     "fas_key_selection_clock=PASS_EXECUTED_ORIGINAL_R5900",
+     "fas_positive_w_reconstruction=PASS_EXECUTED_ORIGINAL_R5900_VU0_MACRO",
+     "fas_quantized_rotation_decompression=PASS_EXECUTED_ORIGINAL_R5900_VU0_MACRO",
+     "fas_to_runtime_node_setter=PASS_STATIC_CALLSITE_ONLY",
+     "fas_type_0x0135_record_layout=PASS_REAL_BYTES",
+     "lib_math_table_initialization=PASS_EXECUTED_ORIGINAL_R5900"
+    ],
+    "new_value": "type-0x0135 quantized rotation decompression EXECUTION-VERIFIED: original R5900/VU0-macro code unpacks s16 xyz (VITOF15, 1/32768) and reconstructs positive quaternion w; original interpolation helpers 0x004CD310/0x004CCF80/0x004CD230 executed with terminal outputs byte-exact to an independent float32 oracle and interpolated outputs within two float32-ULP-sized steps of a sign-invariant shortest-path slerp oracle (max component error 1.1920928955078125e-07; 255 tracks / 4519 keys / 765 evaluator invocations). Prior V2 knee-bend trace retained as corroboration. q1/q2 float-key role split remains HYPOTHESIS.",
+    "previous_value": "s16/32768 xyz with w=sqrt(1-|v|^2) traces smooth knee-bend curve (0.230->0.256->0.230 across walk cycle) - quantized quaternion xyz STRONG_INFERENCE; w-sign convention and q1/q2 role split HYPOTHESIS",
+    "scope": [
+     "fas_type_0x0135_record_layout",
+     "fas_key_selection_clock",
+     "fas_quantized_rotation_decompression",
+     "fas_positive_w_reconstruction",
+     "lib_math_table_initialization",
+     "fas_interpolation"
+    ],
+    "source": {
+     "file": "05_ATLAS/FAS_ROTATION_EXECUTION_V5128_UPDATE.json",
+     "pointer": "#/execution_totals",
+     "sha256": "18583ad2fc9f0db16ccf5bedc340c254148423e0dc91913db30c66ab014ac3de"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/FSS_RTA_POSE_EXECUTION_V5128_PASS64.md",
+     "04_REPORTS/SO3_FSS_RTA_POSE_R5900_EXECUTION_REPORT.json",
+     "07_EXTERNAL_EVIDENCE/FIELD_ENGINE_RESPONSE/SO3_HYBRID_DATA_RESPONSE.json",
+     "07_EXTERNAL_EVIDENCE/FIELD_ENGINE_RESPONSE/hidden_entry_1070/block_0_base_0x001E2B00.bin"
+    ],
+    "field_path": [
+     "structures",
+     "node_record",
+     "+0x10"
+    ],
+    "format_id": "RTA",
+    "gate_basis": [
+     "rta_relocation_and_exact_name_runtime_binding=PASS_EXECUTED_ORIGINAL_R5900",
+     "rta_translation_semantic=REJECTED_RTA_DOES_NOT_LOAD_TRANSFORMS"
+    ],
+    "new_value": "f32[4] auxiliary vector (x,y,z,w); original RTA binder 0x0045B080 does not load it as a transform; semantic role remains UNRESOLVED (V5.12.8 pass 6.4 correction)",
+    "previous_value": "f32[4] translate (x,y,z,w); w scalar often bone-length-like (e.g. 213.29)",
+    "scope": [
+     "0x08FF",
+     "0x0BC0"
+    ],
+    "source": {
+     "file": "05_ATLAS/FSS_RTA_POSE_EXECUTION_V5128_PASS64_UPDATE.json",
+     "pointer": "#/correction",
+     "sha256": "02faf1d2b97e98983f6f2da3e9e31bd64cf9f12b0381ffe786d6cf63f4d5be89"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/CUTSCENE_TRANSFORM_VERIFICATION.md"
+    ],
+    "field_path": [
+     "status"
+    ],
+    "format_id": "SO3_MOVIE_CARRIER",
+    "gate_basis": [
+     "status=VERIFIED",
+     "validated_carriers: entries 15 and 21, ffmpeg_full_decode_errors=0, SAC CRC 255/255 and 438/438"
+    ],
+    "new_value": "structurally supported carrier checkpoint (entry 21); playable:false; exact payload transform VERIFIED: plain64 = ((carrier64 XOR lane_key64) - 57 - row_index) mod 2^64 over 64-byte rows (8 LE u64 lanes, row period 32); entries 15 and 21 fully decoded with zero ffmpeg errors (CUTSCENE_TRANSFORM_UPDATE V2)",
+    "previous_value": "structurally supported carrier checkpoint (entry 21); playable:false; exact payload transform unresolved",
+    "scope": "PAL Disc 1 validated carriers (entries 15 and 21)",
+    "source": {
+     "file": "05_ATLAS/CUTSCENE_TRANSFORM_UPDATE.json",
+     "pointer": "#/transform",
+     "sha256": "e98ab2d16c8b625ab2e08258285665581b99b34eaeb2748936eea00f12cbd056"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63.md",
+     "04_REPORTS/SO3_VU1_PACKET_SKINNING_EXECUTION_REPORT.json"
+    ],
+    "field_path": [
+     "export_gate"
+    ],
+    "format_id": "XBDC",
+    "gate_basis": [
+     "packet_vertex_matrix_selection=PASS_EXECUTED_ORIGINAL_VU1_MICROCODE",
+     "browser_mesh_deformation=WITHHELD_BY_ORDERED_GATE"
+    ],
+    "new_value": "skinned export implementation remains withheld; packaged one-matrix FIXED matrix-address to IDOM-palette mapping is execution-verified, while unsupported renderer profiles and browser deformation remain separate gates",
+    "previous_value": "skinned export withheld until matrix-address -> RTA-node mapping is proven (EXPORT_DECISION)",
+    "scope": [
+     "fixed_vertex_matrix_address_to_idom_palette_slot",
+     "packet_vertex_matrix_selection",
+     "controlled_packet_vertex_transform"
+    ],
+    "source": {
+     "file": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+     "pointer": "#/gates",
+     "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63.md",
+     "04_REPORTS/SO3_VU1_PACKET_SKINNING_EXECUTION_REPORT.json"
+    ],
+    "field_path": [
+     "status"
+    ],
+    "format_id": "XBDC",
+    "gate_basis": [
+     "fixed_vertex_matrix_address_to_idom_palette_slot=PASS_EXECUTED_ORIGINAL_VU1_AND_BYTE_EXACT_CORPUS",
+     "packet_vertex_matrix_selection=PASS_EXECUTED_ORIGINAL_VU1_MICROCODE"
+    ],
+    "new_value": "skinning encoding and packaged one-matrix FIXED address-to-IDOM palette binding execution-verified; V1 wrapper model superseded by chain model; blended or unsupported renderer profiles remain unresolved",
+    "previous_value": "skinning encoding verified; binding table strong-inference; V1 wrapper model superseded by chain model",
+    "scope": [
+     "fixed_vertex_matrix_address_to_idom_palette_slot",
+     "packet_vertex_matrix_selection",
+     "controlled_packet_vertex_transform"
+    ],
+    "source": {
+     "file": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+     "pointer": "#/gates",
+     "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/HYBRID_IDOM_MATRIX_EXECUTION_V5128.md",
+     "04_REPORTS/SO3_VU0_IDOM_MATRIX_MICRO_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_IDOM_LOADER_R5900_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_MATRIX_PALETTE_R5900_EXECUTION_REPORT.json",
+     "04_REPORTS/SO3_FSS_IDOM_RTA_NAME_BRIDGE_REPORT.json",
+     "04_REPORTS/HYBRID_EXECUTION_BRIDGE_V5128.md"
+    ],
+    "field_path": [
+     "structures",
+     "skinning",
+     "confidence"
+    ],
+    "format_id": "XBDC",
+    "gate_basis": [
+     "vu0_matrix_composition=PASS_EXECUTION_VERIFIED",
+     "matrix_palette_dma_vif_shape=PASS_EXECUTION_VERIFIED",
+     "matrix_to_packet_binding=WITHHELD_U_GEO_01 (preserved, FAS_NODE_MATRIX_EXECUTION_V5128_PASS62_UPDATE)"
+    ],
+    "new_value": "VERIFIED (encoding); VU0 matrix composition transpose(root * node * IDOM) and matrix-palette DMA/VIF upload shape EXECUTION-VERIFIED to VU1 qword 0x290 (= 656) with count*4 QWC (V5.12.8 pass 3); matrix-to-packet binding WITHHELD (U-GEO-01)",
+    "previous_value": "VERIFIED (encoding); STRONG_INFERENCE (engine composes RTA world matrices and uploads window to VU 656+)",
+    "scope": [
+     "idom_resource_layout",
+     "idom_to_runtime_node_object",
+     "idom_to_named_fss_node",
+     "matrix_to_rta_actor_0x08FF",
+     "vu0_matrix_composition",
+     "matrix_palette_dma_vif_shape"
+    ],
+    "source": {
+     "file": "05_ATLAS/HYBRID_IDOM_MATRIX_EXECUTION_V5128_UPDATE.json",
+     "pointer": "#/gates",
+     "sha256": "072768d2af4a3b3dca3b872afceb4ea0239612c1df0202c2b12d7bf2bfa20ba7"
+    },
+    "target": "registry"
+   },
+   {
+    "cited_reports": [
+     "04_REPORTS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63.md",
+     "04_REPORTS/SO3_VU1_PACKET_SKINNING_EXECUTION_REPORT.json"
+    ],
+    "field_path": [
+     "structures",
+     "skinning",
+     "confidence"
+    ],
+    "format_id": "XBDC",
+    "gate_basis": [
+     "fixed_vertex_matrix_address_to_idom_palette_slot=PASS_EXECUTED_ORIGINAL_VU1_AND_BYTE_EXACT_CORPUS",
+     "packet_vertex_matrix_selection=PASS_EXECUTED_ORIGINAL_VU1_MICROCODE",
+     "packet_vertex_controlled_matrix_transform=PASS_EXECUTED_ORIGINAL_VU1_FMAC"
+    ],
+    "new_value": "VERIFIED (encoding); VU0 IDOM composition and DMA/VIF palette shape EXECUTION-VERIFIED (V5.12.8 pass 3); FIXED position w to IDOM palette slot and original VU1 one-matrix normal/position transform EXECUTION-VERIFIED across all 4,712 real vertices of packaged actors 0x08FF/0x0BC0 (V5.12.8 pass 6.3); blended weights and unsupported renderer profiles remain withheld",
+    "previous_value": "VERIFIED (encoding); VU0 matrix composition transpose(root * node * IDOM) and matrix-palette DMA/VIF upload shape EXECUTION-VERIFIED to VU1 qword 0x290 (= 656) with count*4 QWC (V5.12.8 pass 3); matrix-to-packet binding WITHHELD (U-GEO-01)",
+    "scope": [
+     "fixed_vertex_matrix_address_to_idom_palette_slot",
+     "packet_vertex_matrix_selection",
+     "controlled_packet_vertex_transform"
+    ],
+    "source": {
+     "file": "05_ATLAS/VU1_PACKET_MATRIX_BINDING_V5128_PASS63_UPDATE.json",
+     "pointer": "#/gates",
+     "sha256": "12bc99b2487c7c56a6823b23db57f27ef1d463477c60e62976678b3f67f149ac"
+    },
+    "target": "registry"
+   }
+  ],
+  "grade_vocabulary_note": "stated_grade strings are copied verbatim from source updates and are NOT normalized onto confidence_order",
+  "schema": "SO3_ATLAS_UPDATE_LAYER_V1",
+  "structure_additions": [
+   {
+    "cited_reports": [
+     "04_REPORTS/MODEL_EVIDENCE_PASS_V511.md",
+     "04_REPORTS/MODEL_TEXTURE_CORPUS_CENSUS_V511.json"
+    ],
+    "format_id": "FIS",
+    "new_key_path": [
+     "structures",
+     "fisa_group_semantics"
+    ],
+    "source": {
+     "file": "05_ATLAS/MODEL_TEXTURE_BINDING_V511_UPDATE.json",
+     "pointer": "#/records/1",
+     "sha256": "2f33e7d0085b607e0f8560e1bef7cd032a0a26a2088185aca42be5c8f4f4c63e"
+    },
+    "target": "registry",
+    "value": {
+     "claim": "FISA is a trailing index for the immediately preceding contiguous FIS group; unknown_08 is member stride and pair keys are 0x10 + ordinal*stride",
+     "confidence": "VERIFIED_CORPUS",
+     "prov_update": "05_ATLAS/MODEL_TEXTURE_BINDING_V511_UPDATE.json#/records/1",
+     "unresolved": "pair value runtime meaning",
+     "validation": "9/9 tables, 34/34 member offsets resolve exactly to FIS headers"
+    }
+   }
+  ]
+ },
+ "version": "1.1.2"
+}
