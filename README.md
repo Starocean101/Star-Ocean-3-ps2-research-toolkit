@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.35
+# Star Ocean Utility Tool v1.36
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,20 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.36
+
+- GPU experiment #2 (system identity): the eboot is now fake-signed as a **system executable**
+  instead of a normal fake self. The program authentication id (PAID) is `0x3100000000000002`
+  (a system id) instead of `0x3800000000000011`, and the program type is `system_exec`. This is
+  what flatz reported got a homebrew process past `eglGetDisplay` on a locked-down firmware.
+  Build knobs (Makefile): `PAID` and `PTYPE`. Revert with
+  `make PAID=0x3800000000000011 PTYPE=fake`.
+- Note on GoldHEN: the HEN fake-self handler copies the PAID from the eboot but fills the rest
+  of the auth_info from its own fixed template, so PAID + program type are the only parts of the
+  identity that actually reach the kernel. A full custom `--authinfo` blob would be ignored.
+- Keeps the `gde` category from v1.35. If the app will not install or launch as a system self,
+  that combination is the likely cause - tell me and I will split the two experiments apart.
 
 ## New in v1.35
 
