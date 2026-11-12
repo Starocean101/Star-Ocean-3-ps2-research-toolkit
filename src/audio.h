@@ -25,3 +25,4 @@ void     audio_play_loop(int on);
 void     audio_play_seek(uint32_t frame);
 int      audio_play_active(void);
 uint32_t audio_play_pos(void);
+const char *audio_play_route(void);   /* v1.41: which port sounds use, for the log */

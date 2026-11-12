@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.40
+# Star Ocean Utility Tool v1.41
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,23 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.41
+
+- **ATRAC9 playback confirmed working on hardware** (v1.40 log: `initA(v1)=0x00000000/0x00000000`,
+  every sound decoded). The fix from v1.32 - no codec bits in the AJM job flags - was right.
+- **Fixed sounds stopping after ~4 plays.** v1.40 opened a second audio port for each sound;
+  after four, the console answered `0x80260005` (AUDIO_OUT_PORT_FULL) and every later sound
+  failed. Sounds now play through the background-music port, which is already open and is
+  muted while a sound plays - no extra ports at all. If music could not start, one dedicated
+  port is opened once and reused. Music level is now set in software (60%) so sounds play at
+  full volume through the shared port.
+- Replays (X in the sound screen) are now logged too, with the port used:
+  `Sound: replay: playing via music port`.
+- GPU: the v1.40 GNM probe passed every tier on hardware (GPU executes our packets, draws a
+  full screen by DMA, flips through GNM like games). Next: shaders and a render target.
+- `source/tests/audio_port_stress.c`: host test, 60 plays against a mock that refuses a third
+  open port, run with AddressSanitizer.
 
 ## New in v1.40
 

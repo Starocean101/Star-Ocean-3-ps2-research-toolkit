@@ -26,6 +26,54 @@ static pthread_t s_thread;
 static volatile int s_errors, s_failed;
 static int s_init_rc, s_open_rc, s_open_rc2;
 
+/* ---------------------------------------------------------------- sound player
+ * A second output port for playing a decoded sound (the music keeps its own port and is
+ * muted while a sound plays). Any channel count is mixed down to stereo; other sample
+ * rates are resampled (nearest) to 48 kHz. */
+static int16_t *p_pcm;
+static uint32_t p_frames, p_ch, p_rate;
+static volatile uint64_t p_pos_fx;     /* source position, 32.32 fixed point */
+static volatile int p_run, p_paused, p_loop;
+static int p_handle = -1, p_music_was;
+static pthread_t p_thread;
+
+/* v1.41: sounds play THROUGH THE MUSIC PORT. v1.40 opened a second port per sound and the
+ * console ran out (PORT_FULL 0x80260005 after 4 plays). The music thread already outputs
+ * continuously and is muted while a sound plays, so it simply outputs the sound instead.
+ * Hand-off: the UI thread clears p_active, then waits while the audio thread is inside
+ * sound_fill (p_busy), so the caller may free the samples as soon as audio_play_stop returns. */
+static volatile int p_active;      /* music thread should output the sound */
+static volatile int p_busy;        /* music thread is reading p_pcm right now */
+static volatile int p_via_music;   /* current sound uses the music port */
+static volatile int s_gain_reset;  /* fade music back in after a sound */
+static int p_ports_opened;         /* dedicated fallback ports opened (should stay <= 1) */
+static int p_last_open_rc, p_last_open_rc2, p_last_close_rc;
+
+/* one grain of the current sound, mixed to stereo and resampled to 48 kHz */
+static void sound_fill(int16_t *out)
+{
+    uint64_t step = ((uint64_t)p_rate << 32) / SAMPLE_RATE;
+    for (int i = 0; i < GRAIN; i++) {
+        int32_t l = 0, r = 0;
+        uint64_t idx = p_pos_fx >> 32;
+        if (!p_paused && idx < p_frames) {
+            const int16_t *sp = p_pcm + idx * p_ch;
+            if (p_ch == 1) l = r = sp[0];
+            else if (p_ch == 2) { l = sp[0]; r = sp[1]; }
+            else {  /* 4.0 / 5.1 / 7.1: fronts + rears (+ centre) */
+                l = sp[0]; r = sp[1];
+                if (p_ch >= 4) { l = (l + sp[p_ch == 4 ? 2 : 4]) / 2; r = (r + sp[p_ch == 4 ? 3 : 5]) / 2; }
+                if (p_ch >= 6) { l += sp[2] / 2; r += sp[2] / 2; }
+            }
+            p_pos_fx += step;
+            if ((p_pos_fx >> 32) >= p_frames && p_loop) p_pos_fx = 0;
+        }
+        if (l > 32767) l = 32767; if (l < -32768) l = -32768;
+        if (r > 32767) r = 32767; if (r < -32768) r = -32768;
+        out[i * 2] = (int16_t)l; out[i * 2 + 1] = (int16_t)r;
+    }
+}
+
 void audio_diag(int *init_rc, int *open_rc, int *open_rc2)
 {
     *init_rc = s_init_rc; *open_rc = s_open_rc; *open_rc2 = s_open_rc2;
@@ -39,8 +87,17 @@ static void *audio_loop(void *arg)
     float gain = 0.f;       /* ramps toward target to avoid clicks */
 
     while (s_run) {
-        float target = s_enabled ? 1.f : 0.f;
-        for (int i = 0; i < GRAIN; i++) {
+        int sound = 0;
+        if (p_active) {
+            p_busy = 1;
+            __sync_synchronize();
+            if (p_active) { sound_fill(out); sound = 1; }
+            __sync_synchronize();
+            p_busy = 0;
+        }
+        if (s_gain_reset) { gain = 0.f; s_gain_reset = 0; }
+        float target = s_enabled ? 0.6f : 0.f;   /* v1.41: music level set here, port at full volume */
+        for (int i = 0; i < GRAIN && !sound; i++) {
             gain += (target - gain) * 0.0005f;
             int16_t s = s_pcm[pos];
             int v = (int)(s * gain);
@@ -103,7 +160,7 @@ int audio_open(void)
     }
     if (s_handle <= 0) { s_handle = -1; return -7; }
     {
-        int vol[2] = { 32768 * 60 / 100, 32768 * 60 / 100 }; /* ~60% headroom */
+        int vol[2] = { 32768, 32768 }; /* v1.41: full; music is scaled to 60% in software so sounds play at 100% */
         sceAudioOutSetVolume(s_handle, 0x1 | 0x2, vol);
     }
     s_run = 1;
@@ -134,6 +191,8 @@ int  audio_failed(void) { return s_failed; }
 
 void audio_stop(void)
 {
+    audio_play_stop();
+    if (p_handle >= 0) { p_last_close_rc = sceAudioOutClose(p_handle); p_handle = -1; }
     if (!s_run) return;
     s_run = 0;
     pthread_join(s_thread, NULL);
@@ -142,42 +201,12 @@ void audio_stop(void)
     s_pcm = NULL;
 }
 
-/* ---------------------------------------------------------------- sound player
- * A second output port for playing a decoded sound (the music keeps its own port and is
- * muted while a sound plays). Any channel count is mixed down to stereo; other sample
- * rates are resampled (nearest) to 48 kHz. */
-static int16_t *p_pcm;
-static uint32_t p_frames, p_ch, p_rate;
-static volatile uint64_t p_pos_fx;     /* source position, 32.32 fixed point */
-static volatile int p_run, p_paused, p_loop;
-static int p_handle = -1, p_music_was;
-static pthread_t p_thread;
-
 static void *play_loop(void *arg)
 {
     (void)arg;
     int16_t out[GRAIN * 2];
-    uint64_t step = ((uint64_t)p_rate << 32) / SAMPLE_RATE;
     while (p_run) {
-        for (int i = 0; i < GRAIN; i++) {
-            int32_t l = 0, r = 0;
-            uint64_t idx = p_pos_fx >> 32;
-            if (!p_paused && idx < p_frames) {
-                const int16_t *s = p_pcm + idx * p_ch;
-                if (p_ch == 1) l = r = s[0];
-                else if (p_ch == 2) { l = s[0]; r = s[1]; }
-                else {  /* 4.0 / 5.1 / 7.1: fronts + rears (+ centre) */
-                    l = s[0]; r = s[1];
-                    if (p_ch >= 4) { l = (l + s[p_ch == 4 ? 2 : 4]) / 2; r = (r + s[p_ch == 4 ? 3 : 5]) / 2; }
-                    if (p_ch >= 6) { l += s[2] / 2; r += s[2] / 2; }
-                }
-                p_pos_fx += step;
-                if ((p_pos_fx >> 32) >= p_frames && p_loop) p_pos_fx = 0;
-            }
-            if (l > 32767) l = 32767; if (l < -32768) l = -32768;
-            if (r > 32767) r = 32767; if (r < -32768) r = -32768;
-            out[i * 2] = (int16_t)l; out[i * 2 + 1] = (int16_t)r;
-        }
+        sound_fill(out);
         if (sceAudioOutOutput(p_handle, out) < 0) sceKernelUsleep(21000);
     }
     memset(out, 0, sizeof(out));
@@ -189,28 +218,44 @@ int audio_play_pcm(int16_t *pcm, uint32_t frames, uint32_t channels, uint32_t ra
 {
     audio_play_stop();
     if (!pcm || !frames || !channels || channels > 8 || !rate) return -1;
-    if (s_handle < 0) sceAudioOutInit();   /* music never started: the library may not be up yet */
-    p_handle = sceAudioOutOpen(ORBIS_USER_SERVICE_USER_ID_SYSTEM, ORBIS_AUDIO_OUT_PORT_TYPE_MAIN, 0, GRAIN, SAMPLE_RATE,
-                               ORBIS_AUDIO_OUT_PARAM_FORMAT_S16_STEREO);
-    if (p_handle <= 0) {
-        int user = -1;
-        sceUserServiceGetInitialUser(&user);
-        p_handle = sceAudioOutOpen(user, ORBIS_AUDIO_OUT_PORT_TYPE_MAIN, 0, GRAIN, SAMPLE_RATE, ORBIS_AUDIO_OUT_PARAM_FORMAT_S16_STEREO);
-    }
-    if (p_handle <= 0) { int rc = p_handle; p_handle = -1; return rc ? rc : -7; }
-    int vol[2] = { 32768, 32768 };
-    sceAudioOutSetVolume(p_handle, 0x1 | 0x2, vol);
     p_pcm = pcm; p_frames = frames; p_ch = channels; p_rate = rate;
     p_pos_fx = 0; p_paused = 0; p_loop = 0;
     p_music_was = s_enabled;
-    s_enabled = 0;              /* mute the background music while a sound plays */
+
+    if (s_run && !s_failed) {          /* the normal path: borrow the music port */
+        s_enabled = 0;                 /* music silent while the sound plays */
+        p_via_music = 1;
+        p_run = 1;
+        __sync_synchronize();
+        p_active = 1;
+        return 0;
+    }
+
+    /* fallback (music could not start): one dedicated port, opened once and kept */
+    p_via_music = 0;
+    if (p_handle < 0) {
+        if (s_handle < 0) sceAudioOutInit();
+        p_handle = sceAudioOutOpen(ORBIS_USER_SERVICE_USER_ID_SYSTEM, ORBIS_AUDIO_OUT_PORT_TYPE_MAIN, 0, GRAIN, SAMPLE_RATE,
+                                   ORBIS_AUDIO_OUT_PARAM_FORMAT_S16_STEREO);
+        p_last_open_rc = p_handle;
+        if (p_handle <= 0) {
+            int user = -1;
+            sceUserServiceGetInitialUser(&user);
+            p_handle = sceAudioOutOpen(user, ORBIS_AUDIO_OUT_PORT_TYPE_MAIN, 0, GRAIN, SAMPLE_RATE, ORBIS_AUDIO_OUT_PARAM_FORMAT_S16_STEREO);
+            p_last_open_rc2 = p_handle;
+        }
+        if (p_handle <= 0) { int rc = p_handle; p_handle = -1; p_pcm = NULL; return rc ? rc : -7; }
+        p_ports_opened++;
+        int vol[2] = { 32768, 32768 };
+        sceAudioOutSetVolume(p_handle, 0x1 | 0x2, vol);
+    }
     p_run = 1;
     pthread_attr_t attr;
     pthread_attr_init(&attr);
     pthread_attr_setstacksize(&attr, 64 * 1024);
     int prc = pthread_create(&p_thread, &attr, play_loop, NULL);
     pthread_attr_destroy(&attr);
-    if (prc != 0) { p_run = 0; sceAudioOutClose(p_handle); p_handle = -1; s_enabled = p_music_was; return -5; }
+    if (prc != 0) { p_run = 0; p_pcm = NULL; return -5; }
     return 0;
 }
 
@@ -218,10 +263,25 @@ void audio_play_stop(void)
 {
     if (!p_run) return;
     p_run = 0;
-    pthread_join(p_thread, NULL);
-    if (p_handle >= 0) { sceAudioOutClose(p_handle); p_handle = -1; }
+    if (p_via_music) {
+        p_active = 0;
+        __sync_synchronize();
+        while (p_busy) sceKernelUsleep(500);     /* at most one grain (~21 ms) */
+        s_gain_reset = 1;
+    } else {
+        pthread_join(p_thread, NULL);            /* the dedicated port stays open for the next sound */
+    }
     p_pcm = NULL;                /* owned by the caller */
     s_enabled = p_music_was;
+}
+
+const char *audio_play_route(void)
+{
+    static char b[160];
+    snprintf(b, sizeof b, "%s, fallback ports opened %d, last open 0x%08x/0x%08x, last close 0x%08x",
+             p_via_music ? "music port" : (p_handle >= 0 ? "own port" : "none"),
+             p_ports_opened, (unsigned)p_last_open_rc, (unsigned)p_last_open_rc2, (unsigned)p_last_close_rc);
+    return b;
 }
 
 void audio_play_pause(int paused) { p_paused = paused; }

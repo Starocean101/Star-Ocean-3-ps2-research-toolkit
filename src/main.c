@@ -51,7 +51,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.40"
+#define APP_VERSION  "1.41"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -2960,6 +2960,21 @@ static void snd_free_pcm(void)
     free(g_snd_pcm); g_snd_pcm = NULL; g_snd_frames = 0;
 }
 
+/* v1.41: every play is logged, including replays (v1.40's replays were silent). */
+static int snd_play(const char *why)
+{
+    if (g_snd_i < 0 || g_snd_i >= g_snd_n || !g_snd_pcm) return -1;
+    const AacSound *s = &g_snd[g_snd_i];
+    int rc = audio_play_pcm(g_snd_pcm, g_snd_frames, s->channels, s->rate ? s->rate : 48000);
+    if (rc != 0) {
+        snprintf(g_snd_err, sizeof(g_snd_err), "Audio output could not open (0x%08x).", (unsigned)rc);
+        logx("Sound: %s: output failed 0x%08x [%s]", why, (unsigned)rc, audio_play_route());
+    } else {
+        logx("Sound: %s: playing via %s", why, audio_play_route());
+    }
+    return rc;
+}
+
 static void snd_decode_current(void)
 {
     snd_free_pcm();
@@ -2975,8 +2990,7 @@ static void snd_decode_current(void)
     logx("Sound: %s #%d: %s (%llu ms) [%s]", g_snd_path, g_snd_i, g_snd_pcm ? "decoded" : err,
          (unsigned long long)((now_us() - t0) / 1000), at9_last_diag());
     if (!g_snd_pcm) { snprintf(g_snd_err, sizeof(g_snd_err), "%s   [codes: %s]", err, at9_last_diag()); return; }
-    int rc = audio_play_pcm(g_snd_pcm, g_snd_frames, s->channels, s->rate ? s->rate : 48000);
-    if (rc != 0) { snprintf(g_snd_err, sizeof(g_snd_err), "Audio output could not open (0x%08x).", (unsigned)rc); logx("Sound: output failed 0x%08x", (unsigned)rc); }
+    snd_play("first play");
 }
 
 static void snd_close(void)
@@ -3118,11 +3132,11 @@ static void update_sound_view(void)
     g_anim = audio_play_active() && !g_snd_paused;
     if (pressed(ORBIS_PAD_BUTTON_CIRCLE)) { snd_close(); return; }
     if (pressed(ORBIS_PAD_BUTTON_CROSS) && g_snd_pcm) {
-        if (!audio_play_active()) { audio_play_pcm(g_snd_pcm, g_snd_frames, g_snd[g_snd_i].channels, g_snd[g_snd_i].rate ? g_snd[g_snd_i].rate : 48000); g_snd_paused = 0; }
+        if (!audio_play_active()) { snd_play("replay"); g_snd_paused = 0; }
         else { g_snd_paused = !g_snd_paused; audio_play_pause(g_snd_paused); }
     }
     if (pressed(ORBIS_PAD_BUTTON_SQUARE) && g_snd_pcm) {
-        if (!audio_play_active()) audio_play_pcm(g_snd_pcm, g_snd_frames, g_snd[g_snd_i].channels, g_snd[g_snd_i].rate ? g_snd[g_snd_i].rate : 48000);
+        if (!audio_play_active()) snd_play("replay");
         audio_play_seek(0); g_snd_paused = 0; audio_play_pause(0);
     }
     if (pressed(ORBIS_PAD_BUTTON_RIGHT) && g_snd_n > 1) { g_snd_i = (g_snd_i + 1) % g_snd_n; snd_decode_current(); }
