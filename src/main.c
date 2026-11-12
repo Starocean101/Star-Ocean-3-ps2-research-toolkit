@@ -51,7 +51,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.39"
+#define APP_VERSION  "1.40"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -938,7 +938,7 @@ static void draw_tools(void)
         case 8: val = "loader / debugger / ftp / klog"; break;
         case 9: val = "pick a .txt in FILES"; break;
         case 10: { static char pv[64]; probe_next_load(); snprintf(pv, sizeof pv, GLYPH_CROSS " run, start at test %d of %d  (left/right)", g_probe_first, gpu_probe_count()); val = pv; break; }
-        case 11: val = GLYPH_CROSS " run  (green screen = GNM flip works)"; break;
+        case 11: val = GLYPH_CROSS " run all GPU tests (about 20 s)"; break;
         }
         if (*val) gfx_text_clip(FONT_SMALL, 760, ry, C_ACCENT, val, SCREEN_W - 820);
     }
@@ -4511,6 +4511,7 @@ int main(void)
         last_tab = g_tab;
         g_live_pending = 0;
 
+        gnm_frame_tick();
         gfx_begin_frame();
         if (g_overlay == OV_MODEL && g_mdl) {
             if (!draw_model_view()) gfx_end_frame();

@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.39
+# Star Ocean Utility Tool v1.40
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,23 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.40
+
+- The GNM probe now tries every route in one run and keeps going past failures, ending with a
+  results table and a "what this means" verdict. About 20 seconds. Colours, in order:
+  GREEN (C1), CYAN (C2), BLUE (C3), then YELLOW full screen (D1) or a RED top stripe (D2).
+  - Tier B checks the GPU actually RUNS our packets: each test ends with a packet that makes
+    the GPU write a known value into our memory, which is read back. (The old "drained" check
+    only showed the driver accepted the submit.) Variants: with/without the SDK default state,
+    end-of-pipe label, and the command buffer in GARLIC memory.
+  - Tier C: three ways to flip - GNM submit-and-flip (C1), the same with a completion label
+    (C2), and a GNM submit followed by a normal VideoOut flip (C3, only if C1 and C2 fail).
+  - Tier D: the GPU writes the picture itself - a DMA fill of the whole screen (D1), or a
+    write-data stripe (D2, only if D1 fails). Pixels are read back to prove the GPU wrote them.
+- After the probe has used GNM, the app calls `sceGnmSubmitDone` every frame, as games do.
+- `source/tests/gnm_mock_gpu.c`: host test that runs the probe against a mock GPU executing the
+  same packets, with failure modes (noexec, reject, flipbad, nodma, nogarlic, noinit).
 
 ## New in v1.39
 
