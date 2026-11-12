@@ -3,7 +3,7 @@
 #   make DEPS=/path/to/prefix-with-libarchive-liblzma-zlib
 
 TITLE       := Star Ocean Utility Tool
-VERSION     := 01.37
+VERSION     := 01.38
 
 # v1.36 GPU experiment: sign as a system executable so the process carries a system-level
 # program authentication id. On GoldHEN the fake-self handler copies PAID from here but fills
@@ -19,7 +19,7 @@ DEPS        ?= $(CURDIR)/deps
 INTDIR      := build
 
 LIBS        := -larchive -llzma -lz -lc -lkernel -lScePad -lSceUserService \
-               -lSceVideoOut -lSceSystemService -lSceAudioOut -lSceRtc -lSceImeDialog -lSceCommonDialog -lSceSysmodule -lpthread
+               -lSceVideoOut -lSceSystemService -lSceAudioOut -lSceRtc -lSceImeDialog -lSceCommonDialog -lSceSysmodule -lSceGnmDriver -lpthread
 
 CFLAGS      := --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -O2 -Wall \
                -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include -I$(DEPS)/include -D__PS4__

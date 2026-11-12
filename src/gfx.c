@@ -351,3 +351,14 @@ void gfx_image(int dx, int dy, int dw, int dh, const uint8_t *rgba, int iw, int 
         }
     }
 }
+
+#ifndef GPU_HOST
+/* ---- v1.38: accessors so the GNM probe can reuse the live VideoOut chain ----
+ * GNM flips the very same buffers VideoOut has registered, so the probe must use
+ * this handle and these buffers rather than opening a second display. */
+int            gfx_video_handle(void) { return s_video; }
+int            gfx_fb_count(void)      { return NUM_FB; }
+void          *gfx_fb(int i)           { return (i >= 0 && i < NUM_FB) ? (void *)s_fb[i] : NULL; }
+unsigned       gfx_fb_bytes(void)      { return (unsigned)FB_SIZE; }
+OrbisKernelEqueue gfx_flip_queue(void) { return s_flipq; }
+#endif

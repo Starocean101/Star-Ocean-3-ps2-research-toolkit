@@ -46,11 +46,12 @@
 #include "r3d.h"
 #include "text16.h"
 #include "gpu.h"
+#include "gnm.h"
 #include <ctype.h>
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.37"
+#define APP_VERSION  "1.38"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -906,8 +907,9 @@ static const char *tools_items[] = {
     "Homebrew service ports...",
     "Run a batch script (.txt)...",
     "GPU probe: test PS4 graphics set-ups (writes gpu_probe.txt)",
+    "GNM GPU probe: can we submit to the GPU like games do (writes gnm_probe.txt)",
 };
-#define TOOLS_N 11
+#define TOOLS_N 12
 static int g_probe_first = 1;
 static void probe_next_load(void);
 
@@ -936,6 +938,7 @@ static void draw_tools(void)
         case 8: val = "loader / debugger / ftp / klog"; break;
         case 9: val = "pick a .txt in FILES"; break;
         case 10: { static char pv[64]; probe_next_load(); snprintf(pv, sizeof pv, GLYPH_CROSS " run, start at test %d of %d  (left/right)", g_probe_first, gpu_probe_count()); val = pv; break; }
+        case 11: val = GLYPH_CROSS " run (magenta screen = GPU cracked)"; break;
         }
         if (*val) gfx_text_clip(FONT_SMALL, 760, ry, C_ACCENT, val, SCREEN_W - 820);
     }
@@ -4187,6 +4190,18 @@ static void run_gpu_probe(void)
         show_message("GPU probe finished (%d). Results are in %s", r, APP_DATA "/gpu_probe.txt");
 }
 
+static void run_gnm_probe(void)
+{
+    mkdir(APP_DATA, 0777);
+    char verdict[200] = "";
+    logx("GNM probe starting");
+    int r = gnm_probe(APP_DATA "/gnm_probe.txt", probe_line, verdict, sizeof verdict);
+    logx("GNM probe finished: %d (%s)", r, verdict);
+    /* the probe may have left a solid colour on screen; the next redraw restores the UI */
+    if (tv_open_path(APP_DATA "/gnm_probe.txt") != 0)
+        show_message("GNM probe finished (%d). %s\nResults in %s", r, verdict, APP_DATA "/gnm_probe.txt");
+}
+
 static void update_tools(void)
 {
     if (repeat(ORBIS_PAD_BUTTON_DOWN)) g_tools_sel = (g_tools_sel + 1) % TOOLS_N;
@@ -4216,6 +4231,7 @@ static void update_tools(void)
                          "\"Run this batch script\". A sample is written to %s/sample_script.txt.", g_extract_dir);
             write_sample_script(); break;
     case 10: run_gpu_probe(); break;
+    case 11: run_gnm_probe(); break;
     }
 }
 

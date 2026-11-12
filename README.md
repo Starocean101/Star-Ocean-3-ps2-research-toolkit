@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.37
+# Star Ocean Utility Tool v1.38
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,20 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.38
+
+- New **GNM GPU probe** (TOOLS tab). This is the first step onto the graphics path games
+  actually use (GNM / libSceGnmDriver), instead of Piglet. It runs in safe tiers and writes a
+  step-by-step `gnm_probe.txt`, each line flushed to disk before the step runs:
+  - Tier A - allocate GPU command-buffer memory, ask `sceGnmAreSubmitsAllowed`.
+  - Tier B - submit an init-only command buffer and confirm the GPU drains it. If this passes,
+    a fake-pkg process CAN submit to the GPU: the wall we hit with Piglet is gone.
+  - Tier C - fill a display buffer magenta on the CPU and flip it THROUGH GNM
+    (`sceGnmSubmitAndFlipCommandBuffers`). A magenta screen = the GPU submit+flip path is open.
+- Deliberately not included yet: the render-target PM4 for an actual shaded GPU draw. Untested
+  register writes can hang the GPU, so that waits until this probe confirms the submit path and
+  reports the GPU generation. The embedded-shader fullscreen quad is the next step after that.
 
 ## New in v1.37
 

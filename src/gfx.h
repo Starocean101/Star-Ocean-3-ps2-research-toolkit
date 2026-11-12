@@ -1,6 +1,9 @@
 /* gfx.h - minimal 2D framebuffer renderer for PS4 (sceVideoOut). */
 #pragma once
 #include <stdint.h>
+#ifndef GPU_HOST
+#include <orbis/libkernel.h>   /* OrbisKernelEqueue for the GNM accessors */
+#endif
 
 #define SCREEN_W 1920
 #define SCREEN_H 1080
@@ -46,3 +49,12 @@ void gfx_image(int dx, int dy, int dw, int dh, const uint8_t *rgba, int iw, int 
                int64_t sx0, int64_t sy0, int64_t step, int bg);
 int  gfx_char_w(int font);
 int  gfx_char_h(int font);
+
+/* v1.38: live VideoOut chain, shared with the GNM probe (gnm.c) */
+int            gfx_video_handle(void);
+int            gfx_fb_count(void);
+void          *gfx_fb(int i);
+unsigned       gfx_fb_bytes(void);
+#ifndef GPU_HOST
+OrbisKernelEqueue gfx_flip_queue(void);
+#endif
