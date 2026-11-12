@@ -211,9 +211,51 @@ static int load_mod(const char *name)
     glog("GPU: load %s -> 0x%08x (module_start returned %d)", name, (unsigned)h, mret);
     return h;
 }
+/* v1.33: the Piglet that working PS4 homebrew uses is the 4.74 dev-kit build together with
+ * the shader compiler libSceShaccVSH (the pair RetroArch and the SM64 port ship). Firmware
+ * 6.72 has no shader compiler of its own. The pair is looked for in
+ * /data/self/system/common/lib and /app0/sce_module BEFORE the console's own Piglet; the
+ * console's copy is only used when the pair is not there. Same order as the SM64 port:
+ * a few system libraries first, then Piglet, then the compiler. */
+static int h_shacc = -1;
+static char g_pig_from[96] = "not loaded";
+static void load_homebrew_pair(void (*lg)(const char *fmt, ...))
+{
+    if (h_piglet >= 0) return;
+    static const char *dirs[] = { "/data/self/system/common/lib", "/app0/sce_module" };
+    static const char *pre[] = { "libSceSysCore", "libSceMbus", "libSceIpmi" };
+    char path[300];
+    for (int d = 0; d < 2 && h_piglet < 0; d++) {
+        snprintf(path, sizeof path, "%s/libScePigletv2VSH.sprx", dirs[d]);
+        int fd = open(path, O_RDONLY);
+        if (fd < 0) { lg("homebrew Piglet: %s is not there", path); continue; }
+        close(fd);
+        const char *word = sceKernelGetFsSandboxRandomWord();
+        for (int i = 0; i < 3; i++) {
+            char sp[200]; int mr = 0;
+            snprintf(sp, sizeof sp, "/%s/common/lib/%s.sprx", word && word[0] ? word : "system", pre[i]);
+            int h = (int)sceKernelLoadStartModule(sp, 0, NULL, 0, NULL, &mr);
+            lg("homebrew Piglet: system library %s -> 0x%08x", pre[i], (unsigned)h);
+        }
+        int mr = 0;
+        lg("-> load %s", path);
+        int h = (int)sceKernelLoadStartModule(path, 0, NULL, 0, NULL, &mr);
+        lg("<- handle 0x%08x, module_start returned %d", (unsigned)h, mr);
+        if (h < 0) continue;
+        h_piglet = h;
+        snprintf(g_pig_from, sizeof g_pig_from, "%s (homebrew pair)", dirs[d]);
+        snprintf(path, sizeof path, "%s/libSceShaccVSH.sprx", dirs[d]);
+        mr = 0;
+        lg("-> load %s", path);
+        h_shacc = (int)sceKernelLoadStartModule(path, 0, NULL, 0, NULL, &mr);
+        lg("<- shader compiler handle 0x%08x, module_start returned %d", (unsigned)h_shacc, mr);
+    }
+}
 static int platform_load(char *err, size_t en)
 {
-    if (h_piglet < 0) h_piglet = load_mod("libScePigletv2VSH.sprx");
+    load_homebrew_pair(glog);
+    if (h_piglet < 0) { h_piglet = load_mod("libScePigletv2VSH.sprx"); if (h_piglet >= 0) snprintf(g_pig_from, sizeof g_pig_from, "the console's own copy"); }
+    glog("GPU: Piglet from %s, shader compiler %s", g_pig_from, h_shacc >= 0 ? "loaded" : "not loaded");
     if (h_piglet < 0) { snprintf(err, en, "the PS4 OpenGL library (Piglet) could not be loaded (0x%08x)", (unsigned)h_piglet); return -1; }
     if (h_shaders < 0) h_shaders = load_mod("libScePrecompiledShaders.sprx");
     void *p = NULL;
@@ -854,11 +896,12 @@ int gpu_start(char *err, size_t en)
     /* Piglet memory budgets: first the small set other PS4 homebrew uses (RetroArch,
      * liborbis), then the large set from the OpenOrbis sample. v1.22 only tried the
      * large one and eglGetDisplay returned nothing on firmware 6.72. */
-    static const uint64_t sets[2][5] = {
+    static const uint64_t sets[3][5] = {
+        { 0x1000000ull, 0x3000000ull, 0xFFFFFFFFull, 0x100000u, 0x1000000u },   /* SM64 port (4.74 pair) */
         { 0x200000ull, 0x2400000ull, 0xAA00000ull, 0xC0000u, 0x10000u },
         { 250ull << 20, 512ull << 20, 170ull << 20, 1u << 20, 1u << 20 } };
     g_dpy = NULL;
-    for (int a = 0; a < 2 && !g_dpy; a++) {
+    for (int a = 0; a < 3 && !g_dpy; a++) {
         uint8_t cfg[0x88];
         memset(cfg, 0, sizeof cfg);
         uint32_t u32; uint64_t u64;
@@ -985,10 +1028,11 @@ static void pr(const char *fmt, ...)
  * configuration. Tests that get no display keep going; the first test that does get a
  * display then tries every way of making a context, and the run stops there (Piglet keeps
  * that display for the rest of the process, so later tests would prove nothing). */
-enum { F_SYS = 1, F_VID = 2, F_FLEX = 4, F_DCB = 8, F_LCUE = 16, F_POS = 32, F_U5C = 64, F_FLAGS = 128 };
+enum { F_SYS = 1, F_VID = 2, F_FLEX = 4, F_DCB = 8, F_LCUE = 16, F_POS = 32, F_U5C = 64, F_FLAGS = 128, F_PORT = 256 };
 typedef struct { const char *name; unsigned fields; } PVar;
-#define PV_N 9
+#define PV_N 10
 static const PVar k_var[PV_N] = {
+    { "v1.33 homebrew recipe: every field as the SM64 port sets it", F_PORT },
     { "only system shared memory 2 MB (+0x18)", F_SYS },
     { "only video shared memory 36 MB (+0x28)", F_VID },
     { "only flexible-memory flag 0x100 and 170 MB limit (+0x30)", F_FLEX },
@@ -1099,6 +1143,12 @@ static int probe_variant(int vi, char *verdict, size_t vn)
     if (v->fields & F_POS) { P32(0x40, SW); P32(0x44, SH); }
     if (v->fields & F_U5C) P32(0x5C, 2);
     if (v->fields & F_FLAGS) { u32 = 0; memcpy(&u32, cfg + 4, 4); P32(0x04, u32 | 0x68); cfg[0x08] = 1; }
+    if (v->fields & F_PORT) {
+        P32(0x04, 0x8 | 0x80 | 0x60); cfg[0x08] = 1;
+        P64(0x18, 0x1000000ull); P64(0x28, 0x3000000ull); P64(0x30, 0xFFFFFFFFull);
+        P32(0x40, SW); P32(0x44, SH); P32(0x48, 0); P32(0x4C, 0);
+        P32(0x54, 0x100000); P32(0x58, 0x1000000); P32(0x5C, 2);
+    }
 #undef P32
 #undef P64
     hexline("config sent", cfg, sizeof cfg);
@@ -1360,9 +1410,12 @@ int gpu_probe(int first, const char *file, void (*out)(const char *), char *summ
     pr("");
     pr("---- libraries ----");
     int mr = 0;
+    load_homebrew_pair(pr);
     int hp = h_piglet >= 0 ? h_piglet : probe_load("libScePigletv2VSH.sprx", &mr);
-    if (h_piglet < 0) h_piglet = hp;
+    if (h_piglet < 0) { h_piglet = hp; if (hp >= 0) snprintf(g_pig_from, sizeof g_pig_from, "the console's own copy"); }
     pr("Piglet handle: 0x%08x", (unsigned)hp);
+    pr("PIGLET IN USE: %s. Shader compiler (libSceShaccVSH): %s", g_pig_from, h_shacc >= 0 ? "loaded" : "NOT loaded");
+    if (h_shacc < 0) pr("  To use the homebrew pair, put the 4.74 libScePigletv2VSH.sprx (744208 bytes) and libSceShaccVSH.sprx (10394272 bytes) in /data/self/system/common/lib/");
     if (h_shaders < 0) { h_shaders = probe_load("libScePrecompiledShaders.sprx", NULL); void *p = NULL; if (h_shaders >= 0 && sceKernelDlsym(h_shaders, "scePrecompiledShaderEntries", &p) == 0) g_blobs = p; }
     pr("PrecompiledShaders handle: 0x%08x, shader table %s", (unsigned)h_shaders, g_blobs ? "found" : "not found");
     pr("-> sceSysmoduleLoadModuleInternal(SYSTEM_SERVICE)");

@@ -50,7 +50,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.32"
+#define APP_VERSION  "1.33"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -4092,7 +4092,7 @@ static void update_ports(void)
 
 static void probe_line(const char *l) { logx("GPU probe: %s", l); }
 
-#define PROBE_NEXT_FILE APP_DATA "/gpu_probe_next.txt"
+#define PROBE_NEXT_FILE APP_DATA "/gpu_probe_next2.txt"   /* new name in v1.33: the test list changed, start at 1 again */
 /* the probe continues where it stopped after the app is restarted */
 static void probe_next_load(void)
 {

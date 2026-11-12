@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.32
+# Star Ocean Utility Tool v1.33
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,18 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.33
+
+- GPU: the tool now looks for the homebrew Piglet pair first - the 4.74 dev-kit
+  `libScePigletv2VSH.sprx` (744208 bytes) and the shader compiler `libSceShaccVSH.sprx`
+  (10394272 bytes) - in `/data/self/system/common/lib/`, then `/app0/sce_module/`. Only when
+  they are missing does it fall back to the console's own Piglet (which on 6.72 has no shader
+  compiler and refused to make a GL context). Load order follows the SM64 PS4 port.
+  These two files are Sony's and are NOT part of this package: copy them to the console yourself.
+- GPU probe: new test 1 uses every configuration value the SM64 port uses. The probe file
+  says which Piglet was loaded ("PIGLET IN USE") and whether the compiler loaded.
+- The renderer start-up tries the same values first.
 
 ## New in v1.32
 
