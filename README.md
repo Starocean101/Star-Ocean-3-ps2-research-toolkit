@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.33
+# Star Ocean Utility Tool v1.34
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,16 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.34
+
+- Fixed wrong file sizes (v1.32 and v1.33 only). Those two builds were compiled with the
+  OpenOrbis 0.5.4 release headers, where `mode_t` is 32 bits; the PS4 kernel uses 16. That
+  shifted `struct stat`, so every size read came back as the block count (the boot log showed
+  `size check MISMATCH (stat=3840, ...)`). Anything that depends on a file's size - the text
+  viewer, sound loading, extraction checks - was affected. **Before compiling, change line 51
+  of the toolchain's `include/bits/alltypes.h` to `typedef unsigned short mode_t;`.**
+- Free space is now read straight from the kernel (`_fstatfs`).
 
 ## New in v1.33
 

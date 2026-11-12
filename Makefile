@@ -3,7 +3,7 @@
 #   make DEPS=/path/to/prefix-with-libarchive-liblzma-zlib
 
 TITLE       := Star Ocean Utility Tool
-VERSION     := 01.33
+VERSION     := 01.34
 TITLE_ID    := CUSA99901
 CONTENT_ID  := UP0001-CUSA99901_00-STAROCEANUTILITY
 

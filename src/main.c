@@ -50,7 +50,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.33"
+#define APP_VERSION  "1.34"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -208,9 +208,19 @@ static void fmt_time(uint64_t s, char *out, size_t n)
 
 static int free_space(const char *path, uint64_t *out)
 {
-    struct statvfs sv;
-    if (statvfs(path, &sv) != 0) return -1;
-    uint64_t v = (uint64_t)sv.f_bavail * (sv.f_frsize ? sv.f_frsize : sv.f_bsize);
+    /* v1.34: ask the kernel directly. The toolchain C library's statvfs() translates through
+     * its own idea of the structure and reported nothing on the console. The kernel's
+     * (FreeBSD) struct statfs has f_bsize at +16 and f_bavail at +48. */
+    extern int _fstatfs(int, void *);
+    uint64_t raw[160]; memset(raw, 0, sizeof raw);
+    int sfd = open(path, O_RDONLY);
+    if (sfd < 0) return -1;
+    int src = _fstatfs(sfd, raw);
+    close(sfd);
+    if (src != 0) return -1;
+    int64_t avail = (int64_t)raw[6];
+    if (avail < 0) avail = 0;
+    uint64_t v = (uint64_t)avail * raw[2];
     if (v > (100ull << 40)) return -1; /* implausible -> unknown */
     *out = v;
     return 0;
