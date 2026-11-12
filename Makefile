@@ -3,7 +3,7 @@
 #   make DEPS=/path/to/prefix-with-libarchive-liblzma-zlib
 
 TITLE       := Star Ocean Utility Tool
-VERSION     := 01.38
+VERSION     := 01.39
 
 # v1.36 GPU experiment: sign as a system executable so the process carries a system-level
 # program authentication id. On GoldHEN the fake-self handler copies PAID from here but fills

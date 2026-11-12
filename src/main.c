@@ -51,7 +51,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.38"
+#define APP_VERSION  "1.39"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -906,8 +906,8 @@ static const char *tools_items[] = {
     "Star Ocean 4 data archives (CUSA09485)",
     "Homebrew service ports...",
     "Run a batch script (.txt)...",
-    "GPU probe: test PS4 graphics set-ups (writes gpu_probe.txt)",
-    "GNM GPU probe: can we submit to the GPU like games do (writes gnm_probe.txt)",
+    "Piglet probe (old path, writes gpu_probe.txt)",
+    "GNM GPU probe (writes gnm_probe.txt)",
 };
 #define TOOLS_N 12
 static int g_probe_first = 1;
@@ -926,7 +926,7 @@ static void draw_tools(void)
     for (int i = 0; i < TOOLS_N; i++) {
         int ry = row0 + i * pitch;
         if (i == g_tools_sel) gfx_rect_blend(56, ry - 4, SCREEN_W - 112, pitch - 2, C_SEL, 170);
-        gfx_text(FONT_SMALL, 72, ry, C_TEXT, tools_items[i]);
+        gfx_text_clip(FONT_SMALL, 72, ry, C_TEXT, tools_items[i], 760 - 72 - 24);   /* v1.39: never run into the value column */
         const char *val = "";
         switch (i) {
         case 2: val = g_deflate ? "Deflate (smaller)" : "Store (fastest)"; break;
@@ -938,7 +938,7 @@ static void draw_tools(void)
         case 8: val = "loader / debugger / ftp / klog"; break;
         case 9: val = "pick a .txt in FILES"; break;
         case 10: { static char pv[64]; probe_next_load(); snprintf(pv, sizeof pv, GLYPH_CROSS " run, start at test %d of %d  (left/right)", g_probe_first, gpu_probe_count()); val = pv; break; }
-        case 11: val = GLYPH_CROSS " run (magenta screen = GPU cracked)"; break;
+        case 11: val = GLYPH_CROSS " run  (green screen = GNM flip works)"; break;
         }
         if (*val) gfx_text_clip(FONT_SMALL, 760, ry, C_ACCENT, val, SCREEN_W - 820);
     }

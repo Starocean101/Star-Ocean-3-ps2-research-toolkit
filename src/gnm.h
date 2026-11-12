@@ -2,7 +2,7 @@
 #pragma once
 #include <stddef.h>
 
-#define GNM_PROBE_VER "1.38"
+#define GNM_PROBE_VER "1.39"
 
 /* Runs the tiered GNM probe. Writes a step-by-step report to `file` (flushed to disk before
  * each step) and also to `out` for the on-screen log. `verdict` gets a one-line summary.

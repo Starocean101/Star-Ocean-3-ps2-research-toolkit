@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.38
+# Star Ocean Utility Tool v1.39
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,17 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.39
+
+- GNM probe Tier C fixed. v1.38's submit-and-flip was rejected with `0x80D11080`
+  (SUBMISSION_AND_FLIP_FAILED_INVALID_COMMAND_BUFFER): the driver requires the last 64 dwords
+  of the command buffer to be a "prepareFlip" packet (type-3 NOP `0xC03E1000`, marker
+  `0x68750777`), which it patches into the flip request. Now appended.
+- v1.38's pink screen was a false positive: the CPU painted the buffer already on screen. Tier C
+  now paints the OFF-screen buffer green and only counts the flip if the flip counter moves
+  during the probe and the green buffer becomes the one on screen. Green is held 3 seconds.
+- TOOLS menu: long item names no longer run into the value column.
 
 ## New in v1.38
 

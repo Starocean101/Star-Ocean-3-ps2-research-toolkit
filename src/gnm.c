@@ -151,49 +151,73 @@ int gnm_probe(const char *file, void (*out)(const char *), char *verdict, size_t
     /* ---------- Tier C: submit + flip a CPU-filled buffer ---------- */
     gp("");
     gp("==== Tier C: submit + flip (proof of pixels) ====");
-    gp("Filling display buffer 0 with solid magenta on the CPU, then flipping it THROUGH GNM.");
-    uint32_t *buf0 = (uint32_t *)gfx_fb(0);
+    /* v1.39: two fixes.
+     * 1) GNM's submit-and-flip requires the LAST 64 dwords of the command buffer to be a
+     *    "prepareFlip" packet (type-3 NOP, header 0xC03E1000, payload 0x68750777). The driver
+     *    patches it in place into the flip request. v1.38 had no such packet, so the driver
+     *    answered 0x80D11080 = SUBMISSION_AND_FLIP_FAILED_INVALID_COMMAND_BUFFER.
+     * 2) v1.38 painted the buffer that was ALREADY on screen, so the CPU write itself showed
+     *    the colour and the flip check was fooled. Now the buffer that is NOT on screen gets
+     *    the colour, and the flip only counts if the flip counter moves during the probe. */
+    OrbisVideoOutFlipStatus st0; memset(&st0, 0, sizeof st0);
+    sceVideoOutGetFlipStatus(vh, &st0);
+    int front = st0.currentBuffer;
+    int back = (front == 0 && nbuf > 1) ? 1 : 0;
+    gp("before: flips so far %llu, buffer on screen %d -> painting buffer %d (off screen)",
+       (unsigned long long)st0.num, front, back);
+    uint32_t *bb = (uint32_t *)gfx_fb(back);
     unsigned fb_bytes = gfx_fb_bytes();
-    if (!buf0) {
+    if (!bb) {
         gp("No display buffer pointer - cannot run Tier C.");
         snprintf(verdict, vn, "Tier B ok; Tier C had no buffer");
         if (g_f) { fclose(g_f); g_f = NULL; }
         return 5;
     }
-    /* 0xFFFF00FF = opaque magenta in the tool's pixel order */
-    for (unsigned i = 0; i < fb_bytes / 4; i++) buf0[i] = 0xFFFF00FFu;
-    gp("buffer filled (%u bytes)", fb_bytes);
+    for (unsigned i = 0; i < fb_bytes / 4; i++) bb[i] = 0xFF00FF00u;   /* solid green */
+    gp("off-screen buffer %d painted solid GREEN (%u bytes) - the screen must not change yet", back, fb_bytes);
 
-    /* rebuild the init-only DCB (it was consumed above) */
     memset(dcb, 0, 64 * 1024);
     used = sceGnmDrawInitDefaultHardwareState350(dcb, 256);
-    dcb_bytes = (uint32_t)used * 4;
+    if (used <= 0) used = 0;
+    uint32_t *pf = dcb + used;            /* prepareFlip: 64 dwords, must be the very end */
+    pf[0] = 0xC03E1000u;                  /* type-3 NOP, 0x3E+2 = 64 dwords total */
+    pf[1] = 0x68750777u;                  /* PrepareFlip marker */
+    for (int i = 2; i < 64; i++) pf[i] = 0;
+    dcb_bytes = (uint32_t)(used + 64) * 4;
     dcbs[0] = dcb; sizes[0] = dcb_bytes;
-    gp("-> sceGnmSubmitAndFlipCommandBuffers(buffer 0, vsync flip)");
+    gp("command buffer: %d dwords of default state + 64-dword prepareFlip packet = %u bytes", used, dcb_bytes);
+    gp("-> sceGnmSubmitAndFlipCommandBuffers(buffer %d, vsync flip)", back);
     int fr = sceGnmSubmitAndFlipCommandBuffers(1, dcbs, sizes, NULL, NULL,
-                                               (uint32_t)vh, 0 /* display buf 0 */,
-                                               ORBIS_VIDEO_OUT_FLIP_VSYNC, 0);
+                                               (uint32_t)vh, (uint32_t)back,
+                                               ORBIS_VIDEO_OUT_FLIP_VSYNC, 0x1390);
     gp("<- rc 0x%08x", (unsigned)fr);
     gp("-> sceGnmSubmitDone");
     sd = sceGnmSubmitDone();
     gp("<- rc 0x%08x", (unsigned)sd);
 
-    /* wait for the flip to land */
     int flipped = 0;
-    for (int i = 0; i < 180; i++) {    /* up to ~3 s */
-        OrbisVideoOutFlipStatus st; memset(&st, 0, sizeof st);
-        if (sceVideoOutGetFlipStatus(vh, &st) == 0 && st.num > 0 && st.currentBuffer == 0) { flipped = 1; break; }
+    OrbisVideoOutFlipStatus st; memset(&st, 0, sizeof st);
+    for (int i = 0; i < 180 && fr == 0; i++) {    /* up to ~3 s */
+        if (sceVideoOutGetFlipStatus(vh, &st) == 0 && st.num > st0.num && st.currentBuffer == back) { flipped = 1; break; }
         sceKernelUsleep(16000);
     }
-    gp("flip landed: %s", flipped ? "yes" : "unconfirmed");
+    gp("after: flips so far %llu, buffer on screen %d, flipArg 0x%llx -> GNM flip %s",
+       (unsigned long long)st.num, st.currentBuffer, (unsigned long long)st.flipArg,
+       flipped ? "CONFIRMED" : "not seen");
+    if (flipped) {
+        gp("holding the green screen for 3 seconds");
+        sceKernelUsleep(3000000);
+    }
 
-    if (fr == 0) {
-        gp("Tier C complete: GNM accepted a submit-and-flip. If the screen is magenta, the GPU");
-        gp("is cracked - a shaded draw is mechanical from here. Press a button to return.");
-        snprintf(verdict, vn, "SUBMIT PATH OPEN. Tier C flip rc 0, submits_allowed=%d, screen should be magenta", allowed);
+    if (fr == 0 && flipped) {
+        gp("Tier C complete: GNM submitted our command buffer AND flipped our buffer to the screen.");
+        gp("If the screen went GREEN, the full games' path (submit + flip) works for this app.");
+        snprintf(verdict, vn, "GNM SUBMIT+FLIP WORKS (green screen). Next: GPU-drawn pixels");
+    } else if (fr == 0) {
+        gp("The driver accepted the submit-and-flip, but no flip to buffer %d was seen.", back);
+        snprintf(verdict, vn, "Tier C: accepted rc 0 but flip not seen");
     } else {
-        gp("Tier C flip was rejected (0x%08x). Submit works (Tier B) but the GNM flip path does not", (unsigned)fr);
-        gp("accept this process; the 2D VideoOut flip still will. Send this file.");
+        gp("Tier C flip was rejected (0x%08x).", (unsigned)fr);
         snprintf(verdict, vn, "Tier B ok; Tier C flip rejected 0x%08x", (unsigned)fr);
     }
     gp("");
