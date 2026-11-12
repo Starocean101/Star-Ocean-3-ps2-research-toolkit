@@ -50,7 +50,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.34"
+#define APP_VERSION  "1.35"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"
@@ -88,7 +88,7 @@ typedef struct {
 } Entry;
 
 enum { TAB_FILES, TAB_TOOLS, TAB_CREDITS, TAB_COUNT };
-enum { OV_NONE, OV_EXTRACT_MENU, OV_ACTIONS, OV_PROGRESS, OV_DONE, OV_MESSAGE, OV_CONFIRM, OV_KEYBOARD, OV_CPK, OV_CPK_CONFIRM, OV_CPK_VIEW, OV_IMAGE, OV_PORTS, OV_KBD_RESCUE, OV_NUMPAD, OV_NAMES, OV_MODEL, OV_SOUND, OV_TEXT };
+enum { OV_NONE, OV_EXTRACT_MENU, OV_ACTIONS, OV_PROGRESS, OV_DONE, OV_MESSAGE, OV_CONFIRM, OV_KEYBOARD, OV_CPK, OV_CPK_CONFIRM, OV_CPK_VIEW, OV_IMAGE, OV_PORTS, OV_KBD_RESCUE, OV_NUMPAD, OV_NAMES, OV_MODEL, OV_SOUND, OV_TEXT, OV_QUIT };
 enum { PK_EXTRACT, PK_ZIP, PK_COPY, PK_MOVE, PK_DELETE, PK_CPK, PK_UNPACK, PK_SCRIPT, PK_NAMES };
 enum { PICK_NONE, PICK_LOG, PICK_EXTRACT_DEFAULT, PICK_EXTRACT_ONCE, PICK_CPK_DEST };
 
@@ -1013,7 +1013,7 @@ static void draw_extract_menu(void)
     gfx_text(FONT_SMALL, x, by + 630, C_DIM, GLYPH_CROSS " Start   " GLYPH_CIRCLE " Cancel   (change the default folder in TOOLS)");
 }
 
-enum { ACT_ZIP, ACT_COPY, ACT_MOVE, ACT_DELETE, ACT_NEWDIR, ACT_UNPACK, ACT_CPK, ACT_SCRIPT, ACT_VERIFY, ACT_SELALL, ACT_CLEAR, ACT_LOG, ACT_CLOSE, ACTIONS_N };
+enum { ACT_ZIP, ACT_COPY, ACT_MOVE, ACT_DELETE, ACT_NEWDIR, ACT_UNPACK, ACT_CPK, ACT_SCRIPT, ACT_VERIFY, ACT_SELALL, ACT_CLEAR, ACT_LOG, ACT_EXIT, ACT_CLOSE, ACTIONS_N };
 static void draw_actions_menu(void)
 {
     gfx_rect_blend(0, 0, SCREEN_W, SCREEN_H, RGB(0, 0, 0), 150);
@@ -1033,7 +1033,8 @@ static void draw_actions_menu(void)
     snprintf(lbl[ACT_SELALL], 96, "Select ALL here");
     snprintf(lbl[ACT_CLEAR], 96, "Clear selection");
     snprintf(lbl[ACT_LOG], 96, "Set this folder as log folder");
-    snprintf(lbl[ACT_CLOSE], 96, "Close");
+    snprintf(lbl[ACT_EXIT], 96, "Close application...");
+    snprintf(lbl[ACT_CLOSE], 96, "Close this menu");
     PANEL(bx, by, bw, 880);
     gfx_text(FONT_LARGE, bx + 36, by + 24, C_ACCENT, "Actions");
     for (int i = 0; i < ACTIONS_N; i++) {
@@ -1063,6 +1064,58 @@ static void draw_confirm(void)
     int cy = text_wrap(FONT_SMALL, 300, 460, C_TEXT, g_confirm_text, SCREEN_W - 600, 2);
     gfx_text(FONT_SMALL, 300, cy + 14, C_WARN, "This cannot be undone. Folders are deleted with everything inside.");
     gfx_text(FONT_SMALL, 300, 620, C_DIM, GLYPH_SQUARE " Delete      " GLYPH_CIRCLE " Cancel");
+}
+
+/* ---------------------------------------------------------------- v1.35: close from inside
+ * Every step is written to the log AND forced to disk before the step runs, so if the console
+ * goes down during shutdown the last "shutdown:" line names the step that did it. */
+static void sd_log(const char *fmt, ...) __attribute__((format(printf, 1, 2)));
+static void sd_log(const char *fmt, ...)
+{
+    char b[300];
+    va_list ap; va_start(ap, fmt);
+    vsnprintf(b, sizeof b, fmt, ap);
+    va_end(ap);
+    logx("shutdown: %s", b);
+    const char *lp = logger_path();
+    if (lp && lp[0]) { int fd = open(lp, O_WRONLY | O_APPEND); if (fd >= 0) { fsync(fd); close(fd); } }
+}
+static int g_sd_started;
+static void sd_atexit(void) { sd_log("atexit handlers running (process is leaving normally)"); }
+static void app_shutdown(void)
+{
+    g_sd_started = 1;
+    sd_log("==== requested from the menu (v%s) ====", APP_VERSION);
+    unsigned fe = 0, ft = 0; int le = 0;
+    gfx_flip_stats(&fe, &ft, &le);
+    sd_log("state: overlay %d, tab %d, GPU renderer %s, flip errors %u, timeouts %u", g_overlay, g_tab, gpu_active() ? "ON" : "off", fe, ft);
+    sd_log("step 1/6 -> stop sound playback");
+    audio_play_stop();
+    sd_log("step 1/6 <- done");
+    sd_log("step 2/6 -> stop background music thread and close its audio port");
+    audio_stop();
+    sd_log("step 2/6 <- done");
+    sd_log("step 3/6 -> save settings");
+    settings_save();
+    sd_log("step 3/6 <- done");
+    sd_log("step 4/6 -> wait 100 ms for the last frame");
+    sceKernelUsleep(100000);
+    sd_log("step 4/6 <- done");
+    sd_log("step 5/6 -> close the video output (sceVideoOutClose)");
+    int vr = gfx_suspend();
+    sd_log("step 5/6 <- 0x%08x", (unsigned)vr);
+    sd_log("step 6/6 -> sceSystemServiceLoadExec(\"exit\") - if this is the last line, the system took over here");
+    int er = sceSystemServiceLoadExec("exit", NULL);
+    sd_log("step 6/6 <- returned 0x%08x (unexpected: the call normally does not return); calling exit(0)", (unsigned)er);
+    exit(0);
+}
+static void draw_quit(void)
+{
+    gfx_rect_blend(0, 0, SCREEN_W, SCREEN_H, RGB(0, 0, 0), 170);
+    PANEL(240, 360, SCREEN_W - 480, 300);
+    gfx_text(FONT_LARGE, 300, 400, C_ACCENT, "Close Star Ocean Utility Tool?");
+    gfx_text(FONT_SMALL, 300, 490, C_TEXT, "Each shutdown step is written to the log file first.");
+    gfx_text(FONT_SMALL, 300, 580, C_DIM, GLYPH_CROSS " Close application      " GLYPH_CIRCLE " Cancel");
 }
 
 static void draw_progress(void)
@@ -4197,6 +4250,7 @@ static void update_overlay(void)
             case ACT_VERIFY: verify_highlighted(); break;
             case ACT_SELALL: files_select_all(); break;
             case ACT_CLEAR: mark_clear(); logx("Selection cleared"); break;
+            case ACT_EXIT: g_overlay = OV_QUIT; break;
             case ACT_LOG:
                 if (!g_cwd[0]) show_message("Open a folder first, then set it as the log folder.");
                 else if (!dir_writable(g_cwd)) show_message("%s is read-only.", g_cwd);
@@ -4248,6 +4302,10 @@ static void update_overlay(void)
         cpk_apply_typed(g_kbd_purpose, typed);
         break;
     }
+    case OV_QUIT:
+        if (pressed(ORBIS_PAD_BUTTON_CIRCLE)) g_overlay = OV_NONE;
+        else if (pressed(ORBIS_PAD_BUTTON_CROSS)) app_shutdown();
+        break;
     case OV_CONFIRM:
         if (pressed(ORBIS_PAD_BUTTON_CIRCLE) || pressed(ORBIS_PAD_BUTTON_CROSS)) {
             g_overlay = OV_NONE;
@@ -4387,6 +4445,7 @@ int main(void)
         show_message("Could not access storage. Load GoldHEN first, then restart this app.");
     g_cwd[0] = 0;
     load_dir(NULL);
+    atexit(sd_atexit);
     logx("boot: ready in %llu ms", (unsigned long long)((now_us() - t_boot) / 1000));
 
     uint64_t last_draw = 0, last_health = now_us();
@@ -4417,7 +4476,8 @@ int main(void)
                 if (pressed(ORBIS_PAD_BUTTON_R1)) g_tab = (g_tab + 1) % TAB_COUNT;
                 if (pressed(ORBIS_PAD_BUTTON_L1)) g_tab = (g_tab + TAB_COUNT - 1) % TAB_COUNT;
             }
-            if (g_tab == TAB_FILES) update_files();
+            if (g_tab != TAB_FILES && pressed(ORBIS_PAD_BUTTON_OPTIONS)) g_overlay = OV_QUIT;   /* FILES: OPTIONS menu has "Close application" */
+            else if (g_tab == TAB_FILES) update_files();
             else if (g_tab == TAB_TOOLS) update_tools();
         }
 
@@ -4458,6 +4518,7 @@ int main(void)
         case OV_DONE: draw_done(); break;
         case OV_MESSAGE: draw_message(); break;
         case OV_CONFIRM: draw_confirm(); break;
+        case OV_QUIT: draw_quit(); break;
         case OV_KEYBOARD: draw_keyboard_wait(); break;
         case OV_CPK: draw_cpk(); break;
         case OV_CPK_VIEW: draw_cpk_view(); break;

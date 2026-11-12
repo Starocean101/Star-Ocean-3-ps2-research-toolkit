@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.34
+# Star Ocean Utility Tool v1.35
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,14 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.35
+
+- Close from inside the app: OPTIONS on the TOOLS or CREDITS tab, or "Close application..." in
+  the FILES tab's OPTIONS menu. Every shutdown step is written to the log and forced to disk
+  before it runs (lines start with `shutdown:`), so a console crash during shutdown leaves the
+  failing step as the last line.
+- GPU experiment: param.sfo CATEGORY is now `gde` (was `gd`), as in flatz's working GL test.
 
 ## New in v1.34
 
