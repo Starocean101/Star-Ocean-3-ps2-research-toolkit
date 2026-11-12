@@ -3,14 +3,14 @@
 #   make DEPS=/path/to/prefix-with-libarchive-liblzma-zlib
 
 TITLE       := Star Ocean Utility Tool
-VERSION     := 01.36
+VERSION     := 01.37
 
 # v1.36 GPU experiment: sign as a system executable so the process carries a system-level
 # program authentication id. On GoldHEN the fake-self handler copies PAID from here but fills
 # the rest of the auth_info from its own template, so PAID + PTYPE are the only levers that
 # actually reach the kernel. 0x3800000000000011 = normal fake; 0x3100000000000002 = system.
-PAID        ?= 0x3100000000000002
-PTYPE       ?= system_exec
+PAID        ?= 0x3800000000000011
+PTYPE       ?= fake
 TITLE_ID    := CUSA99901
 CONTENT_ID  := UP0001-CUSA99901_00-STAROCEANUTILITY
 

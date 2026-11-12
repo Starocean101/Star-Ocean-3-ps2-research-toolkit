@@ -50,7 +50,7 @@
 
 #define APP_TITLE    "Star Ocean Utility Tool"
 #define APP_DEV      "Starocean 101"
-#define APP_VERSION  "1.36"
+#define APP_VERSION  "1.37"
 #define APP_DATA     "/data/StarOceanUtility"
 #define DEF_LOG      APP_DATA "/log.txt"
 #define DEF_EXTRACT  "/data/Extracted"

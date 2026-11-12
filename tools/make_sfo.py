@@ -55,7 +55,7 @@ def main():
         ("APP_TYPE", FMT_INT, 1, 4),
         ("APP_VER", FMT_UTF8, a.version, 8),
         ("ATTRIBUTE", FMT_INT, 0, 4),
-        ("CATEGORY", FMT_UTF8, "gde", 4),   # v1.35: flatz's working GL test needs gde
+        ("CATEGORY", FMT_UTF8, "gd", 4),
         ("CONTENT_ID", FMT_UTF8, a.content_id, 48),
         ("DOWNLOAD_DATA_SIZE", FMT_INT, 0, 4),
         ("FORMAT", FMT_UTF8, "obs", 4),

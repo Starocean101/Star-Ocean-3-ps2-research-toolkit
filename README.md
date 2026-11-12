@@ -1,4 +1,4 @@
-# Star Ocean Utility Tool v1.36
+# Star Ocean Utility Tool v1.37
 
 **Developer: Starocean 101**
 Title ID **CUSA99901**, Content ID `UP0001-CUSA99901_00-STAROCEANUTILITY`
@@ -166,6 +166,16 @@ These tools read CRI `CPK` archives, such as Star Ocean 4 (CUSA09485) `app0/0000
 * *Also keep compressed copies*: also saves the raw `.crilayla` data next to each unpacked file.
 
 Single compressed files are unpacked in memory, up to 320 MB each. Larger compressed entries are reported as errors in the log instead of risking a crash. Uncompressed files of any size are streamed.
+
+## New in v1.37
+
+- Reverted both GPU signing experiments. v1.36 would not launch: a system PAID / system_exec
+  self is rejected by GoldHEN's loader, which expects a fake self with the fake PAID. Signing is
+  back to `0x3800000000000011` / `fake` and the package category is back to `gd` - the same
+  known-good combination as v1.30, so this launches. All the real fixes (file sizes, free space,
+  audio job flags, close-from-app with logged shutdown) are kept.
+- Conclusion on Piglet: the eglCreateContext wall is a system-app privilege gate, not a config
+  problem. The next GPU work, if any, should use GNM (what games use), not Piglet. See notes.
 
 ## New in v1.36
 
